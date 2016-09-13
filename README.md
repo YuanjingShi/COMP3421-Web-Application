@@ -1,9 +1,6 @@
-# Exercise-From-leetcode-and-Cracking-the-Interview
+# COMO3421-Web-Application
 
-This is a repository of my own solutions of leetcode & cc150 problems.
+PolyU 2016/17 fall semester 
 
-Java would be my first choice for programming language and later I may upload some corresponding solutions in Python.
+Yuanjing Shi
 
-Update: There would be also some algorithm problem from 九章算法 
-
-For any concerns or questions, feel free to contact me via Github or my email: youngforyou520@gmail.com
