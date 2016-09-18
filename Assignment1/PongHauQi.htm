@@ -16,9 +16,7 @@ var redGamePiece, blueGamePiece, yellowGamePiece;
     
 function startGame() {
     myGameArea.start();
-    redGamePiece = new component(75, 75, "red", 10, 10);
-    yellowGamePiece = new component(75, 75, "yellow", 50, 60); 
-    blueGamePiece = new component(75, 75, "blue", 10, 110);
+    myGamePiece = new component(30, 30, "red", 10, 120);
 }
     
 function component(width, height, color, x, y) {
@@ -38,9 +36,14 @@ var myGameArea = {
     start : function() {
         this.canvas.width = 480;
         this.canvas.height = 270;
+        this.canvas.style.cursor = "none"; //hide the original cursor
         this.context = this.canvas.getContext("2d");
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
         this.interval = setInterval(updateGameArea, 20);
+        window.addEventListener('mousemove', function (e) {
+            myGameArea.x = e.pageX;
+            myGameArea.y = e.pageY;
+        })
     },//why there should be a comma
     clear : function() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -50,19 +53,16 @@ var myGameArea = {
 
 function updateGameArea() {
     myGameArea.clear();
-    redGamePiece.x += 1;
-    yellowGamePiece.x += 1; 
-    yellowGamePiece.y += 1; 
-    blueGamePiece.x += 1; 
-    blueGamePiece.y -= 1; 
-    redGamePiece.update();
-    yellowGamePiece.update(); 
-    blueGamePiece.update();
+    if (myGameArea.x && myGameArea.y) {
+        myGamePiece.x = myGameArea.x;
+        myGamePiece.y = myGameArea.y;
+    }
+    myGamePiece.update();
 }
 
 </script>
 
-<p>First we create a canvas!</p>
+<p>Move the cursor inside the canvas to move the red square.</p>
 
 </body>
 </html>
