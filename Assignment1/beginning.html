@@ -13,25 +13,35 @@ canvas {
 <script>
 
 var myGamePiece;
+var myBackground;
 
 function startGame() {
-    myGamePiece = new component(30, 30, "piece1.png", 10, 120, "image");
+    myGamePiece = new component(30, 30, "image1/piece1.png", 10, 120, "image");
+    myBackground = new component(270, 270, "image1/board1.png", 0, 0, "image");
     myGameArea.start();
 }
 
 var myGameArea = {
     canvas : document.createElement("canvas"),
+    
     start : function() {
-        this.canvas.width = 480;
+        this.canvas.width = 270;
         this.canvas.height = 270;
+        this.canvas.style.cursor = "none"; //hide the original cursor
         this.context = this.canvas.getContext("2d");
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
         this.frameNo = 0;
         this.interval = setInterval(updateGameArea, 20);
+        window.addEventListener('mousemove', function (e) {
+            myGameArea.x = e.pageX;
+            myGameArea.y = e.pageY;
+        })
         },
+    
     clear : function() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     },
+    
     stop : function() {
         clearInterval(this.interval);
     }
@@ -70,6 +80,12 @@ function component(width, height, color, x, y, type) {
 function updateGameArea() {
     myGameArea.clear();
     myGamePiece.newPos();
+    if (myGameArea.x && myGameArea.y) {
+        myGamePiece.x = myGameArea.x;
+        myGamePiece.y = myGameArea.y; 
+    }
+    myBackground.newPos(); 
+    myBackground.update();
     myGamePiece.update();
 }
 
@@ -101,7 +117,7 @@ function clearmove() {
   <button onmousedown="movedown()" onmouseup="clearmove()" ontouchstart="movedown()">DOWN</button>
 </div>
 
-<p>The component constructor uses the built-in image object to draw images onto the canvas.</p>
+<p>background image added and now we got a game!</p>
 
 </body>
 </html>
