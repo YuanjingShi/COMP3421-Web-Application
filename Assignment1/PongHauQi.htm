@@ -18,9 +18,9 @@ var piece1;
     
 function startGame() {
     myGameArea.start();
-    myGamePiece = new component(30, 30, "red", 10, 120,"");
-    myObstacle = new component(10, 200, "green", 300, 120.""); 
-    piece1 = new component(0, 30, "image1/piece1.png", 10, 120, "image")
+    //myGamePiece = new component(30, 30, "red", 10, 120,"");
+    //myObstacle = new component(10, 200, "green", 300, 120.""); 
+    piece1 = new component(30, 30, "piece1.png", 10, 120, "image")
 }
     
 function component(width, height, color, x, y, type) {
@@ -68,10 +68,7 @@ var myGameArea = {
 
 function updateGameArea() {
     myGameArea.clear();
-    if (myGameArea.x && myGameArea.y) {
-        myGamePiece.x = myGameArea.x;
-        myGamePiece.y = myGameArea.y;
-    }
+    
     myGamePiece.update();
     myObstacle.update();
 }
