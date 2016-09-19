@@ -12,11 +12,16 @@ canvas {
 <body onload="startGame()">
 <script>
 
-var myGamePiece;
+var player1Piece1, player1Piece2;
+var player2Piece1, player2Piece2;
 var myBackground;
 
 function startGame() {
-    myGamePiece = new component(37.5, 37.5, "image1/piece1.png", 10, 120, "image");
+    myGamePiece = new component(37.5, 37.5, "image1/piece1.png", 120, 120, "image");
+    player1Piece1 = new component(37.5, 37.5, "image1/piece1.png", 4, 5, "image");
+    player1Piece2 = new component(37.5, 37.5, "image1/piece1.png", 4, 225, "image");
+    player2Piece1 = new component(37.5, 37.5, "image1/piece2.png", 228.5, 5, "image");
+    player2Piece2 = new component(37.5, 37.5, "image1/piece2.png", 228.5, 225, "image");
     myBackground = new component(270, 270, "image1/board1.png", 0, 0, "image");
     myGameArea.start();
 }
@@ -87,6 +92,10 @@ function updateGameArea() {
     myBackground.newPos(); 
     myBackground.update();
     myGamePiece.update();
+    player1Piece1.update();
+    player1Piece2.update();
+    player2Piece1.update();
+    player2Piece2.update();
 }
 
 function moveup() {
