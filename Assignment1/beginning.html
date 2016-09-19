@@ -17,11 +17,7 @@ var player2Piece1, player2Piece2;
 var myBackground;
 
 function startGame() {
-    myGamePiece = new component(37.5, 37.5, "image1/piece1.png", 120, 120, "image");
-    player1Piece1 = new component(37.5, 37.5, "image1/piece1.png", 4, 5, "image");
-    player1Piece2 = new component(37.5, 37.5, "image1/piece1.png", 4, 225, "image");
-    player2Piece1 = new component(37.5, 37.5, "image1/piece2.png", 228.5, 5, "image");
-    player2Piece2 = new component(37.5, 37.5, "image1/piece2.png", 228.5, 225, "image");
+    myGamePiece = new component(37.5, 37.5, "image1/piece1.png", 115, 1, "image");
     myBackground = new component(270, 270, "image1/board1.png", 0, 0, "image");
     myGameArea.start();
 }
@@ -92,12 +88,14 @@ function updateGameArea() {
     myBackground.newPos(); 
     myBackground.update();
     myGamePiece.update();
-    player1Piece1.update();
-    player1Piece2.update();
-    player2Piece1.update();
-    player2Piece2.update();
 }
 
+///
+///
+//
+// 
+//
+///
 function moveup() {
     myBackground.image.src = "image1/board1.png";
     myGamePiece.speedY = -1;
@@ -119,6 +117,20 @@ function moveright() {
 function clearmove() {
     myGamePiece.speedX = 0;
     myGamePiece.speedY = 0;
+}
+
+function allowDrop(ev) {
+    ev.preventDefault();
+}
+
+function drag(ev) {
+    ev.dataTransfer.setData("text", ev.target.id);
+}
+
+function drop(ev) {
+    ev.preventDefault();
+    var data = ev.dataTransfer.getData("text");
+    ev.target.appendChild(document.getElementById(data));
 }
 </script>
 <div style="text-align:center;width:480px;">
