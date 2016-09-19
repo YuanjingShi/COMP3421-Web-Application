@@ -2,10 +2,38 @@
   <xs:element name="realEstate">
     <xs:complexType>
       <xs:sequence>
-        <xs:element type="xs:string" name="agencies"/>
-        <xs:element type="xs:string" name="owners"/>
-        <xs:element type="xs:string" name="propeties"/>
-        <xs:element type="xs:string" name="flats"/>
+        <xs:element name="agencies">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:string" name="name"/>
+              <xs:element type="xs:string" name="email"/>
+              <xs:element type="xs:string" name="phone"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="owners">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:string" name="name"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="propeties">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:string" name="name"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="flats">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:string" name="name"/>
+              <xs:element type="xs:string" name="description"/>
+              <xs:element type="xs:string" name="rate"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
       </xs:sequence>
     </xs:complexType>
   </xs:element>

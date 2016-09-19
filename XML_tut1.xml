@@ -2,9 +2,25 @@
 
 <realEstate>
 
-  <agencies></agencies>
-  <owners></owners>
-  <propeties></propeties>
-  <flats></flats>
+  <agencies>
+      <name></name>
+      <email></email>
+      <phone></phone>
+  </agencies>
+
+  <owners>
+      <name></name>
+  </owners>
+
+  <propeties>
+      <name></name>
+  </propeties>
+
+  <flats>
+      <name></name>
+      <description></description>
+      <rate></rate>
+
+  </flats>
 
 </realEstate>
