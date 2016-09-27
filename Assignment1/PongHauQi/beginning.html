@@ -1,83 +1,29 @@
 <!DOCTYPE html>
 <html>
-<head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<style>
-    
-    
-.floating-box {
-    float: left;
-    width: 100px;
-    height: 100px;
-    margin: 10px;
-    padding: 10px;
-    border: 1px solid #aaaaaa;
-}
-    
-
-
-</style>
-</head>
-<body onload="startGame()">
-<script>
-
-
-
-function moveup() {
-    myBackground.image.src = "image1/board1.png";
-    myGamePiece.speedY = -1;
-}
-
-function movedown() {
-    myBackground.image.src = "image1/board2.png";
-    myGamePiece.speedY = 1;
-}
-
-function moveleft() {
-    myGamePiece.speedX = -1;
-}
-
-function moveright() {
-    myGamePiece.speedX = 1;
-}
-
-function clearmove() {
-    myGamePiece.speedX = 0;
-    myGamePiece.speedY = 0;
-}
-
-function allowDrop(ev) {
-    ev.preventDefault();
-}
-
-function drag(ev) {
-    ev.dataTransfer.setData("text", ev.target.id);
-}
-
-function drop(ev) {
-    ev.preventDefault();
-    var data = ev.dataTransfer.getData("text");
-    ev.target.appendChild(document.getElementById(data));
-}
-</script>
-<div style="text-align:center;width:480px;">
-  <button onmousedown="moveup()" onmouseup="clearmove()" ontouchstart="moveup()">UP</button><br><br>
-  <button onmousedown="moveleft()" onmouseup="clearmove()" ontouchstart="moveleft()">LEFT</button>
-  <button onmousedown="moveright()" onmouseup="clearmove()" ontouchstart="moveright()">RIGHT</button><br><br>
-  <button onmousedown="movedown()" onmouseup="clearmove()" ontouchstart="movedown()">DOWN</button>
-</div>
-<p>background image added and now we got a game!</p>
-    
-<div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)" class="floating-box">
-  <img src="image1/piece1.png" draggable="true" ondragstart="drag(event)" id="drag1" width="31" height="31">
-</div>
-
-<div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)" class="floating-box"></div>
-<div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)" class="floating-box"></div>
-<div id="div4" ondrop="drop(event)" ondragover="allowDrop(event)" class="floating-box"></div>
-<div id="div5" ondrop="drop(event)" ondragover="allowDrop(event)" class="floating-box"></div>
-
-
-
+<body>
+     <canvas id = "myCanvas1" width = "200" height = "200" ></canvas>
+    <canvas id = "myCanvas2" width = "200" height = "200" ></canvas>
+    <canvas id = "myCanvas3" width = "200" height = "200" ></canvas>
+    <script>
+        
+        function draw(canvas,ctx){
+            var centerX = canvas.width/2;
+            var centerY = canvas.height/2;
+            var radius = 70;
+            
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
+            ctx.fillStyle = 'green';
+            ctx.fill();
+            ctx.lineWidth = 5;
+            ctx.strokeStyle = '#003300';
+            ctx.stroke();
+        }
+        
+        draw(document.getElementById("myCanvas1"), document.getElementById("myCanvas1").getContext("2d"));
+        draw(document.getElementById("myCanvas2"), document.getElementById("myCanvas2").getContext("2d"));
+    </script>
+   
 </body>
 </html>

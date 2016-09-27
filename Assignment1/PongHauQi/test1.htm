@@ -30,6 +30,13 @@ function rect(x,y,w,h) {
  ctx.fill();
 }
 
+function arc(centerX, centerY, radius){ 
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
+    ctx.fillStyle = 'green';
+    ctx.fill();
+}
+
 function clear() {
  ctx.clearRect(0, 0, WIDTH, HEIGHT);
 }
@@ -45,7 +52,7 @@ function draw() {
  ctx.fillStyle = "#FAF7F8";
  rect(0,0,WIDTH,HEIGHT);
  ctx.fillStyle = "#444444";
- rect(x - 15, y - 15, 30, 30);
+ arc(x - 15, y - 15, 30);
 }
 
 function myMove(e){
