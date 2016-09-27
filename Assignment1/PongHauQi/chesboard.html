@@ -1,47 +1,40 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title></title>
-        <meta charset="UTF-8">
-        <style>
-            .chess-board { border-spacing: 0; border-collapse: collapse; }
-            .chess-board th { padding: .5em; }
-            .chess-board td { border: 1px solid; width: 2em; height: 2em; }
-            .chess-board .light { background: #eee; }
-            .chess-board .dark { background: #000; }
-        </style>
-    </head>
-    <body>
-        <table class="chess-board">
-            <tbody>
-                <tr>
-                    <th></th>
-                    <th>a</th>
-                    <th>b</th>
-                    <th>c</th>
-                </tr>
-                <tr>
-                    <th>8</th>
-                    <td class="light"></td>
-                    <td class="dark"></td>
-                    <td class="light"></td>
-                 
-                </tr>
-                <tr>
-                    <th>7</th>
-                    <td class="dark"></td>
-                    <td class="light"></td>
-                    <td class="dark"></td>
-            
-                </tr>
-                <tr>
-                    <th>6</th>
-                    <td class="light"></td>
-                    <td class="dark"></td>
-                    <td class="light"></td>
-              
-                </tr>
-            </tbody>
-        </table>
-    </body>
-</html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0066)http://www.redips.net/my/preview/REDIPS_drag/example00/index1.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+		<link rel="stylesheet" href="./Example 0_ Minimal steps to enable content dragging in table_files/style.css" type="text/css" media="screen">
+		<script type="text/javascript" src="./Example 0_ Minimal steps to enable content dragging in table_files/header.js"></script>
+		<script type="text/javascript" src="./Example 0_ Minimal steps to enable content dragging in table_files/redips-drag-min.js"></script>
+		<title>Example 0: Minimal steps to enable content dragging in table</title>
+	</head>
+	<body onload="REDIPS.drag.init()"><div><div style="background-color:#eee;padding:10px;text-align:center;font-size:20px;font-weight:bold">Example 0: Minimal steps to enable content dragging in table</div><div style="float:left;width:50%;padding-left:10px"><a href="http://www.redips.net/my/preview/REDIPS_drag/">Index</a></div><div style="text-align:right;padding-right:10px;margin-bottom:10px"><a href="http://www.redips.net/javascript/drag-and-drop-table-content/">www.redips.net</a></div></div>
+		<center>
+			<!-- tables inside this DIV could contain drag-able content  -->
+			<div id="redips-drag">
+				<table>
+					<colgroup>
+						<col width="100">
+						<col width="100">
+						<col width="100">
+					</colgroup>
+					<tbody>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td><div class="redips-drag" style="border-style: solid; cursor: move;">Hello World!</div></td>
+							<td></td>
+						</tr>
+					</tbody>
+				</table>
+			<div id="redips_clone" style="height: 1px; width: 1px;"></div></div>
+		</center>
+	
+</body></html>
