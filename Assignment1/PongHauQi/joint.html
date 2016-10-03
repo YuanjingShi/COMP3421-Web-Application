@@ -197,7 +197,39 @@
             return {x:left, y:top};
         }
         //function mouseMove()
+        function mouseMove(ev){
+            ev = ev || window.event;
+            var mousePos = mouseCoords(ev);
             
+            if(dragObject){
+                dragObject.style.position = 'absolute';
+                dragObject.style.top = mousePos.y ‐ mouseOffset.y;
+                dragObject.style.left = mousePos.x ‐ mouseOffset.x;
+                
+                desRow = -1;
+                desCol = -1;
+                //alert(mousePos.x+" "+mousePos.y);
+                
+                for(var i=0;i<colNum;i++){
+                    if(mousePos.x > xPos[i] && mousePos.x < xPos[i+1]){
+                        desCol = i;
+                        break;
+                    }
+                    
+                }
+                
+                for(var i=0;i<rowNum;i++){
+                    if(mousePos.y > yPos[i] && mousePos.y < yPos[i+1]){
+                        desRow = i;
+                        breal;
+                    }
+                }
+                
+                //alert(desRow + " " + desCol);
+                return false;
+                }
+        }
+                
         //function mouseUp()
             
         //function makeDraggable()
