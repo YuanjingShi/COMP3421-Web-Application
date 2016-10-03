@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<!-- saved from url=(0110)https://learn.polyu.edu.hk/bbcswebdav/pid-2169674-dt-content-rid-9208950_1/courses/COMP3421_20161_A/DnD-1.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=Big5">
+<style>
+#div1 {
+    width: 350px;
+    height: 70px;
+    padding: 10px;
+    border: 1px solid #aaaaaa;
+}
+#div2 {
+    width: 350px;
+    height: 70px;
+    padding: 10px;
+    border: 1px solid #aaaaaa;
+}
+</style>
+<script>
+function allowDrop(ev) {
+    ev.preventDefault();
+}
+
+function drag(ev) {
+    ev.dataTransfer.setData("text", ev.target.id);
+}
+
+function drop(ev) {
+    ev.preventDefault();
+    var data = ev.dataTransfer.getData("text");
+    ev.target.appendChild(document.getElementById(data));
+}
+</script>
+</head>
+<body>
+
+<p>Drag the image into the rectangle:</p>
+
+<div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+<div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)"><img id="drag1" src="./DnD-1_files/chicken.gif" draggable="true" ondragstart="drag(event)" width="336" height="69"></div>
+<br>
+
+
+
+
+
+</body></html>

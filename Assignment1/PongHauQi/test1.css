@@ -1,0 +1,15 @@
+table th,
+table td {
+  width: 200px;
+  height: 70px;
+  padding: 5px;
+}
+
+table span {
+  display: block;
+  background-color: #ccc;
+  border: 1px solid black;
+  color: fff;
+  height: 30px;
+  width: 100%;
+}

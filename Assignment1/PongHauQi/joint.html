@@ -1,0 +1,208 @@
+<html>
+    <head>
+        <script type = "text/javascript">
+            var b = "blank"
+            
+            //Poem initialization
+            var poem = [
+                [
+                    [b,"16","t01_11","06","01","t01_11"],
+                    [b,"17","12","07","02","t02_14"],
+                    
+                    [b,"18","13","08","03",b],
+                    [b,"19","t02_14","09","04",b],
+                    [b,"20","15","10","05",b]
+                ],
+                [
+                   [b,"16","11","06","01","t01"],
+                    [b,"17","12","07","02","t02"],
+                    [b,"18","13","08","03",b],
+                    [b,"19","14","09","04",b],
+                    [b,"20","15","10","05",b]
+                ],
+                [
+                    [b,"16","11","06","01","t01"],
+                    [b,"17","12","07","02","t02"],
+                    [b,"18","13","08","03","t03"],
+                    [b,"19","14","09","04","t04"],
+                    [b,"20","15","10","05",b]
+                ]
+            ];
+            
+            //Row & Column numbers initialization
+            
+            var rowNum = 5;
+            var colNum = 6;
+        
+            //Cell position and Content
+            
+            var picturePosition = new Array(colNum*rowNum);
+            
+            var pictureContent = new Array(colNum*rowNum);
+            
+            var level = 0;
+            var result;
+            
+            result = new Array(rowNum);
+            
+            for(var j = 0; j < rowNum, j++){
+                result[j] = new Array(colNum);
+            }
+            
+            xPos = new Array(colNum + 1);
+            yPos = new Array(rowNumber + 1);
+            
+            var inHand = "blank";
+            
+            var dragObject = null;
+            var mouseOffset = null;
+            var startDrag = 0;
+            
+            time = 200;
+        
+        function play(){
+            
+            level = 1 + Math.floor((Math.random()*3));
+            showPoem(level);
+            registerEvent();
+            getCellPositionX();
+            getCellPositionY();
+            startTimer();
+            
+        }
+        
+        function getCellPositionX(){
+            for(var i = 0; i < colNum; i++){
+                var n = i;
+                xPos[i] = document.body.offsetLeft + document.body.clientLeft + document.getElementByld("table").offsetLeft + document.getElementById("table" ).clientLeft + document.getElementById("row0").offsetLeft+document.getElementById("row0" ).clientLeft + document.getElementById("cell"+n).offsetLeft + document.getElementById("cell"+n).clientLeft + 1;
+            }
+            xPos[colNum] = 2*xPos[colNum - 1] - xPos[colNum -2];
+        }
+            
+        function getCellPositionY(){
+            for(var i = 0; i < rowNum; i++){
+                var n = i*colNum;
+                yPos[i] = document.body.offsetTop + document.body.clientTop + document.getElementByld("table").offsetTop + document.getElementById("table" ).clientTop + document.getElementById("row" + i).offsetTop+document.getElementById("row" + i ).clientTop + 1;
+                ////no need to document.getElementById("cell"+n). offsetTop;
+            }
+            yPos[rowNum] = 2*yPos[rowNum - 1] - yPos[rowNum -2];
+        }
+            
+        function showPoem(i){
+            
+            var newPoem = randomPoem(i);
+            result = newPoem;
+            
+            for(var j = 0; j < rowNum; j++){
+                for(var k = 0;k<colNum;k++){
+                    n = j*colNum + k;
+                    var target = document.getElementById("cell" + n);
+                    if(newPoem[j][k] != b){
+                        target.innerHTML = getImage(i,n,newPoem[j][k]);
+                        picturePosition[n] = n;
+                        pictureContent[n] = newPoem[j][k];
+                        }
+                    }
+                }
+        }
+            
+            function randomPoem(i){
+                var temp = new Array(rowNum);
+                
+                for (var j = 0; j < rowNum; j++){
+                    temp[j] = new Array(colNum);
+                }
+                
+                for (ar j = 0; j < rowNum; j++){
+                    for(var k = 0; k < colNum; k++){
+                        temp[j][k] = poem[i-1][j][k];
+                    }
+                }
+                
+                for(var j = 0; j < rowNum; j++){
+                    for(var k = 0; k < colNum; k++){
+                        var m = Math.floor(Math.random()*rowNum);
+                        var n = Math.floor(Math.random()*colNum);
+                        var tmp = temp[j][k];
+                        temp[j][k] = temp[m][n];
+                        temp[m][n] = tmp;    
+                    }
+                }
+                
+                return temp;
+            }
+        function getImage(i,j,ch){
+            var extension = "";
+            if(i == 1 || i == 3){
+                extension = "png"
+            }else{
+                extension = "jpg"
+            }
+            
+            var img =  "<img id = \"" + j + "\" src = \"poem" + i + "/" + ch + "." + extension + "\"/>";
+            
+            return img;
+        }
+        
+        function check(){
+            for(var j=0;j<rowNum;j++){
+                for(var k=0;k<colNum;k++){
+                    if(result[j][k]!=poem[level‐1][j][k]){
+                        alert("You got wrong answer");
+                        return false;}
+                }
+            }
+            alert("right!");
+            return true;
+        }
+        
+        //function check()
+            
+        //function clearAnswer()
+            
+        //function getMouseOffset()
+        
+        //function getPosition()
+        
+        //function mouseMove()
+            
+        //function mouseUp()
+            
+        //function makeDraggable()
+            
+        //mouseCoords()
+            
+        //function registerEvent()
+            
+        //function startTimer()
+        
+        //function updateTime(){
+            
+        //function dialog{
+            
+            }
+        
+        </script>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    </head>
+
+
+
+
+
+
+
+</html>
