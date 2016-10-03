@@ -303,12 +303,23 @@
             }
         }
         //function startTimer()
-        
+        function startTimer(){
+            timerId = window.setInterval( "updateTime()", 1000 );
+        }
         //function updateTime(){
+        function updateTime(){
+            --time;
+            document.getElementById("timer").innerHTML = time;
             
-        //function dialog{
-            
+            if(time==0){
+                catchCoin = new Number(originAmount ‐ amount);
+                alert("Game Over ! You catched " + catchCoin.toFixed(1) + " dollars");
+                window.clearInterval(timerId);
+                document.getElementById("timer").innerHTML = 0;
+                
+                window.close();
             }
+        }
         
         </script>
     
