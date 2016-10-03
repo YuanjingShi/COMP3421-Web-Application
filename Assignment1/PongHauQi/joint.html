@@ -60,6 +60,7 @@
             
             time = 200;
         
+        //function play()
         function play(){
             
             level = 1 + Math.floor((Math.random()*3));
@@ -71,6 +72,7 @@
             
         }
         
+        //function getCellPosition()
         function getCellPositionX(){
             for(var i = 0; i < colNum; i++){
                 var n = i;
@@ -79,6 +81,7 @@
             xPos[colNum] = 2*xPos[colNum - 1] - xPos[colNum -2];
         }
             
+        //function getCellPositionY()
         function getCellPositionY(){
             for(var i = 0; i < rowNum; i++){
                 var n = i*colNum;
@@ -88,6 +91,7 @@
             yPos[rowNum] = 2*yPos[rowNum - 1] - yPos[rowNum -2];
         }
             
+        //function showPoem()
         function showPoem(i){
             
             var newPoem = randomPoem(i);
@@ -106,7 +110,8 @@
                 }
         }
             
-            function randomPoem(i){
+        //function randomPoem()
+        function randomPoem(i){
                 var temp = new Array(rowNum);
                 
                 for (var j = 0; j < rowNum; j++){
@@ -130,7 +135,9 @@
                 }
                 
                 return temp;
-            }
+        }
+            
+        //function getImage()
         function getImage(i,j,ch){
             var extension = "";
             if(i == 1 || i == 3){
@@ -144,6 +151,7 @@
             return img;
         }
         
+        //function check()
         function check(){
             for(var j=0;j<rowNum;j++){
                 for(var k=0;k<colNum;k++){
