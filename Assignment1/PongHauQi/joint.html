@@ -175,7 +175,13 @@
         }
             
         //function getMouseOffset()
-        
+        function getMouseOffset(){
+            ev = ev || window.event;
+            var docPos = getPosition(target);
+            var mousePos = mouseCoords(ev);
+            return {x:mousePos.x ‐ docPos.x, y:mousePos.y ‐ docPos.y};
+        }
+            
         //function getPosition()
         
         //function mouseMove()
