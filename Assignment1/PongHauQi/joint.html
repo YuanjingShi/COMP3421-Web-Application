@@ -324,20 +324,35 @@
         </script>
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     </head>
-
+    <body onload = "play()">
+    <script type = "text/javascript">
+        document.writeln("<p> Time Left: <label id=\"timer\"/></p>");
+        document.writeln("<table id = \"table\" border = \"2\">");
+        
+        for(var i = 0;i<rowNum*colNum;i++){
+            var rowIndex = (i ‐ i%colNum)/colNum;
+            if(i%colNum==0){
+                document.write("<tr id = \"row" + rowIndex + "\" >");
+            }
+            
+            document.writeln("<td width = \"50\" height = \"50\" id = \"cell" + i + "\"></td>");
+            
+            if(i%colNum == colNum‐1){
+                document.write("</tr>");
+            }
+            document.write("</table>");
+            
+            function dialog(){
+                alert("you chose to exit");
+                window.close();
+            }
+        </script>
+        
+    <input type = "button" value = "Finish" onclick = "check()"/>
+    <input type = "button" value = "Reset" onclick = "dialog()"/><input>
+    
+    </body>
 
 
 
