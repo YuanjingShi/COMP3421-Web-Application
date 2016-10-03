@@ -157,6 +157,16 @@
         }
         
         //function check()
+        function check(){
+            for(var j=0;j<rowNum;j++)
+                for(var k=0;k<colNum;k++){
+                    if(result[j][k]!=poem[level‐1][j][k]){
+                        alert("You got wrong answer");
+                        return false;}
+                }
+            alert("right!");
+            return true;
+        }
             
         //function clearAnswer()
             
