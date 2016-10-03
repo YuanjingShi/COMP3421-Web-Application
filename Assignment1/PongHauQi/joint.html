@@ -290,7 +290,18 @@
             };
         }
         //function registerEvent()
-            
+        function registerEvent(){
+            for(var i = 0;i<rowNum*colNum;i++){
+                try{
+                   document.getElementById(i).onmouseup = mouseUp;
+                    document.getElementById(i).onmousemove = mouseMove;
+                    makeDraggable(document.getElementById(i));
+                }
+                catch(e){
+                    
+                }
+            }
+        }
         //function startTimer()
         
         //function updateTime(){
