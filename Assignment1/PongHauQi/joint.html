@@ -251,9 +251,44 @@
             }
         }
         //function makeDraggable()
+        function makeDraggable(item){
             
+        if(!item)
+            return;
+            
+            item.onmousedown = function(ev){
+                if(dragObject == null){
+                    //alert(this.id);
+                    //alert(this.id.substring(3));
+                    var pictureId = parseInt(this.id);
+                    //alert("lala" + pictureId);
+                    originalIndex = picturePosition[pictureId];
+                    //alert("originalIndex" + originalIndex);
+                    originalX = offsetLeft+document.body.clientLeft + document.getElementById("   ").offsetLeft+document.getElementById("table" ).clientLeft + document.getElementById("row0").offsetLeft+document.getElementById("row0" ).clientLeft + document.getElementById("cell"+originalIndex).offsetLeft + document.getElementById("cell"+originalIndex).clientLeft + 1;
+                    
+                    originalY = document.body.offsetTop+document.body.clientTop + document.getElementById("table").offsetTop+document.getElementById("table").clientTop + document.getElementById("cell"+originalIndex).offsetTop + document.getElementById("cell"+originalIndex).clientTop + 1; + 1;
+                    
+                        //alert(" x is " + originalX + " " + originalY);
+                        //alert(originalIndex);
+                        inhand = pictureContent[pictureId];
+                        dragObject = this;
+                }
+                mouseOffset = getMouseOffset(this, ev);
+                return false;
+            }
+            
+        }
         //mouseCoords()
+        function mouseCoords(ev){
+            if(ev.pageX || ev.pageY){
+                return {x:ev.pageX, y:ev.pageY};
+            }
             
+            retun{
+                x:ev.clientX + document.body.scrollLeft ‐ document.body.clientLeft,
+                y:ev.clientY + document.body.scrollTop ‐ document.body.clientTop
+            };
+        }
         //function registerEvent()
             
         //function startTimer()
