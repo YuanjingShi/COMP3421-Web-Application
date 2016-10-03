@@ -231,7 +231,25 @@
         }
                 
         //function mouseUp()
-            
+        function mouseUp(ev){
+            if(desRow!=‐1&&desCol!=‐1&&result[desRow][desCol]==b&&inhand!=b){
+                dragObject.style.position = 'absolute';
+                dragObject.style.top = yPos[desRow];
+                dragObject.style.left = xPos[desCol];
+                //alert("inhand is "+inhand);
+                result[desRow][desCol] = inhand;
+                result[(originalIndex ‐originalIndex%colNum)/colNum][originalIndex%colNum] = b;
+                picturePosition[parseInt(this.id)] = desRow*colNum + desCol;
+                inhand = b;
+                //alert(result[desRow][desCol]);
+            }else{
+                //alert("has");
+                //alert("desRow is" + desRow + "desCol" + desCol + "result at"+result[desRow][desCol]+" inhand "+inhand);
+                dragObject.style.position = 'absolute';
+                dragObject.style.top = originalY;
+                dragObject.style.left = originalX;
+            }
+        }
         //function makeDraggable()
             
         //mouseCoords()
