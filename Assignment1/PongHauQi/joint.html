@@ -84,6 +84,7 @@
         //function getCellPositionY()
         function getCellPositionY(){
             for(var i = 0; i < rowNum; i++){
+                
                 var n = i*colNum;
                 yPos[i] = document.body.offsetTop + document.body.clientTop + document.getElementByld("table").offsetTop + document.getElementById("table" ).clientTop + document.getElementById("row" + i).offsetTop+document.getElementById("row" + i ).clientTop + 1;
                 ////no need to document.getElementById("cell"+n). offsetTop;
@@ -98,7 +99,7 @@
             result = newPoem;
             
             for(var j = 0; j < rowNum; j++){
-                for(var k = 0;k<colNum;k++){
+                for(var k = 0;k < colNum; k++){
                     n = j*colNum + k;
                     var target = document.getElementById("cell" + n);
                     if(newPoem[j][k] != b){
@@ -178,7 +179,7 @@
             
         //function clearAnswer()
         function clearAnswer(){
-            for(var i = 0;i<colNum*rowNum;i++)
+            for(var i = 0;i < colNum*rowNum; i++)
                 result[i] = "";
         }
             
@@ -218,7 +219,7 @@
                 desCol = -1;
                 //alert(mousePos.x+" "+mousePos.y);
                 
-                for(var i=0;i<colNum;i++){
+                for(var i=0 ; i < colNum; i++){
                     if(mousePos.x > xPos[i] && mousePos.x < xPos[i+1]){
                         desCol = i;
                         break;
@@ -257,6 +258,7 @@
                 dragObject.style.top = originalY;
                 dragObject.style.left = originalX;
             }
+            dragObject = null;
         }
         //function makeDraggable()
         function makeDraggable(item){
