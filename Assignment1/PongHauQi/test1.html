@@ -5,16 +5,21 @@
 <script type = "text/javascript">
 //initial vars
 var str = 'web programming';
-var letters = new Object;
+var letters = ();
+var currChar;
 //loop, figure it out
 for(x = 0, length = str.length; x < length; x++) {
-     str.charAt(x);
-     isNaN(letters[str.charAt(x)]
+     currChar = str.charAt(x);
+    if (isNaN(letters[str.charAt(x)])){
+        letters(currChar) = 1;
+    }else{
+        letters(currChar)++;
+    }
 }
 //output count!
 s1 = " ";
 for (key in letters) {
-     s1 += '(' + key + ', ' + letters[key] + '), ';
+     s1 += '(' + key + ', ' + letters(key) + '), ';
 }
 document.getElementById( "mess" ).innerHTML = s1;
 </script>
