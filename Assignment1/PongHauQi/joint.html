@@ -45,7 +45,7 @@
             
             result = new Array(rowNum);
             
-            for(var j = 0; j < rowNum, j++){
+            for(var j = 0; j < rowNum; j++){
                 result[j] = new Array(colNum);
             }
             
@@ -156,7 +156,7 @@
         function check(){
             for(var j=0;j<rowNum;j++){
                 for(var k=0;k<colNum;k++){
-                    if(result[j][k]!=poem[level‐1][j][k]){
+                    if(result[j][k]!=poem[level - 1][j][k]){
                         alert("You got wrong answer");
                         return false;}
                 }
@@ -169,7 +169,7 @@
         function check(){
             for(var j=0;j<rowNum;j++)
                 for(var k=0;k<colNum;k++){
-                    if(result[j][k]!=poem[level‐1][j][k]){
+                    if(result[j][k]!=poem[level - 1][j][k]){
                         alert("You got wrong answer");
                         return false;}
                 }
@@ -188,7 +188,7 @@
             ev = ev || window.event;
             var docPos = getPosition(target);
             var mousePos = mouseCoords(ev);
-            return {x:mousePos.x ‐ docPos.x, y:mousePos.y ‐ docPos.y};
+            return {x:mousePos.x - docPos.x, y:mousePos.y - docPos.y};
         }
             
         //function getPosition()
@@ -213,8 +213,8 @@
             
             if(dragObject){
                 dragObject.style.position = 'absolute';
-                dragObject.style.top = mousePos.y ‐ mouseOffset.y;
-                dragObject.style.left = mousePos.x ‐ mouseOffset.x;
+                dragObject.style.top = mousePos.y - mouseOffset.y;
+                dragObject.style.left = mousePos.x - mouseOffset.x;
                 
                 desRow = -1;
                 desCol = -1;
@@ -242,13 +242,13 @@
                 
         //function mouseUp()
         function mouseUp(ev){
-            if(desRow!=‐1&&desCol!=‐1&&result[desRow][desCol]==b&&inhand!=b){
+            if(desRow!= - 1&&desCol!= - 1&&result[desRow][desCol]==b&&inhand!=b){
                 dragObject.style.position = 'absolute';
                 dragObject.style.top = yPos[desRow];
                 dragObject.style.left = xPos[desCol];
                 //alert("inhand is "+inhand);
                 result[desRow][desCol] = inhand;
-                result[(originalIndex ‐originalIndex%colNum)/colNum][originalIndex%colNum] = b;
+                result[(originalIndex - originalIndex%colNum)/colNum][originalIndex%colNum] = b;
                 picturePosition[parseInt(this.id)] = desRow*colNum + desCol;
                 inhand = b;
                 //alert(result[desRow][desCol]);
@@ -295,9 +295,10 @@
                 return {x:ev.pageX, y:ev.pageY};
             }
             
-            retun{
-                x:ev.clientX + document.body.scrollLeft ‐ document.body.clientLeft,
-                y:ev.clientY + document.body.scrollTop ‐ document.body.clientTop
+            return{
+
+                x:ev.clientX + document.body.scrollLeft - document.body.clientLeft,
+                y:ev.clientY + document.body.scrollTop - document.body.clientTop
             };
         }
         //function registerEvent()
@@ -323,7 +324,7 @@
             document.getElementById("timer").innerHTML = time;
             
             if(time==0){
-                catchCoin = new Number(originAmount ‐ amount);
+                catchCoin = new Number(originAmount - amount);
                 alert("Game Over ! You catched " + catchCoin.toFixed(1) + " dollars");
                 window.clearInterval(timerId);
                 document.getElementById("timer").innerHTML = 0;
@@ -341,23 +342,24 @@
         document.writeln("<p> Time Left: <label id=\"timer\"/></p>");
         document.writeln("<table id = \"table\" border = \"2\">");
         
-        for(var i = 0;i<rowNum*colNum;i++){
-            var rowIndex = (i ‐ (i%colNum))/colNum;
-            if(i%colNum==0){
+        for(var i = 0;i<rowNum*colNum;i++) {
+            var rowIndex = (i - (i % colNum)) / colNum;
+            if (i % colNum == 0) {
                 document.write("<tr id = \"row" + rowIndex + "\" >");
             }
-            
+
             document.writeln("<td width = \"50\" height = \"50\" id = \"cell" + i + "\"></td>");
-            
-            if(i%colNum == colNum‐1){
+
+            if (i % colNum == colNum - 1) {
                 document.write("</tr>");
             }
             document.write("</table>");
-            
-            function dialog(){
+
+            function dialog() {
                 alert("you chose to exit");
                 window.close();
             }
+        }
         </script>
         
     <input type = "button" value = "Finish" onclick = "check()"/>
