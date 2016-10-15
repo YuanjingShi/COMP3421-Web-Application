@@ -342,7 +342,7 @@
         document.writeln("<table id = \"table\" border = \"2\">");
         
         for(var i = 0;i<rowNum*colNum;i++){
-            var rowIndex = (i ‐ i%colNum)/colNum;
+            var rowIndex = (i ‐ (i%colNum))/colNum;
             if(i%colNum==0){
                 document.write("<tr id = \"row" + rowIndex + "\" >");
             }
