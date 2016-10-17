@@ -8,15 +8,25 @@
         float: left;
         width: 35px;
         height: 35px;
-        margin: 10px;
+        margin: auto;
         position: relative;
+
 	}
-    #outterdiv { padding: 3px; border: 1px solid black; }
-    .background { background-color: #c0c0c0; padding: 0; color: #335500; }
+    #div6, #div7, #div8, #div9{
+        float: left;
+        width: 35px;
+        height: 35px;
+        margin: auto;
+        position: relative;
+        border:1px solid black;
+    }
+    #div0 { padding: 3px; border: 1px solid black; }
+
 </style>
 
 <script>
-    var count = 0;
+    var count1 = 0;
+    var count2 = 0;
     var id1, id2, id3, id4 ,id5 = 0;
 	function allowDrop(ev) {
 		ev.preventDefault();
@@ -24,30 +34,55 @@
 
 	function drag(ev) {
 		ev.dataTransfer.setData("text", ev.target.id);
+        count1++;
 	}
 
 	function drop(ev) {
 		ev.preventDefault();
 		var data = ev.dataTransfer.getData("text");
 		ev.target.appendChild(document.getElementById(data));
+        count2++;
 	}
+
+	function displayCount(){
+        txtOutput.value = count1;
+
+    }
+
 </script>
 <body>
-<div id = "outterdiv" style= "position: relative; width: 200px; margin: auto;">
-    <div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
-	    <img src="image1/piece1.png" draggable="true" ondragstart="drag(event)" id="drag1" width="50" height="50">
-    </div>
+<div id = "div0" style= "position: relative; height: 150px; width: 110px; margin: auto;">
 
+    <div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+	    <img src="image1/piece1.png" draggable="true" ondragstart="drag(event)" id="drag1" width="35" height="35">
+    </div>
+    <div id="div6"></div>
     <div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)">
-        <img src="image1/piece1.png" draggable="true" ondragstart="drag(event)" id="drag2" width="50" height="50">
+        <img src="image1/piece1.png" draggable="true" ondragstart="drag(event)" id="drag2" width="35" height="35">
     </div>
+    <div id="div7"></div>
     <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-    <div id="div4" ondrop="drop(event)" ondragover="allowDrop(event)"><img src="image1/piece2.png" draggable="true" ondragstart="drag(event)" id="drag3" width="50" height="50">
+    <div id="div8"></div>
+    <div id="div4" ondrop="drop(event)" ondragover="allowDrop(event)">
+        <img src="image1/piece2.png" draggable="true" ondragstart="drag(event)" id="drag3" width="35" height="35">
     </div>
+    <div id="div9"></div>
     <div id="div5" ondrop="drop(event)" ondragover="allowDrop(event)">
-        <img src="image1/piece2.png" draggable="true" ondragstart="drag(event)" id="drag4" width="50" height="50">
+        <img src="image1/piece2.png" draggable="true" ondragstart="drag(event)" id="drag4" width="35" height="35">
     </div>
 
 </div>
+
+<form action = "">
+  <fieldset>
+  <label>This is the count </label>
+<input type = "button"
+       value = "click me"
+       onclick = "displayCount()"/>
+<input type = "text"
+       id = "txtOutput" />
+</fieldset>
+</form>
+
 </body>
 </html>
