@@ -1,0 +1,30 @@
+<HTML>
+<HEAD>
+ <TITLE>Form</TITLE>
+<SCRIPT LANGUAGE="JavaScript">
+
+<!--
+function checkTextArea(form) {
+        var thestr = form.mytarea.value;
+        var n = thestr.indexOf("~") + thestr.indexOf("&") + thestr.indexOf("!") + thestr.indexOf("@") + thestr.indexOf("#");
+        if ( n != 0 ) 
+                alert("No profanity please");
+        else 
+                alert("Thanks");
+}
+<!-- end script -->
+
+</SCRIPT>
+</HEAD>
+<BODY>
+
+<P>Please provide your feedback below:
+
+<FORM NAME="myform"> 
+<TEXTAREA NAME="mytarea" ROWS="5" COLUMNS="80" wrap="yes" onBlur="checkTextArea(myform)">
+</TEXTAREA>
+</FORM>
+<HR></P>
+
+</BODY>
+</HTML>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>My First Web Page</h1>
+    
+<SCRIPT language="Javascript">
+function display() {
+  document.writeln(this.Name);
+}
+
+function raise(percent) {
+  this.Salary = this.Salary + this.Salary * percent  }
+
+function employee(Name,Department,Hiredate,Salary) {
+    this.Name = Name;
+    this.Department = Department;
+    this.Hiredate = Hiredate;
+    this.Salary = Salary;
+}
+
+document.write('<BR><H4>emp1 = new employee ("John", "IRS", "6/1/1993", 40000)</H4>');
+emp1 = new employee("John", "IRS", "6/1/1993", 40000);
+
+document.write('<BR><H4>emp2 = new employee("Mary", "DoD", "6/1/1993", 50000)</H4>');
+emp2 = new employee("Mary", "DoD", "6/1/1993", 50000);
+
+document.write("<BR><H4>emp1.display()</H4>");
+emp1.display();
+
+document.write("<BR><H4>emp1.raise(0.5)</H4>");
+emp1.raise(0.5);
+
+document.write("<BR><H4>emp1.display()</H4>");
+emp1.display();
+
+document.write("<BR><H4>emp2.display()</H4>");
+emp2.display();
+
+document.write("<BR><H4>emp2.raise(0.2)</H4>");
+emp2.raise(0.2);
+
+document.write("<BR><H4>emp2.display()</H4>");
+emp2.display();
+</SCRIPT>
+    </body>
+</html>
