@@ -3,7 +3,9 @@
 <head>
 	<title>Pong Hau Qi</title>
 </head>
-<p id="demo"></p>
+<p id="demo">This is a Pong Hau Qi game</p>
+<p>This is a fucking timer MF</p>
+<p id="demo1"></p>
 <style>
 	#div1, #div2, #div3,#div4,#div5 {
         float: left;
@@ -30,7 +32,8 @@
     var count2 = 0;
     var id1, id2= 0;
     var turn = 0;
-    var position = new Array(1,2,4,5);
+    var position = new Array("div1","div2","div4","div5");
+    var myTime = setInterval(displayTime, 1000);
 
 	function allowDrop(ev) {
 		ev.preventDefault();
@@ -42,13 +45,21 @@
 	        if(id1 == "drag1" || id1 == "drag2") {
                 ev.dataTransfer.setData("text", id1);
                 turn = 1;
-                count1 ++;
+                if(id1 == "drag1"){
+                    count1 = 0;
+                }else{
+                    count1 = 1;
+                }
             }
         }else if(turn == 1){
             if(id1 == "drag3" || id1 == "drag4") {
                 ev.dataTransfer.setData("text", id1);
                 turn = 0;
-                count2++;
+                if(id1 == "drag3"){
+                    count2 = 0;
+                }else{
+                    count2 = 1;
+                }
             }
         }
 
@@ -56,23 +67,32 @@
 
 	function drop(ev) {
 		ev.preventDefault();
+        id2 = ev.target.id;
 		var data = ev.dataTransfer.getData("text");
 		ev.target.appendChild(document.getElementById(data));
+
         //reminder of Turns
         if(turn == 0) {
             document.getElementById("demo").innerHTML = "The player 1's turn";
+            if(count2 == 0){
+                position[2] = id2;
+            }else{
+                position[3] = id2;
+            }
         }else{
             document.getElementById("demo").innerHTML = "The player 2's turn";
+            if(count1 == 0){
+                position[0] = id2;
+            }else{
+                position[1] = id2;
+            }
         }
         count2++;
 	}
 
 	function displayCount(){
-	    if(id1 == "drag1") {
-            txtOutput.value = id1;
-        }else{
-            txtOutput.value = 3;
-        }
+
+        txtOutput.value = position;
 
     }
 
@@ -83,6 +103,12 @@
             Turn.value = "Player 2 's turn";
         }
 
+    }
+
+
+    function displayTime() {
+        var d = new Date();
+        document.getElementById("demo1").innerHTML = d.toLocaleTimeString();
     }
 
 </script>
