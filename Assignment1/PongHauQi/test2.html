@@ -107,25 +107,22 @@
     }
 
 
-    function displayTime() {
-            document.getElementById("demo1").innerHTML = --value;
-    }
-
-
     function start () {
             stop();
             value = 20;
             myTime = setInterval(displayTime, 1000);
+
     }
 
     function stop() {
             clearInterval(myTime);
     }
 
-
-    function alertTimeOut(){
-
+    function displayTime() {
+        document.getElementById("demo1").innerHTML = --value;
+        setTimeout(function(){ alert("Your time's out!"); }, 20000);
     }
+
 
     function alertWinner(){
 
