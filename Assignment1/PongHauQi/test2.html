@@ -5,7 +5,7 @@
 </head>
 <p id="demo">This is a Pong Hau Qi game</p>
 <p>This is a fucking timer MF</p>
-<p id="demo1"></p>
+<p id="demo1">This is the timer</p>
 <style>
 	#div1, #div2, #div3,#div4,#div5 {
         float: left;
@@ -33,7 +33,8 @@
     var id1, id2= 0;
     var turn = 0;
     var position = new Array("div1","div2","div4","div5");
-    var myTime = setInterval(displayTime, 1000);
+    var myTime;
+    var value;
 
 	function allowDrop(ev) {
 		ev.preventDefault();
@@ -73,14 +74,14 @@
 
         //reminder of Turns
         if(turn == 0) {
-            document.getElementById("demo").innerHTML = "The player 1's turn";
+            document.getElementById("demo").innerHTML = "Player 1's turn";
             if(count2 == 0){
                 position[2] = id2;
             }else{
                 position[3] = id2;
             }
         }else{
-            document.getElementById("demo").innerHTML = "The player 2's turn";
+            document.getElementById("demo").innerHTML = "Player 2's turn";
             if(count1 == 0){
                 position[0] = id2;
             }else{
@@ -107,8 +108,27 @@
 
 
     function displayTime() {
-        var d = new Date();
-        document.getElementById("demo1").innerHTML = d.toLocaleTimeString();
+            document.getElementById("demo1").innerHTML = --value;
+    }
+
+
+    function start () {
+            stop();
+            value = 20;
+            myTime = setInterval(displayTime, 1000);
+    }
+
+    function stop() {
+            clearInterval(myTime);
+    }
+
+
+    function alertTimeOut(){
+
+    }
+
+    function alertWinner(){
+
     }
 
 </script>
@@ -141,6 +161,12 @@
     <input type = "button"
        value = "click me"
        onclick = "displayCount(), displayTurn()"/>
+      <input type = "button"
+             value = "start"
+             onclick = "start()"/>
+      <input type = "button"
+             value = "stop"
+             onclick = "stop()"/>
     <input type = "text"
        id = "txtOutput" />
       <input type = "text"
