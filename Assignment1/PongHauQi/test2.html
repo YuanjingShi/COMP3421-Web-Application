@@ -3,6 +3,7 @@
 <head>
 	<title>Pong Hau Qi</title>
 </head>
+<p id="demo"></p>
 <style>
 	#div1, #div2, #div3,#div4,#div5 {
         float: left;
@@ -38,13 +39,13 @@
 	    id1 = ev.target.id;
 	    if(temp == 0) {
 	        if(id1 == "drag1" || id1 == "drag2") {
-                ev.dataTransfer.setData("text", ev.target.id);
+                ev.dataTransfer.setData("text", id1);
                 temp = 1;
                 count1 ++;
             }
         }else if(temp == 1){
             if(id1 == "drag3" || id1 == "drag4") {
-                ev.dataTransfer.setData("text", ev.target.id);
+                ev.dataTransfer.setData("text", id1);
                 temp = 0;
                 count2++;
             }
@@ -56,6 +57,13 @@
 		ev.preventDefault();
 		var data = ev.dataTransfer.getData("text");
 		ev.target.appendChild(document.getElementById(data));
+
+        //reminder of Turns
+        if(temp == 0) {
+            document.getElementById("demo").innerHTML = "The player 1's turn";
+        }else{
+            document.getElementById("demo").innerHTML = "The player 2's turn";
+        }
         count2++;
 	}
 
@@ -64,6 +72,15 @@
             txtOutput.value = id1;
         }else{
             txtOutput.value = 3;
+        }
+
+    }
+
+    function displayTurn(){
+        if(temp == 0) {
+            turn.value = "Player 1 's turn";
+        }else{
+            turn.value = "Player 2 's turn";
         }
 
     }
@@ -97,7 +114,7 @@
   <label>This is the count </label>
     <input type = "button"
        value = "click me"
-       onclick = "displayCount()"/>
+       onclick = "displayCount(), displayTurn()"/>
     <input type = "text"
        id = "txtOutput" />
       <input type = "text"
