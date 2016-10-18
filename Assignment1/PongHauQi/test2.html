@@ -27,14 +27,29 @@
 <script>
     var count1 = 0;
     var count2 = 0;
-    var id1, id2, id3, id4 ,id5 = 0;
+    var id1, id2= 0;
+    var temp = 0;
+
 	function allowDrop(ev) {
 		ev.preventDefault();
 	}
 
 	function drag(ev) {
-		ev.dataTransfer.setData("text", ev.target.id);
-        count1++;
+	    id1 = ev.target.id;
+	    if(temp == 0) {
+	        if(id1 == "drag1" || id1 == "drag2") {
+                ev.dataTransfer.setData("text", ev.target.id);
+                temp = 1;
+                count1 ++;
+            }
+        }else if(temp == 1){
+            if(id1 == "drag3" || id1 == "drag4") {
+                ev.dataTransfer.setData("text", ev.target.id);
+                temp = 0;
+                count2++;
+            }
+        }
+
 	}
 
 	function drop(ev) {
@@ -45,7 +60,11 @@
 	}
 
 	function displayCount(){
-        txtOutput.value = count1;
+	    if(id1 == "drag1") {
+            txtOutput.value = id1;
+        }else{
+            txtOutput.value = 3;
+        }
 
     }
 
@@ -73,14 +92,16 @@
 
 </div>
 
-<form action = "">
+<form action = "" style= "position: relative; height: 150px; width: 110px;">
   <fieldset>
   <label>This is the count </label>
-<input type = "button"
+    <input type = "button"
        value = "click me"
        onclick = "displayCount()"/>
-<input type = "text"
+    <input type = "text"
        id = "txtOutput" />
+      <input type = "text"
+             id = "turn" />
 </fieldset>
 </form>
 
