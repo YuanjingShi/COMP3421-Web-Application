@@ -9,22 +9,34 @@
 <style>
 	#div1, #div2, #div3,#div4,#div5 {
         float: left;
-        width: 35px;
-        height: 35px;
+        width: 74px;
+        height: 74px;
         margin: auto;
         position: relative;
-        border:1px solid black;
 
 	}
     #div6, #div7, #div8, #div9{
         float: left;
-        width: 37px;
-        height: 37px;
+        width: 74px;
+        height: 74px;
         margin: auto;
         position: relative;
 
     }
-    #div0 { padding: 3px; border: 1px solid black; }
+    #div0 {
+        position: relative;
+        height: 228px;
+        width: 228px;
+        margin: auto;
+        padding: 6px;
+        background-image: url('image1/board1.png');
+        background-size: contain;
+    }
+    #drag1, #drag2, #drag3, #drag4 {
+        width: 80px;
+        height: 80px;
+    }
+
 
 </style>
 
@@ -32,9 +44,12 @@
     var count = 0;
     var count1 = 0;
     var count2 = 0;
+    var winCount = 0;
     var id1, id2= 0;
+    var class1, class2 = 0;
     var turn = 0;
     var position = new Array("div1","div2","div4","div5");
+    var prePosition, postPosition;
     var myTime;
     var value;
 
@@ -55,16 +70,23 @@
 
 	function drag(ev) {
 
+        //when count is 0, game could not be started
 	    if(count == 1) {
+
             id1 = ev.target.id;
+            class1 = ev.target.className;
             if (turn == 0) {
-                if (id1 == "drag1" || id1 == "drag2") {
+                if (id1 == "drag1") {
                     ev.dataTransfer.setData("text", id1);
                     turn = 1;
                     if (id1 == "drag1") {
                         count1 = 0;
+                        prePosition = document.getElementById(position[0]);
+
                     } else {
                         count1 = 1;
+                        prePosition = document.getElementById(position[1]);
+
                     }
                 }
             } else if (turn == 1) {
@@ -73,8 +95,11 @@
                     turn = 0;
                     if (id1 == "drag3") {
                         count2 = 0;
+                        prePosition = document.getElementById(position[2]);
+
                     } else {
                         count2 = 1;
+                        prePosition = document.getElementById(position[3]);
                     }
                 }
             }
@@ -85,29 +110,45 @@
 	function drop(ev) {
 		ev.preventDefault();
         id2 = ev.target.id;
-		var data = ev.dataTransfer.getData("text");
-		ev.target.appendChild(document.getElementById(data));
+        class2 = ev.target.className;
+        if (class2 == "true") {
+            var data = ev.dataTransfer.getData("text");
+            ev.target.appendChild(document.getElementById(data));
 
-        //reminder of Turns
-        if(turn == 0) {
-            document.getElementById("demo").innerHTML = "Player 1's turn";
-            if(count2 == 0){
-                position[2] = id2;
-            }else{
-                position[3] = id2;
+            //reminder of Turns
+            if (turn == 0) {
+                document.getElementById("demo").innerHTML = "Player 1's turn";
+                if (count2 == 0) {
+                    position[2] = id2;
+                    class2 = "false";
+
+                } else {
+                    position[3] = id2;
+                    class2 = "false";
+                    prePosition.className = "true";
+                }
+            } else {
+                document.getElementById("demo").innerHTML = "Player 2's turn";
+                if (count1 == 0) {
+                    position[0] = id2;
+                    class2 = "false";
+                    prePosition.className = "true";
+                } else {
+                    position[1] = id2;
+                    class2 = "false";
+                    prePosition.className = "true";
+                }
+            }
+
+            alertWinner();
+            //re-enter the timer if game need to be continued.
+            if (winCount == 0) {
+                start();
             }
         }else{
-            document.getElementById("demo").innerHTML = "Player 2's turn";
-            if(count1 == 0){
-                position[0] = id2;
-            }else{
-                position[1] = id2;
-            }
+            alert("You can only drop piece on empty positions");
+            reloadPage();
         }
-
-        alertWinner();
-        //re-enter the timer if game need to be continued.
-        start();
 	}
 
 	function displayCount(){
@@ -128,7 +169,7 @@
 
     function start () {
             clearInterval(myTime);
-            document.getElementById("demo").innerHTML = "Player 1's turn";
+           // document.getElementById("demo").innerHTML = "Player 1's turn";
             value = 21;
             myTime = setInterval(displayTime, 1000);
 
@@ -156,59 +197,63 @@
         if((position[0] == "div1" && position[1] == "div4") || (position[0] == "div4" && position[1] == "div1")){
             if((position[2] == "div3" && position[3] == "div5") || (position[2] == "div5" && position[3] == "div3")) {
                 alert("Player 2 is the winner!");
-                stop()
+                stop();
+                winCount = 1;
             }
         }
 
         if((position[0] == "div2" && position[1] == "div5") || (position[0] == "div5" && position[1] == "div2")){
             if((position[2] == "div3" && position[3] == "div4") || (position[2] == "div4" && position[3] == "div3")) {
                 alert("Player 2 is the winner!");
-                stop()
+                stop();
+                winCount = 1;
             }
         }
 
         if((position[2] == "div1" && position[3] == "div4") || (position[2] == "div4" && position[3] == "div1")){
             if((position[0] == "div3" && position[1] == "div5") || (position[0] == "div5" && position[1] == "div3")){
                 alert("Player 1 is the winner!");
-                stop()
+                stop();
+                winCount = 1;
             }
         }
 
         if((position[2] == "div2" && position[3] == "div5") || (position[2] == "div5" && position[3] == "div2")){
             if((position[0] == "div3" && position[1] == "div4") || (position[0] == "div4" && position[1] == "div3")){
                 alert("Player 1 is the winner!");
-                stop()
+                stop();
+                winCount = 1;
             }
         }
     }
 
 </script>
 <body>
-<div id = "div0" style= "position: relative; height: 150px; width: 120px; margin: auto;">
+<div id = "div0">
 
-    <div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
-	    <img src="image1/piece1.png" draggable="true" ondragstart="drag(event)" id="drag1" width="35" height="35">
+    <div id="div1" class = "false" ondrop="drop(event)" ondragover="allowDrop(event)">
+	    <img src="image1/piece4.png" draggable="true" ondragstart="drag(event)" id="drag1">
     </div>
     <div id="div6"></div>
-    <div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)">
-        <img src="image1/piece1.png" draggable="true" ondragstart="drag(event)" id="drag2" width="35" height="35">
+    <div id="div2" class = "false" ondrop="drop(event)" ondragover="allowDrop(event)">
+        <img src="image1/piece4.png" draggable="true" ondragstart="drag(event)" id="drag2" >
     </div>
     <div id="div7"></div>
-    <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+    <div id="div3" class = "true" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
     <div id="div8"></div>
-    <div id="div4" ondrop="drop(event)" ondragover="allowDrop(event)">
-        <img src="image1/piece2.png" draggable="true" ondragstart="drag(event)" id="drag3" width="35" height="35">
+    <div id="div4" class = "false" ondrop="drop(event)" ondragover="allowDrop(event)">
+        <img src="image1/piece3.png" draggable="true" ondragstart="drag(event)" id="drag3">
     </div>
     <div id="div9"></div>
-    <div id="div5" ondrop="drop(event)" ondragover="allowDrop(event)">
-        <img src="image1/piece2.png" draggable="true" ondragstart="drag(event)" id="drag4" width="35" height="35">
+    <div id="div5" class = "false" ondrop="drop(event)" ondragover="allowDrop(event)">
+        <img src="image1/piece3.png" draggable="true" ondragstart="drag(event)" id="drag4" >
     </div>
 
 </div>
 
 <form action = "" style= "position: relative; height: 150px; width: 110px;">
   <fieldset>
-  <label>This is the count </label>
+  <label>Control Panel</label>
     <input type = "button"
        value = "click me"
        onclick = "displayCount(), displayTurn()"/>
