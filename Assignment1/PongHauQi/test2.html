@@ -76,7 +76,7 @@
             id1 = ev.target.id;
             class1 = ev.target.className;
             if (turn == 0) {
-                if (id1 == "drag1") {
+                if (id1 == "drag1" || id1 == "drag2") {
                     ev.dataTransfer.setData("text", id1);
                     turn = 1;
                     if (id1 == "drag1") {
@@ -111,40 +111,40 @@
 		ev.preventDefault();
         id2 = ev.target.id;
         class2 = ev.target.className;
-        if (class2 == "true") {
-            var data = ev.dataTransfer.getData("text");
-            ev.target.appendChild(document.getElementById(data));
+        if (class2 == "true" && checkIfDroppable(prePosition.id, id2)) {
+                var data = ev.dataTransfer.getData("text");
+                ev.target.appendChild(document.getElementById(data));
 
-            //reminder of Turns
-            if (turn == 0) {
-                document.getElementById("demo").innerHTML = "Player 1's turn";
-                if (count2 == 0) {
-                    position[2] = id2;
-                    class2 = "false";
-
+                //reminder of Turns
+                if (turn == 0) {
+                    document.getElementById("demo").innerHTML = "Player 1's turn";
+                    if (count2 == 0) {
+                        position[2] = id2;
+                        class2 = "false";
+                        prePosition.className = "true";
+                    } else {
+                        position[3] = id2;
+                        class2 = "false";
+                        prePosition.className = "true";
+                    }
                 } else {
-                    position[3] = id2;
-                    class2 = "false";
-                    prePosition.className = "true";
+                    document.getElementById("demo").innerHTML = "Player 2's turn";
+                    if (count1 == 0) {
+                        position[0] = id2;
+                        class2 = "false";
+                        prePosition.className = "true";
+                    } else {
+                        position[1] = id2;
+                        class2 = "false";
+                        prePosition.className = "true";
+                    }
                 }
-            } else {
-                document.getElementById("demo").innerHTML = "Player 2's turn";
-                if (count1 == 0) {
-                    position[0] = id2;
-                    class2 = "false";
-                    prePosition.className = "true";
-                } else {
-                    position[1] = id2;
-                    class2 = "false";
-                    prePosition.className = "true";
-                }
-            }
 
-            alertWinner();
-            //re-enter the timer if game need to be continued.
-            if (winCount == 0) {
-                start();
-            }
+                alertWinner();
+                //re-enter the timer if game need to be continued.
+                if (winCount == 0) {
+                    start();
+                }
         }else{
             alert("You can only drop piece on empty positions");
             reloadPage();
@@ -164,6 +164,22 @@
             Turn.value = "Player 2 's turn";
         }
 
+    }
+
+    function checkIfDroppable(x, y){
+        if(x == "div1" && (y == "div3" || y == "div4")){
+            return true;
+        }else if(x == "div2" && (y == "div3" || y == "div5")){
+            return true;
+        }else if(x == "div3" && (y == "div1" || y == "div2" || y == "div4" || y == "div5" )){
+            return true;
+        }else if(x == "div4" && (y == "div1" || y == "div3" || y == "div5")) {
+            return true;
+        }else if(x == "div5" && (y == "div2" || y == "div3" || y == "div4")) {
+            return true;
+        }else{
+            return false;
+        }
     }
 
 
