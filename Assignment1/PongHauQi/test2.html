@@ -145,8 +145,11 @@
                 if (winCount == 0) {
                     start();
                 }
-        }else{
+        }else if(class2 == "false"){
             alert("You can only drop piece on empty positions");
+            reloadPage();
+        }else{
+            alert("You cannot make this move");
             reloadPage();
         }
 	}
