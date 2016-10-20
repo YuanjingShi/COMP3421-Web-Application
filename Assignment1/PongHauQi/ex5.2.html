@@ -1,0 +1,51 @@
+<!--<html>
+<style type = "text/css">
+    .a{
+         color:red;
+     }
+    .b{
+        color:green;
+    }
+    .c{
+        color:blue;
+    }
+</style>
+
+<div id = "colorText"> Select below to change the color of this text </div>
+<select onchange="changeColor(this.value)">
+    <option value = "a">Red</option>
+    <option value = "b">Green</option>
+    <option value = "c">Blue</option>
+    </select>
+
+<script type = "text/javascript">
+    function changeColor(value){
+        //sth miss 2
+        var mySelect = document.getElementsByID("colorText");
+        mySelect.className = value;
+    }
+</script>
+</html>-->
+<html>
+<style type="text/css">
+    .a {color:red;}
+    .b {color:green;}
+    .c {color:blue;}
+</style>
+<div id="colorText">Select below to change the color of this text</div>
+<select onchange="changeColor(this.value)">
+    <option value="a">Red</option>
+    <option value="b">Green</option>
+    <option value="c">Blue</option>
+</select>
+<script type="text/javascript">
+    //<![CDATA[
+    function changeColor(value) {
+
+
+        // Answer:
+        Document.getElementById("colorText").className = value;
+    }
+    //]]>
+</script>
+</html>
