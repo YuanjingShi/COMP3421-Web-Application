@@ -60,10 +60,7 @@
     //other vars
     var myTime;
     var value;
-
-    //ai variables
-    var ai1;
-    var ai2;
+    
 
     function init(){
         //this is a initialize count
@@ -130,7 +127,7 @@
 
                 //reminder of Turns
                 if (turn == 0) {
-                    document.getElementById("demo").innerHTML = "Player 1's turn";
+                    document.getElementById("demo").innerHTML = "Your turn";
                     if (count2 == 0) {
                         position[2] = id2;
                         class2 = "false";
@@ -141,6 +138,7 @@
                         prePosition.className = "true";
                     }
                 } else {
+                    //this part is for dual-player model
                     document.getElementById("demo").innerHTML = "Player 2's turn";
                     if (count1 == 0) {
                         position[0] = id2;
@@ -158,6 +156,7 @@
                 if (winCount == 0) {
                     start();
                 }
+                triggerAI();
         }else if(class2 == "false"){
             alert("You can only drop piece on empty positions");
             reloadPage();
@@ -181,47 +180,49 @@
 
     function triggerAI(){
         if(turn == 1){
-        var temp1 = checkIfDroppable(position[2],position[4]);
-        var temp2 = checkIfDroppable(position[3], position[4]);
-        if(temp1){
-            //drag operations
-            var positionTemp;
-            turn = 0;
-            count2 = 0;
-            prePosition = document.getElementById(position[2]);
-            document.getElementById(position[4])
-                    .appendChild(document.getElementById("drag3"));
-            positionTemp = position[4];
-            position[4] = position[2];
-            position[2] = positionTemp;
-            document.getElementById(position[2]).className = "false";
-            prePosition.className = "true";
+            var temp1 = checkIfDroppable(position[2],position[4]);
+            var temp2 = checkIfDroppable(position[3], position[4]);
+            document.getElementById("demo").innerHTML = "Your turn";
+            if(temp2 && !temp1){
+                turn = 0;
+                count2 = 1;
+                var positionTemp;
+                prePosition = document.getElementById(position[3]);
+                document.getElementById(position[4])
+                        .appendChild(document.getElementById("drag4"));
+                positionTemp = position[4];
+                position[4] = position[3];
+                position[3] = positionTemp;
+                document.getElementById(position[3]).className = "false";
+                prePosition.className = "true";
 
-            alertWinner();
-            //re-enter the timer if game need to be continued.
-            if (winCount == 0) {
-                start();
-            }
+                alertWinner();
+                //re-enter the timer if game need to be continued.
+                if (winCount == 0) {
+                    start();
+                }
 
         }else{
-            turn = 0;
-            count2 = 1;
-            var positionTemp;
-            prePosition = document.getElementById(position[3]);
-            document.getElementById(position[4])
-                    .appendChild(document.getElementById("drag4"));
-            positionTemp = position[4];
-            position[4] = position[3];
-            position[3] = positionTemp;
-            document.getElementById(position[3]).className = "false";
-            prePosition.className = "true";
+                //drag operations
+                var positionTemp;
+                turn = 0;
+                count2 = 0;
+                prePosition = document.getElementById(position[2]);
+                document.getElementById(position[4])
+                        .appendChild(document.getElementById("drag3"));
+                positionTemp = position[4];
+                position[4] = position[2];
+                position[2] = positionTemp;
+                document.getElementById(position[2]).className = "false";
+                prePosition.className = "true";
 
-            alertWinner();
-            //re-enter the timer if game need to be continued.
-            if (winCount == 0) {
-                start();
+                alertWinner();
+                //re-enter the timer if game need to be continued.
+                if (winCount == 0) {
+                    start();
+                }
+
             }
-        }
         }
     }
 
@@ -261,7 +262,10 @@
             alertTimeOut();
         }
     }
-
+    function displayTest(){
+        txtOutput.value = position;
+        Turn.value = Math.round(Math.random())+2;
+    }
     function alertTimeOut(){
         alert("Your time is out!");
         stop();
@@ -330,7 +334,7 @@
   <label>Control Panel</label>
     <input type = "button"
        value = "click me"
-       onclick = "displayCount(), displayTurn()"/>
+       onclick = "displayTest()"/>
       <input type = "button"
              value = "start"
              onclick = "init()"/>
@@ -340,9 +344,6 @@
       <input type = "button"
              value = "restart"
              onclick = "reloadPage()"/>
-      <input type = "button"
-             value = "finish"
-             onclick = "triggerAI()"/>
     <input type = "text"
        id = "txtOutput" />
       <input type = "text"
