@@ -6,12 +6,28 @@
     <style>
     	* { padding: 0; margin: 0; }
     	canvas { background: #eee; display: block; margin: 0 auto; }
+        #startScreen{
+            width: 800PX;
+            height: 500px;
+            background-image: url('BGP.png');
+            background-size: contain;
+        }
+        #lang1,#lang2{
+            position: relative;
+            height: 50px;
+            width: 110px;
+            top: 60%;
+            left: 60%;
+
+        }
     </style>
 </head>
 <body>
-<button id = "lang" onclick = "changeLanguage()">Change your language
-    更改你的语言
-    (ENG/中文）</button>
+<div id = "startScreen">
+    <button id = "lang1" onclick = "changeLanguage(1)" >English</button>
+    <button id = "lang2" onclick = "changeLanguage(0)" >中文</button>
+</div>
+
 <canvas id="myCanvas" width="520" height="320"></canvas>
 
 <script>
@@ -194,51 +210,56 @@ function draw() {
     requestAnimationFrame(draw);
 }
 
-function init(){
-    draw();
-}
-
 function displayTest(){
     txtOutput.value = "test";
 }
 
-function changeLanguage(){
-    if(lanCount == 0) {
+function changeLanguage(count){
+    if(count == 0) {
+
         //control panel language changes
-        document.getElementById("label").innerHTML = "控制面板"
+        document.getElementById("label").innerHTML = "控制面板";
         document.getElementById("button1").value = "点击我";
         document.getElementById("button2").value = "开始游戏";
         document.getElementById("button3").value = "第一难度";
         document.getElementById("button4").value = "第二难度";
         document.getElementById("button5").value = "重新启动";
 
-        //inGame Txts changes
+        //inGame Texts changes
         scoreTxt = "分数:";
         liveTxt = "生命值:";
         winTxt = "恭喜您完成了这个关卡!";
         lostTxt = "很遗憾，再试一次吧";
         timeOutTxt = "时间不够了哦";
 
-        //reset language count
-        lanCount = 1;
+        //remove the div
+        var el = document.getElementById("startScreen");
+        el.parentNode.removeChild( el );
 
-    }else if(lanCount == 1){
+        //init the game
+        draw();
 
+    }else{
+        document.getElementById("label").innerHTML = "Control panel";
         document.getElementById("button1").value = "click me";
         document.getElementById("button2").value = "start";
         document.getElementById("button3").value = "level1";
         document.getElementById("button4").value = "level2";
         document.getElementById("button5").value = "restart";
 
-        //inGame Txts changes
+        //inGame Texts changes
         scoreTxt = "Score:";
         liveTxt = "Lives:";
         winTxt = "Congrats!!";
         lostTxt = "You lose";
         timeOutTxt = "Time is out";
 
-        //reset language count
-        lanCount = 0;
+        //remove the div
+        var el = document.getElementById( 'startScreen' );
+        el.parentNode.removeChild( el );
+
+        //init the game
+        draw();
     }
 }
 
@@ -275,7 +296,7 @@ left: 45%;">
         <input id = "button2"
                 type = "button"
                value = "start"
-               onclick = "init()"/>
+               onclick = ""/>
         <input id = "button3"
                type = "button"
                value = "level1"
