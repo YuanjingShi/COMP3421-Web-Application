@@ -5,12 +5,20 @@
     <title ID="title">KarkOut Game</title>
     <style>
     	* { padding: 0; margin: 0; }
-    	canvas { background: #eee; display: block; margin: 0 auto; }
+    	canvas {
+            background: #eee;
+            display: block;
+            margin: 0 auto;
+            position: fixed;
+            z-index: -1;
+        }
         #s1{
             width: 800PX;
             height: 500px;
             background-image: url('BGP.png');
             background-size: contain;
+            position: absolute;
+            z-index: 0;
         }
         #lang1,#lang2{
             position: relative;
@@ -55,6 +63,11 @@ var lives = 3;
 var lanCount = 0;
 var bricks = [];
 
+var scoreTxt;
+var liveTxt;
+var winTxt;
+var lostTxt;
+var timeOutTxt;
 
 function level1(){
     brickRowCount = 8;
@@ -205,7 +218,11 @@ function draw() {
 }
 
 function displayTest(){
-    txtOutput.value = "test";
+    txtOutput.value = scoreTxt;
+}
+
+function init(){
+    draw();
 }
 
 function changeLanguage(count){
@@ -226,14 +243,11 @@ function changeLanguage(count){
         document.getElementById("button5").value = "重新启动";
 
         //inGame Texts changes
-        var scoreTxt = "分数:";
-        var liveTxt = "生命值:";
-        var winTxt = "恭喜您完成了这个关卡!";
-        var lostTxt = "很遗憾，再试一次吧";
-        var timeOutTxt = "时间不够了哦";
-
-        //init the game
-        draw();
+        scoreTxt = "分数:";
+        liveTxt = "生命值:";
+        winTxt = "恭喜您完成了这个关卡!";
+        lostTxt = "很遗憾，再试一次吧";
+        timeOutTxt = "时间不够了哦";
 
     }else{
         //remove the div
@@ -251,14 +265,12 @@ function changeLanguage(count){
         document.getElementById("button5").value = "restart";
 
         //inGame Texts changes
-        var scoreTxt = "Score:";
-        var liveTxt = "Lives:";
-        var winTxt = "Congrats!!";
-        var lostTxt = "You lose";
-        var timeOutTxt = "Time is out";
-        
-        //init the game
-        draw();
+        scoreTxt = "Score:";
+        liveTxt = "Lives:";
+        winTxt = "Congrats!!";
+        lostTxt = "You lose";
+        timeOutTxt = "Time is out";
+
     }
 }
 
@@ -284,8 +296,8 @@ function level6(){
 
 
 </script>
-<form action = "" style= "position: relative; height: 150px; width: 110px; top: 50%;
-left: 45%;">
+<form action = "" style= "position: absolute; height: 150px; width: 120px; top: 55%;
+left: 18%; z-index: -1">
     <fieldset>
         <label id = "label">Control Panel</label>
         <input id = "button1"
@@ -295,7 +307,7 @@ left: 45%;">
         <input id = "button2"
                 type = "button"
                value = "start"
-               onclick = ""/>
+               onclick = "init()"/>
         <input id = "button3"
                type = "button"
                value = "level1"
