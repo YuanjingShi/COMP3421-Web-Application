@@ -184,20 +184,47 @@
         var temp1 = checkIfDroppable(position[2],position[4]);
         var temp2 = checkIfDroppable(position[3], position[4]);
         if(temp1){
+            //drag operations
+            var positionTemp;
+            turn = 0;
+            count2 = 0;
             prePosition = document.getElementById(position[2]);
             document.getElementById(position[4])
                     .appendChild(document.getElementById("drag3"));
+            positionTemp = position[4];
             position[4] = position[2];
+            position[2] = positionTemp;
+            document.getElementById(position[2]).className = "false";
+            prePosition.className = "true";
+
+            alertWinner();
+            //re-enter the timer if game need to be continued.
+            if (winCount == 0) {
+                start();
+            }
 
         }else{
+            turn = 0;
+            count2 = 1;
+            var positionTemp;
             prePosition = document.getElementById(position[3]);
             document.getElementById(position[4])
                     .appendChild(document.getElementById("drag4"));
+            positionTemp = position[4];
             position[4] = position[3];
+            position[3] = positionTemp;
+            document.getElementById(position[3]).className = "false";
+            prePosition.className = "true";
+
+            alertWinner();
+            //re-enter the timer if game need to be continued.
+            if (winCount == 0) {
+                start();
+            }
         }
         }
     }
-    
+
 
     function checkIfDroppable(x, y){
         if(x == "div1" && (y == "div3" || y == "div4")){
