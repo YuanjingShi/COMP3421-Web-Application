@@ -7,7 +7,9 @@
     height: 70px;
     padding: 10px;
     border: 1px solid #aaaaaa;
+    background-image: url('image1/board1.png')
 }
+    
 </style>
 <script>
 function allowDrop(ev) {
@@ -25,17 +27,27 @@ function drop(ev) {
 }
 
 function myFunction(){
-    document.getElementById('div1')
-    .appendChild(document.getElementById('drag1'));
+   var el = document.getElementById("div1");
+   while (el.firstChild) {
+       el.removeChild(el.firstChild);
+   }
+    
+   el.parentNode.removeChild(el);
     
 }
+    
+    function removeDic(){
+        
+    }
 </script>
 </head>
 <body>
 
 <p>Drag the W3Schools image into the rectangle:</p>
 
-<div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+<div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+    <img src = "image1/board2.png">
+    </div>
 <br>
 <img id="drag1" src="image1/board1.png" draggable="true" ondragstart="drag(event)" width="336" height="69">
 

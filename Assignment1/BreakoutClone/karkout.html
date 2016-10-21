@@ -6,7 +6,7 @@
     <style>
     	* { padding: 0; margin: 0; }
     	canvas { background: #eee; display: block; margin: 0 auto; }
-        #startScreen{
+        #s1{
             width: 800PX;
             height: 500px;
             background-image: url('BGP.png');
@@ -23,7 +23,7 @@
     </style>
 </head>
 <body>
-<div id = "startScreen">
+<div id = "s1">
     <button id = "lang1" onclick = "changeLanguage(1)" >English</button>
     <button id = "lang2" onclick = "changeLanguage(0)" >中文</button>
 </div>
@@ -54,12 +54,6 @@ var score = 0;
 var lives = 3;
 var lanCount = 0;
 var bricks = [];
-
-var scoreTxt = "Score:";
-var liveTxt = "Lives:";
-var winTxt = "Congrats!";
-var lostTxt = "You lose";
-var timeOutTxt = "Time is out";
 
 
 function level1(){
@@ -217,6 +211,12 @@ function displayTest(){
 function changeLanguage(count){
     if(count == 0) {
 
+        //remove the div
+        var el = document.getElementById("s1");
+        while (el.firstChild) {
+            el.removeChild(el.firstChild);
+        }
+        el.parentNode.removeChild(el);
         //control panel language changes
         document.getElementById("label").innerHTML = "控制面板";
         document.getElementById("button1").value = "点击我";
@@ -226,20 +226,23 @@ function changeLanguage(count){
         document.getElementById("button5").value = "重新启动";
 
         //inGame Texts changes
-        scoreTxt = "分数:";
-        liveTxt = "生命值:";
-        winTxt = "恭喜您完成了这个关卡!";
-        lostTxt = "很遗憾，再试一次吧";
-        timeOutTxt = "时间不够了哦";
-
-        //remove the div
-        var el = document.getElementById("startScreen");
-        el.parentNode.removeChild( el );
+        var scoreTxt = "分数:";
+        var liveTxt = "生命值:";
+        var winTxt = "恭喜您完成了这个关卡!";
+        var lostTxt = "很遗憾，再试一次吧";
+        var timeOutTxt = "时间不够了哦";
 
         //init the game
         draw();
 
     }else{
+        //remove the div
+        var el = document.getElementById("s1");
+        while (el.firstChild) {
+            el.removeChild(el.firstChild);
+        }
+        el.parentNode.removeChild(el);
+
         document.getElementById("label").innerHTML = "Control panel";
         document.getElementById("button1").value = "click me";
         document.getElementById("button2").value = "start";
@@ -248,16 +251,12 @@ function changeLanguage(count){
         document.getElementById("button5").value = "restart";
 
         //inGame Texts changes
-        scoreTxt = "Score:";
-        liveTxt = "Lives:";
-        winTxt = "Congrats!!";
-        lostTxt = "You lose";
-        timeOutTxt = "Time is out";
-
-        //remove the div
-        var el = document.getElementById( 'startScreen' );
-        el.parentNode.removeChild( el );
-
+        var scoreTxt = "Score:";
+        var liveTxt = "Lives:";
+        var winTxt = "Congrats!!";
+        var lostTxt = "You lose";
+        var timeOutTxt = "Time is out";
+        
         //init the game
         draw();
     }
