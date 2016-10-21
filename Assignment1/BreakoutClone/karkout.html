@@ -2,15 +2,17 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Gamedev Canvas Workshop</title>
+    <title ID="title">KarkOut Game</title>
     <style>
     	* { padding: 0; margin: 0; }
     	canvas { background: #eee; display: block; margin: 0 auto; }
     </style>
 </head>
 <body>
-
-<canvas id="myCanvas" width="480" height="320"></canvas>
+<button id = "lang" onclick = "changeLanguage()">Change your language
+    更改你的语言
+    (ENG/中文）</button>
+<canvas id="myCanvas" width="520" height="320"></canvas>
 
 <script>
 var canvas = document.getElementById("myCanvas");
@@ -25,17 +27,32 @@ var paddleWidth = 75;
 var paddleX = (canvas.width-paddleWidth)/2;
 var rightPressed = false;
 var leftPressed = false;
-var brickRowCount = 5;
+var brickRowCount = 8;
 var brickColumnCount = 3;
-var brickWidth = 75;
+var brickWidth = 50;
 var brickHeight = 20;
 var brickPadding = 10;
 var brickOffsetTop = 30;
 var brickOffsetLeft = 30;
 var score = 0;
 var lives = 3;
-
+var lanCount = 0;
 var bricks = [];
+
+var scoreTxt = "Score:";
+var liveTxt = "Lives:";
+var winTxt = "Congrats!";
+var lostTxt = "You lose";
+var timeOutTxt = "Time is out";
+
+
+function level1(){
+    brickRowCount = 8;
+    brickColumnCount = 4;
+    brickWidth = 50;
+    brickHeight = 20;
+}
+
 for(c=0; c<brickColumnCount; c++) {
     bricks[c] = [];
     for(r=0; r<brickRowCount; r++) {
@@ -79,7 +96,7 @@ function collisionDetection() {
                     b.status = 0;
                     score++;
                     if(score == brickRowCount*brickColumnCount) {
-                        alert("YOU WIN, CONGRATS!");
+                        alert(winTxt);
                         document.location.reload();
                     }
                 }
@@ -122,12 +139,12 @@ function drawBricks() {
 function drawScore() {
     ctx.font = "16px Arial";
     ctx.fillStyle = "#0095DD";
-    ctx.fillText("Score: "+score, 8, 20);
+    ctx.fillText(scoreTxt+score, 8, 20);
 }
 function drawLives() {
     ctx.font = "16px Arial";
     ctx.fillStyle = "#0095DD";
-    ctx.fillText("Lives: "+lives, canvas.width-65, 20);
+    ctx.fillText(liveTxt+lives, canvas.width-65, 20);
 }
 
 function draw() {
@@ -152,7 +169,7 @@ function draw() {
         else {
             lives--;
             if(!lives) {
-                alert("GAME OVER");
+                alert(lostTxt);
                 document.location.reload();
             }
             else {
@@ -177,8 +194,102 @@ function draw() {
     requestAnimationFrame(draw);
 }
 
-draw();
-</script>
+function init(){
+    draw();
+}
 
+function displayTest(){
+    txtOutput.value = "test";
+}
+
+function changeLanguage(){
+    if(lanCount == 0) {
+        //control panel language changes
+        document.getElementById("label").innerHTML = "控制面板"
+        document.getElementById("button1").value = "点击我";
+        document.getElementById("button2").value = "开始游戏";
+        document.getElementById("button3").value = "第一难度";
+        document.getElementById("button4").value = "第二难度";
+        document.getElementById("button5").value = "重新启动";
+
+        //inGame Txts changes
+        scoreTxt = "分数:";
+        liveTxt = "生命值:";
+        winTxt = "恭喜您完成了这个关卡!";
+        lostTxt = "很遗憾，再试一次吧";
+        timeOutTxt = "时间不够了哦";
+
+        //reset language count
+        lanCount = 1;
+
+    }else if(lanCount == 1){
+
+        document.getElementById("button1").value = "click me";
+        document.getElementById("button2").value = "start";
+        document.getElementById("button3").value = "level1";
+        document.getElementById("button4").value = "level2";
+        document.getElementById("button5").value = "restart";
+
+        //inGame Txts changes
+        scoreTxt = "Score:";
+        liveTxt = "Lives:";
+        winTxt = "Congrats!!";
+        lostTxt = "You lose";
+        timeOutTxt = "Time is out";
+
+        //reset language count
+        lanCount = 0;
+    }
+}
+
+function level2(){
+
+}
+
+function level3(){
+
+}
+
+function level4(){
+
+}
+
+function level5(){
+
+}
+
+function level6(){
+
+}
+
+
+</script>
+<form action = "" style= "position: relative; height: 150px; width: 110px; top: 50%;
+left: 45%;">
+    <fieldset>
+        <label id = "label">Control Panel</label>
+        <input id = "button1"
+               type = "button"
+               value = "click me"
+               onclick = "displayTest()"/>
+        <input id = "button2"
+                type = "button"
+               value = "start"
+               onclick = "init()"/>
+        <input id = "button3"
+               type = "button"
+               value = "level1"
+               onclick = "level1()"/>
+        <input id = "button4"
+                type = "button"
+               value = "level2"
+               onclick = "level2()"/>
+        <input type = "button5"
+               value = "restart"
+               onclick = "reloadPage()"/>
+        <input type = "text"
+               id = "txtOutput" />
+    </fieldset>
+</form>
 </body>
 </html>
