@@ -33,7 +33,7 @@ give you more time to take your move.
     e. Do remember to click the "start" button every time you want to begin the
     game or you premature move would be invalid.
 
- Hope you will enjoy the game (since this ai is not ai ai).
+ Hope you will enjoy the game (since this ai is not ai ai, like, at all).
 
  Student Name: Yuanjing Shi
  Student ID: 13104584d

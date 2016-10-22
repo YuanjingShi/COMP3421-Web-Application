@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    elementFormDefault="qualified"
+    attributeFormDefault="unqualified">
+            <xsd:complexType name="Project">
+                  <xsd:sequence>
+                        <xsd:element name="Project_ID" type="xsd:ID" />
+                        <xsd:element name="Project_Company" type="xsd:string" />
+                        <xsd:element name="Project_Contact" type="xsd:string" maxOccurs="unbounded" minOccurs="1" />
+                        <xsd:element name="Project_Status" type="xsd:boolean" />
+                        <xsd:element name="submittedReport" type="xsd:anyURI" maxOccurs="1" minOccurs="0"/>
+                        <xsd:element name="Project_Speciality" type="xsd:string" maxOccurs="1" minOccurs="1" />
+                        <xsd:element name="Project_Visits" type="Visit" maxOccurs="2" minOccurs="2"/>
+                        <xsd:element name="Project_Supervisors" type="Supervisor" maxOccurs="2" minOccurs="2"/>
+                        <xsd:element name="Project_Students" type="Student" maxOccurs="3" minOccurs="0"/>
+                  </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="Student">
+                <xsd:sequence>
+                      <xsd:element name="Student_ID" type="xsd:ID" />
+                      <xsd:element name="Student_Name" type="xsd:string" />
+                      <xsd:element name="Curriculum_Vita" type="xsd:string" />
+                      <xsd:element name="Student_Projects" type="Project" maxOccurs="3" minOccurs="1"/>
+                </xsd:sequence>
+          </xsd:complexType>
+          <xsd:complexType name="Speciality">
+                <xsd:sequence>
+                      <xsd:element name="analysis" type="xsd:string" />
+                      <xsd:element name="design" type="xsd:string" />
+                      <xsd:element name="development" type="xsd:string" />
+                      <xsd:element name="management" type="xsd:string" />
+                </xsd:sequence>
+          </xsd:complexType>
+          <xsd:complexType name="Visit">
+                <xsd:sequence>
+                      <xsd:element name="Visit_Date" type="xsd:date" />
+                      <xsd:element name="Visit_Turn" type="xsd:positiveInteger" />
+                </xsd:sequence>
+          </xsd:complexType>
+          <xsd:complexType name="Supervisor">
+                <xsd:sequence>
+                      <xsd:element name="Chief_Supervisor" type="xsd:string" />
+                      <xsd:element name="Co_Supervisor" type="xsd:string" />
+                </xsd:sequence>
+          </xsd:complexType>
+          <xsd:complexType name="Contacts">
+                <xsd:sequence>
+                      <xsd:element name="Name" type="xsd:string" />
+                      <xsd:element name="Phone" type="xsd:string" />
+                      <xsd:element name="Email" type="xsd:string" />
+                      <xsd:element name="Address" type="xsd:string" />
+                </xsd:sequence>
+          </xsd:complexType>
+          <xsd:complexType name="Project2Students">
+                <xsd:sequence>
+                      <xsd:element name="studentIDREF" type="xsd:IDREF"/>
+                      <xsd:element name="thisStudent" type="Student" maxOccurs="1" minOccurs="1"/>
+                      <xsd:element name="StudentOfProjects" type="Project" maxOccurs="3" minOccurs="1"/>
+                </xsd:sequence>
+          </xsd:complexType>
+          <xsd:complexType name="Students2Project">
+                <xsd:sequence>
+                    <xsd:element name="projectIDREF" type="xsd:IDREF"/>
+                    <xsd:element name="thisProject" type="Project" maxOccurs="1" minOccurs="1"/>
+                    <xsd:element name="StudentOfProject" type="Student" maxOccurs="3" minOccurs="0"/>
+                </xsd:sequence>
+          </xsd:complexType>
+    </xsd:schema>
