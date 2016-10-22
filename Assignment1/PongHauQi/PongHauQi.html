@@ -3,9 +3,9 @@
 <head>
 	<title>Pong Hau Qi</title>
 </head>
-<p id="demo">This is a Pong Hau Qi game</p>
-<p>Every turn you got:</p>
-<p id="demo1">This is the timer</p>
+<p id="demo" style= "position:relative; left: 42%">This is a Pong Hau Qi game</p>
+<p style= "position:relative; left: 44%">Every turn you got:</p>
+<p id="demo1" style= "position:relative; left: 45%">This is the timer</p>
 <style>
 	#div1, #div2, #div3,#div4,#div5 {
         float: left;
@@ -127,7 +127,7 @@
 
                 //reminder of Turns
                 if (turn == 0) {
-                    document.getElementById("demo").innerHTML = "Your turn";
+                    document.getElementById("demo").innerHTML = "";
                     if (count2 == 0) {
                         position[2] = id2;
                         class2 = "false";
@@ -182,7 +182,7 @@
         if(turn == 1){
             var temp1 = checkIfDroppable(position[2],position[4]);
             var temp2 = checkIfDroppable(position[3], position[4]);
-            document.getElementById("demo").innerHTML = "Your turn";
+            document.getElementById("demo").innerHTML = "";
             if(temp2 && !temp1){
                 turn = 0;
                 count2 = 1;
@@ -329,12 +329,7 @@
 
 </div>
 
-<form action = "" style= "position: relative; height: 150px; width: 110px;">
-  <fieldset>
-  <label>Control Panel</label>
-    <input type = "button"
-       value = "click me"
-       onclick = "displayTest()"/>
+<div  style= "position: relative; height: 150px; width: 200px; left: 43%">
       <input type = "button"
              value = "start"
              onclick = "init()"/>
@@ -344,12 +339,7 @@
       <input type = "button"
              value = "restart"
              onclick = "reloadPage()"/>
-    <input type = "text"
-       id = "txtOutput" />
-      <input type = "text"
-             id = "Turn" />
-</fieldset>
-</form>
+</div>
 
 </body>
 </html>
