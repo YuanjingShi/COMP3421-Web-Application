@@ -60,7 +60,7 @@ var brickOffsetTop = 30;
 var brickOffsetLeft = 30;
 var score = 0;
 var lives = 3;
-var lanCount = 0;
+var lanCount;
 var bricks = [];
 
 var scoreTxt;
@@ -160,6 +160,11 @@ function drawBricks() {
     }
 }
 function drawScore() {
+    if(lanCount == 0){
+        scoreTxt = "分数:";
+    }else if(lancount == 1){
+        scoreTxt = "Score:";
+    }
     ctx.font = "16px Arial";
     ctx.fillStyle = "#0095DD";
     ctx.fillText(scoreTxt+score, 8, 20);
@@ -249,6 +254,8 @@ function changeLanguage(count){
         lostTxt = "很遗憾，再试一次吧";
         timeOutTxt = "时间不够了哦";
 
+        lancount = 0;
+
     }else{
         //remove the div
         var el = document.getElementById("s1");
@@ -270,6 +277,7 @@ function changeLanguage(count){
         winTxt = "Congrats!!";
         lostTxt = "You lose";
         timeOutTxt = "Time is out";
+        lancount = 1;
 
     }
 }

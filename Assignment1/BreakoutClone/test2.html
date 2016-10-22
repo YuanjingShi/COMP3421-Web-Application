@@ -1,0 +1,46 @@
+<html>
+<head>
+    <meta charset=" utf-8"/>
+    <title>Fucking TUT</title>
+
+    <style>
+        *{
+            padding:0;
+            margin:0;
+        }
+        canvas{
+            background: #eee;
+            display:block;
+            margin:0 auto;
+        }
+    </style>
+
+</head>
+    <body>
+        <canvas width="500" height="300" id="canvas">Sorry, no canvas available</canvas>
+
+
+        <script>
+            var context = document.getElementById("canvas");
+            var ctx = context.getContext("2d");
+
+            ctx.beginPath();
+            ctx.rect(100,100,50,50);
+            ctx.fillStyle = "#FF0000";
+            ctx.fill();
+            ctx.closePath();
+
+            ctx.beginPath();
+            ctx.arc(100,20,20,0,Math.PI*2,false);
+            ctx.fillStyle = "green";
+            ctx.fill();
+            ctx.closePath();
+
+            ctx.beginPath();
+            ctx.rect(160,20,20,100);
+            ctx.strokeStyle = "rgba(0,0,255,0.5)";
+            ctx.stroke();
+            ctx.closePath();
+        </script>
+        </body>
+</html>
