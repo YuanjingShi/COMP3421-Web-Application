@@ -68,6 +68,8 @@
 <script>
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
+
+//ball vars
 var ballRadius = 10;
 var x = canvas.width/2;
 var y = canvas.height-30;
@@ -82,10 +84,10 @@ var rightPressed1 = false;
 var leftPressed1 = false;
 
 //second paddle init
-var paddle2Count = 1;
+var paddle2Count = 0;
 var paddle2Height = 10;
 var paddle2Width = 75;
-var paddle2X = (canvas.width-paddle1Width)/2 + 50;
+var paddle2X = (canvas.width-paddle1Width)/2 + 100;
 var rightPressed2 = false;
 var leftPressed2 = false;
 
@@ -97,7 +99,7 @@ var brickPadding = 10;
 var brickOffsetTop = 30;
 var brickOffsetLeft = 30;
 var score = 0;
-var lives = 9;
+var lives = 3;
 var bricks = [];
 
 //all counting vars
@@ -118,6 +120,7 @@ var timeOutTxt;
 //all the color vars
 var fontColor = "#f45942";
 var ballColor = "skyblue";
+var ballColor1 = "#f44292";
 
 var Level;
 var Level1 = [  [0,1,1,1,1,1,1,1,1,0],
@@ -329,30 +332,47 @@ function draw() {
     if(y + dy < ballRadius) {
         dy = -dy;
     } else if(y + dy > canvas.height-ballRadius) {
-
-        if((x > paddle1X && x < paddle1X + paddle1Width) || (x > paddle2X && x < paddle2X + paddle2Width)) {
-            dy = -dy;
-        } else {
-            lives--;
-            if(lives <= 0) {
-
-                alert(lostTxt);
-                document.location.reload();
-
+        if (paddle2Count == 0) {
+            if (x > paddle1X && x < paddle1X + paddle1Width) {
+                dy = -dy;
             } else {
-                if(x > paddle1X && x < paddle1X + paddle1Width) {
+                lives--;
+                if (!lives) {
+                    alert(lostTxt);
+                    document.location.reload();
+                } else {
                     x = canvas.width / 2;
                     y = canvas.height - 30;
                     dx = 2;
                     dy = -2;
                     paddle1X = (canvas.width - paddle1Width) / 2;
+                }
+            }
+        } else {
+            if ((x > paddle1X && x < paddle1X + paddle1Width) || (x > paddle2X && x < paddle2X + paddle2Width)) {
+                dy = -dy;
+            } else {
+                lives--;
+                if (!lives) {
 
-                }else if(x > paddle2X && x < paddle2X + paddle2Width){
-                    x = canvas.width/2;
-                    y = canvas.height-30;
-                    dx = 2;
-                    dy = -2;
-                    paddle2X = (canvas.width-paddle2Width)/2 + 50;
+                    alert(lostTxt);
+                    document.location.reload();
+
+                } else {
+                    if (!(x > paddle1X && x < paddle1X + paddle1Width)) {
+                        x = canvas.width / 2;
+                        y = canvas.height - 30;
+                        dx = 2;
+                        dy = -2;
+                        paddle1X = (canvas.width - paddle1Width) / 2;
+
+                    } else if (!(x > paddle2X && x < paddle2X + paddle2Width)) {
+                        x = canvas.width / 2;
+                        y = canvas.height - 30;
+                        dx = 2;
+                        dy = -2;
+                        paddle2X = (canvas.width - paddle2Width) / 2 + 50;
+                    }
                 }
             }
         }
