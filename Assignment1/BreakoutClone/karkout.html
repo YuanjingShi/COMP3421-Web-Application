@@ -40,7 +40,7 @@
             width: 110px;
             top: 72%;
             left: 53%;
-
+            display: none;
         }
         #lang2{
             position: absolute;
@@ -48,7 +48,7 @@
             width: 110px;
             top: 72%;
             left: 67%;
-
+            display:none;
         }
         #button1,#button2,#button3,#button4,#button5,#button6,#button7,#button8,#button9{
 
@@ -388,6 +388,8 @@ function choosePaddleNo(x){
     }
     document.getElementById("p1").remove();
     document.getElementById("p2").remove();
+    document.getElementById("lang1").style.display = "block";
+    document.getElementById("lang2").style.display = "block";
 }
 
 function changeLanguage(count){
