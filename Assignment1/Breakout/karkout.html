@@ -270,7 +270,7 @@ function drawBall() {
     ctx.fill();
     ctx.closePath();
 }
-function drawpaddle1() {
+function drawpaddle() {
     ctx.beginPath();
     ctx.rect(paddle1X, canvas.height-paddle1Height, paddle1Width, paddle1Height);
     ctx.fillStyle = fontColor;
@@ -280,7 +280,7 @@ function drawpaddle1() {
     if(paddle2Count == 1){
         ctx.beginPath();
         ctx.rect(paddle2X, canvas.height-paddle2Height, paddle2Width, paddle2Height);
-        ctx.fillStyle = fontColor;
+        ctx.fillStyle = ballColor1;
         ctx.fill();
         ctx.closePath();
     }
@@ -320,7 +320,7 @@ function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawBricks();
     drawBall();
-    drawpaddle1();
+    drawpaddle();
     drawScore();
     drawLives();
     collisionDetection();
