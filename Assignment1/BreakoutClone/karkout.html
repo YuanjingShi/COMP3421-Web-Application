@@ -20,12 +20,34 @@
             position: absolute;
             z-index: 0;
         }
-        #lang1,#lang2{
-            position: relative;
+        #p1{
+            position: absolute;
             height: 50px;
             width: 110px;
             top: 60%;
-            left: 60%;
+            left: 53%;
+        }
+        #p2{
+            position: absolute;
+            height: 50px;
+            width: 110px;
+            top: 60%;
+            left: 67%;
+        }
+        #lang1{
+            position: absolute;
+            height: 50px;
+            width: 110px;
+            top: 72%;
+            left: 53%;
+
+        }
+        #lang2{
+            position: absolute;
+            height: 50px;
+            width: 110px;
+            top: 72%;
+            left: 67%;
 
         }
         #button1,#button2,#button3,#button4,#button5,#button6,#button7,#button8,#button9{
@@ -35,6 +57,8 @@
 </head>
 <body>
 <div id = "s1">
+    <button id = "p1" onclick = "choosePaddleNo(1)">Single Mode/单人模式</button>
+    <button id = "p2" onclick = "choosePaddleNo(2)">Dual Mode/双人模式</button>
     <button id = "lang1" onclick = "changeLanguage(1)" >English</button>
     <button id = "lang2" onclick = "changeLanguage(0)" >中文</button>
 </div>
@@ -49,11 +73,22 @@ var x = canvas.width/2;
 var y = canvas.height-30;
 var dx = 2;
 var dy = -2;
-var paddleHeight = 10;
-var paddleWidth = 75;
-var paddleX = (canvas.width-paddleWidth)/2;
-var rightPressed = false;
-var leftPressed = false;
+
+//first paddle init
+var paddle1Height = 10;
+var paddle1Width = 75;
+var paddle1X = (canvas.width-paddle1Width)/2;
+var rightPressed1 = false;
+var leftPressed1 = false;
+
+//second paddle init
+var paddle2Count = 1;
+var paddle2Height = 10;
+var paddle2Width = 75;
+var paddle2X = (canvas.width-paddle1Width)/2 + 50;
+var rightPressed2 = false;
+var leftPressed2 = false;
+
 var brickRowCount = 10;
 var brickColumnCount = 6;
 var brickWidth = 50;
@@ -62,7 +97,7 @@ var brickPadding = 10;
 var brickOffsetTop = 30;
 var brickOffsetLeft = 30;
 var score = 0;
-var lives = 3;
+var lives = 9;
 var bricks = [];
 
 //all counting vars
@@ -115,7 +150,7 @@ var Level4 = [  [1,1,0,0,1,1,0,0,1,1],
 
 var Level6 = [  [1,1,1,1,1,1,1,1,1,1],
                 [1,1,1,1,1,1,1,1,1,1],
-                [1,1,1,1,1,0,1,1,1,1],
+                [1,1,1,1,1,1,1,1,1,1],
                 [1,1,1,1,1,1,1,1,1,1],
                 [1,1,1,1,1,1,1,1,1,1],
                 [1,1,1,1,1,1,1,1,1,1]];
@@ -129,7 +164,8 @@ var Level5 = [  [1,1,1,1,1,1,1,1,1,1],
 
 
 
-var Level = Level1;
+Level = Level1;
+
 function initBrick(x){
     if( x != null) {
         Level = x;
@@ -138,7 +174,7 @@ function initBrick(x){
         bricks[c] = [];
         for (r = 0; r < brickRowCount; r++) {
             bricks[c][r] = {x: 0, y: 0, status: 1, state: Level[c][r]};
-            if (Level[c][r] == 0) {
+            if (Level[c][r] == 1) {
                 winCount++;
             }
         }
@@ -153,31 +189,46 @@ document.addEventListener("mousemove", mouseMoveHandler, false);
 
 function keyDownHandler(e) {
     if(e.keyCode == 39) {
-        rightPressed = true;
+        rightPressed1 = true;
     }
     else if(e.keyCode == 37) {
-        leftPressed = true;
+        leftPressed1 = true;
     }
+
+    if(e.keyCode == 68) {
+        rightPressed2 = true;
+    }
+    else if(e.keyCode == 65) {
+        leftPressed2 = true;
+    }
+
 }
 function keyUpHandler(e) {
     if(e.keyCode == 39) {
-        rightPressed = false;
+        rightPressed1 = false;
     }
     else if(e.keyCode == 37) {
-        leftPressed = false;
+        leftPressed1 = false;
+    }
+
+    if(e.keyCode == 68) {
+        rightPressed2 = false;
+    }
+    else if(e.keyCode == 65) {
+        leftPressed2 = false;
     }
 }
 function mouseMoveHandler(e) {
     var relativeX = e.clientX - canvas.offsetLeft;
     if(relativeX > 0 && relativeX < canvas.width) {
-        paddleX = relativeX - paddleWidth/2;
+        paddle1X = relativeX - paddle1Width/2;
     }
 }
 function collisionDetection() {
     for(c=0; c<brickColumnCount; c++) {
         for(r=0; r<brickRowCount; r++) {
             var b = bricks[c][r];
-            if(b.status == 1 && b.state == 0) {
+            if(b.status == 1 && b.state == 1) {
                 if(x > b.x && x < b.x+brickWidth && y > b.y && y < b.y+brickHeight) {
                     dy = -dy;
                     b.status = 0;
@@ -216,18 +267,26 @@ function drawBall() {
     ctx.fill();
     ctx.closePath();
 }
-function drawPaddle() {
+function drawpaddle1() {
     ctx.beginPath();
-    ctx.rect(paddleX, canvas.height-paddleHeight, paddleWidth, paddleHeight);
+    ctx.rect(paddle1X, canvas.height-paddle1Height, paddle1Width, paddle1Height);
     ctx.fillStyle = fontColor;
     ctx.fill();
     ctx.closePath();
+
+    if(paddle2Count == 1){
+        ctx.beginPath();
+        ctx.rect(paddle2X, canvas.height-paddle2Height, paddle2Width, paddle2Height);
+        ctx.fillStyle = fontColor;
+        ctx.fill();
+        ctx.closePath();
+    }
 }
 function drawBricks() {
 
     for(c=0; c<brickColumnCount; c++) {
         for(r=0; r<brickRowCount; r++) {
-            if(bricks[c][r].status == 1 && bricks[c][r].state == 0  ) {
+            if(bricks[c][r].status == 1 && bricks[c][r].state == 1  ) {
                 var brickX = (r*(brickWidth+brickPadding))+brickOffsetLeft;
                 var brickY = (c*(brickHeight+brickPadding))+brickOffsetTop;
                 bricks[c][r].x = brickX;
@@ -258,47 +317,59 @@ function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawBricks();
     drawBall();
-    drawPaddle();
+    drawpaddle1();
     drawScore();
     drawLives();
     collisionDetection();
 
-    if(document.getElementById("label").innerHTML == "控制面板"){
-        lostTxt = "很遗憾，再试一次吧！";
-    }else{
-        lostTxt = "You lose.";
-    }
     if(x + dx > canvas.width-ballRadius || x + dx < ballRadius) {
         dx = -dx;
     }
+
     if(y + dy < ballRadius) {
         dy = -dy;
-    }
-    else if(y + dy > canvas.height-ballRadius) {
-        if(x > paddleX && x < paddleX + paddleWidth) {
+    } else if(y + dy > canvas.height-ballRadius) {
+
+        if((x > paddle1X && x < paddle1X + paddle1Width) || (x > paddle2X && x < paddle2X + paddle2Width)) {
             dy = -dy;
-        }
-        else {
+        } else {
             lives--;
-            if(!lives) {
+            if(lives <= 0) {
+
                 alert(lostTxt);
                 document.location.reload();
-            }
-            else {
-                x = canvas.width/2;
-                y = canvas.height-30;
-                dx = 2;
-                dy = -2;
-                paddleX = (canvas.width-paddleWidth)/2;
+
+            } else {
+                if(x > paddle1X && x < paddle1X + paddle1Width) {
+                    x = canvas.width / 2;
+                    y = canvas.height - 30;
+                    dx = 2;
+                    dy = -2;
+                    paddle1X = (canvas.width - paddle1Width) / 2;
+
+                }else if(x > paddle2X && x < paddle2X + paddle2Width){
+                    x = canvas.width/2;
+                    y = canvas.height-30;
+                    dx = 2;
+                    dy = -2;
+                    paddle2X = (canvas.width-paddle2Width)/2 + 50;
+                }
             }
         }
     }
     
-    if(rightPressed && paddleX < canvas.width-paddleWidth) {
-        paddleX += 7;
+    if(rightPressed1 && paddle1X < canvas.width-paddle1Width) {
+        paddle1X += 7;
     }
-    else if(leftPressed && paddleX > 0) {
-        paddleX -= 7;
+    else if(leftPressed1 && paddle1X > 0) {
+        paddle1X -= 7;
+    }
+
+    if(rightPressed2 && paddle2X < canvas.width-paddle2Width) {
+        paddle2X += 7;
+    }
+    else if(leftPressed2 && paddle2X > 0) {
+        paddle2X -= 7;
     }
     
     x += dx;
@@ -307,6 +378,16 @@ function draw() {
 
 function displayTest(){
     txtOutput.value = winCount;
+}
+
+function choosePaddleNo(x){
+    if(x == 1){
+        paddle2Count = 0;
+    }else{
+        paddle2Count = 1;
+    }
+    document.getElementById("p1").remove();
+    document.getElementById("p2").remove();
 }
 
 function changeLanguage(count){
