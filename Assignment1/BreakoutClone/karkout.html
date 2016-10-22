@@ -63,10 +63,14 @@ var brickOffsetTop = 30;
 var brickOffsetLeft = 30;
 var score = 0;
 var lives = 3;
+var bricks = [];
+
+//all counting vars
 var lanCount;
 var winCount = 0;
-var bricks = [];
+var stopCount;
 var levelCount = 1;
+var myTime;
 
 //all the text variables
 var scoreTxt;
@@ -74,10 +78,11 @@ var liveTxt;
 var winTxt;
 var lostTxt;
 var finishTxt;
-var timeOutTxt = "Time is out!";
+var timeOutTxt;
 
 //all the color vars
-var fontColor = "green";
+var fontColor = "#f45942";
+var ballColor = "skyblue";
 
 var Level;
 var Level1 = [  [0,1,1,1,1,1,1,1,1,0],
@@ -110,7 +115,7 @@ var Level4 = [  [1,1,0,0,1,1,0,0,1,1],
 
 var Level6 = [  [1,1,1,1,1,1,1,1,1,1],
                 [1,1,1,1,1,1,1,1,1,1],
-                [1,1,1,1,1,1,1,1,1,1],
+                [1,1,1,1,1,0,1,1,1,1],
                 [1,1,1,1,1,1,1,1,1,1],
                 [1,1,1,1,1,1,1,1,1,1],
                 [1,1,1,1,1,1,1,1,1,1]];
@@ -133,7 +138,7 @@ function initBrick(x){
         bricks[c] = [];
         for (r = 0; r < brickRowCount; r++) {
             bricks[c][r] = {x: 0, y: 0, status: 1, state: Level[c][r]};
-            if (Level[c][r] == 1) {
+            if (Level[c][r] == 0) {
                 winCount++;
             }
         }
@@ -172,7 +177,7 @@ function collisionDetection() {
     for(c=0; c<brickColumnCount; c++) {
         for(r=0; r<brickRowCount; r++) {
             var b = bricks[c][r];
-            if(b.status == 1 && b.state == 1) {
+            if(b.status == 1 && b.state == 0) {
                 if(x > b.x && x < b.x+brickWidth && y > b.y && y < b.y+brickHeight) {
                     dy = -dy;
                     b.status = 0;
@@ -207,14 +212,14 @@ function collisionDetection() {
 function drawBall() {
     ctx.beginPath();
     ctx.arc(x, y, ballRadius, 0, Math.PI*2);
-    ctx.fillStyle = "#11D489";
+    ctx.fillStyle = ballColor;
     ctx.fill();
     ctx.closePath();
 }
 function drawPaddle() {
     ctx.beginPath();
     ctx.rect(paddleX, canvas.height-paddleHeight, paddleWidth, paddleHeight);
-    ctx.fillStyle = "#97203C";
+    ctx.fillStyle = fontColor;
     ctx.fill();
     ctx.closePath();
 }
@@ -222,14 +227,14 @@ function drawBricks() {
 
     for(c=0; c<brickColumnCount; c++) {
         for(r=0; r<brickRowCount; r++) {
-            if(bricks[c][r].status == 1 && bricks[c][r].state == 1  ) {
+            if(bricks[c][r].status == 1 && bricks[c][r].state == 0  ) {
                 var brickX = (r*(brickWidth+brickPadding))+brickOffsetLeft;
                 var brickY = (c*(brickHeight+brickPadding))+brickOffsetTop;
                 bricks[c][r].x = brickX;
                 bricks[c][r].y = brickY;
                 ctx.beginPath();
                 ctx.rect(brickX, brickY, brickWidth, brickHeight);
-                ctx.fillStyle = "#97203C";
+                ctx.fillStyle = fontColor;
                 ctx.fill();
                 ctx.closePath();
             }
@@ -304,11 +309,6 @@ function displayTest(){
     txtOutput.value = winCount;
 }
 
-function init(){
-    setInterval(draw,10);
-
-}
-
 function changeLanguage(count){
     if(count == 0) {
 
@@ -319,8 +319,8 @@ function changeLanguage(count){
         }
         el.parentNode.removeChild(el);
         //control panel language changes
-        document.getElementById("label").innerHTML = "控制面板";
-        document.getElementById("button1").value = "点击我";
+        document.getElementById("label").innerHTML = "计时器";
+        document.getElementById("button1").value = "暂停游戏";
         document.getElementById("button2").value = "开始游戏";
         document.getElementById("button3").value = "第一难度";
         document.getElementById("button4").value = "第二难度";
@@ -335,6 +335,7 @@ function changeLanguage(count){
         scoreTxt = "分数：";
         liveTxt = "生命值：";
         finishTxt = "您已完成所有关卡，休息一会？"
+        timeOutTxt = "时间不够了哦";
         lancount = 0;
         //draw();
     }else{
@@ -345,22 +346,23 @@ function changeLanguage(count){
         }
         el.parentNode.removeChild(el);
 
-        document.getElementById("label").innerHTML = "Control panel";
-        document.getElementById("button1").value = "click me";
-        document.getElementById("button2").value = "start";
-        document.getElementById("button3").value = "level1";
-        document.getElementById("button4").value = "level2";
-        document.getElementById("button6").value = "level3";
-        document.getElementById("button7").value = "level4";
-        document.getElementById("button8").value = "level5";
-        document.getElementById("button9").value = "level6";
-        document.getElementById("button5").value = "restart";
+        document.getElementById("label").innerHTML = " Timer ";
+        document.getElementById("button1").value = " Pause";
+        document.getElementById("button2").value = " Start ";
+        document.getElementById("button3").value = "Level1";
+        document.getElementById("button4").value = "Level2";
+        document.getElementById("button6").value = "Level3";
+        document.getElementById("button7").value = "Level4";
+        document.getElementById("button8").value = "Level5";
+        document.getElementById("button9").value = "Level6";
+        document.getElementById("button5").value = "Restart";
 
         winTxt = "Congrats!";
         lostTxt = "You lose.";
         scoreTxt = "Score: ";
         liveTxt = "Lives: ";
         finishTxt = "You have finished all levels, time to have a rest?";
+        timeOutTxt = "Time is out!";
         lancount = 1;
         //draw();
     }
@@ -372,30 +374,35 @@ function level1(){
 }
 
 function level2(){
+    fontColor = "#f4f142";
     initBrick(Level2);
     levelCount = 2;
     draw();
 }
 
 function level3(){
+    fontColor = "#42f495";
     initBrick(Level3);
     levelCount = 3;
     draw();
 }
 
 function level4(){
+    fontColor = "#42d1f4";
     initBrick(Level4);
     levelCount = 4;
     draw();
 }
 
 function level5(){
+    fontColor = "#8642f4";
     initBrick(Level5);
     levelCount = 5;
     draw();
 }
 
 function level6(){
+    fontColor = "#f44292";
     initBrick(Level6);
     levelCount = 6;
     draw();
@@ -405,19 +412,43 @@ function reset(){
     location.reload();
 }
 
+function init(){
+    stopCount = setInterval(draw,10);
+    value = 301;
+    myTime = setInterval(displayTime, 1000);
+}
+
+function stop(){
+    clearInterval(stopCount);
+    clearInterval(myTime);
+}
+
+function displayTime() {
+    document.getElementById("label").innerHTML = "  "+ --value + "s";
+    if(value <= 0){
+        alert(timeOutTxt);
+        stop();
+    }
+
+}
+
 
 </script>
-<div style= "position: absolute; height: 120px; width: 200px; top: 65%;
-left: 18%; z-index: -1">
-        <label id = "label">Control Panel</label>
+<div style= "position: absolute; height: 120px; width: 200px; top: 68%;
+left: 25%; z-index: -1">
+
+        <input id = "button2"
+           type = "button"
+           value = " Start "
+           onclick = "init()"/>
         <input id = "button1"
                type = "button"
-               value = "click me"
-               onclick = "displayTest()"/>
-        <input id = "button2"
-                type = "button"
-               value = "start"
-               onclick = "init()"/>
+               value = " Pause "
+               onclick = "stop()"/>
+        <input id = "button5"
+           type = "button"
+           value = "Restart"
+           onClick="history.go(0)"/>
         <input id = "button3"
                type = "button"
                value = "level1"
@@ -443,10 +474,8 @@ left: 18%; z-index: -1">
                value = "level6"
                onclick = "level6()"/>
 
-        <input id = "button5"
-                type = "button"
-               value = "restart"
-               onClick="history.go(0)"/>
+
+    <label id = "label">Timer</label>
 </div>
 </body>
 </html>
