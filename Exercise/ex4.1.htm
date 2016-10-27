@@ -9,25 +9,49 @@
 </style>
 </head>
 <body>
-<canvas id='canvas' width='600' height='400'> Canvas not supported
-</canvas>
+<div id ="a">A
+    <div id="b">B
+        <div id ="d">D</div>
+    </div>
+    <div id ="c">C</div>
+</div>
 <script>
-    var canvas = document.getElementById('canvas'), context = canvas.getContext('2d');
-    context.lineWidth = 30;
-    context.font = '24px Helvetica'; context.fillText('Click anywhere to erase', 175, 40);
-    var ctx = canvas.getContext("2d");
-    ctx.fillStyle = "green";
-    ctx.fillRect(300, 200, canvas.width/2, canvas.height/2);
-    //ctx.fillRect(10, 10, 100, 100);
-    context.canvas.onmousedown = function (e) { 
-       ctx.clearRect(0, 0, canvas.width, canvas.height);
-       context.fillStyle = "black";
-       context.fillText('Click anywhere to erase', 175, 40);
-       
-    };
+    /*function Jeep(){
+        this.organization="DaimlerChrysler";
+    }
+    Jeep.prototype.color="blue";
+    var blue=new Jeep();
+    console.log(blue.organization); //LineA
+    console.log(blue.color); //LineB
+    var red=new Jeep();
+    red.color="red";
+    console.log(red.organization); //LineC
+    console.log(red.color); //LineD
+    Jeep.organization="Chrysler";
+    Jeep.prototype.color="green";
+    console.log(blue.organization); //LineE
+    console.log(blue.color); // LineF
+    console.log(red.organization); //LineG
+    console.log(red.color); //Line H
+    console.log(red.color); //Line H
+    function myFunction(){
+        console.log(event.target.id + "" + event.currentTarget.id);
+    }
+
+    document.getElementById("a").addEventListener("click",myFunction,true);
+    document.getElementById("b").addEventListener("click",myFunction,true);
+    document.getElementById("c").addEventListener("click",myFunction,true);
+    document.getElementById("d").addEventListener("click",myFunction,false);*/
+    var x=1;
+    (function(x){
+        console.log(x);
+        x=3;
+    })(2);
+    console.log(x);
     
     
-        </script> 
+        </script>
+<button id = "button1" onclick="myFunction()">Test</button>
 <textarea id="code" class="playable-code">
 ctx.fillStyle = "green";
 ctx.fillRect(10, 10, 100, 100);</textarea>
