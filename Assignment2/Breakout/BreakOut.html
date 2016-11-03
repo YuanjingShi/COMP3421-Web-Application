@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title ID="title">KarkOut Game</title>
+    <style>
+    	* { padding: 0; margin: 0; }
+    	canvas {
+            background: #eee;
+            display: block;
+            margin: 0 auto;
+            position: fixed;
+            z-index: -1;
+        }
+        #s1{
+            width: 800PX;
+            height: 500px;
+            background-image: url('BGP.png');
+            background-size: contain;
+            position: absolute;
+            z-index: 0;
+        }
+        #p1{
+            position: absolute;
+            height: 50px;
+            width: 110px;
+            top: 60%;
+            left: 53%;
+        }
+        #p2{
+            position: absolute;
+            height: 50px;
+            width: 110px;
+            top: 60%;
+            left: 67%;
+        }
+        #lang1{
+            position: absolute;
+            height: 50px;
+            width: 110px;
+            top: 72%;
+            left: 53%;
+            display: none;
+        }
+        #lang2{
+            position: absolute;
+            height: 50px;
+            width: 110px;
+            top: 72%;
+            left: 67%;
+            display:none;
+        }
+        #button1,#button2,#button3,#button4,#button5,#button6,#button7,#button8,#button9{
+
+        }
+    </style>
+</head>
+<body>
+<div id = "s1">
+    <button id = "p1" onclick = "choosePaddleNo(1)">Single Mode/单人模式</button>
+    <button id = "p2" onclick = "choosePaddleNo(2)">Dual Mode/双人模式</button>
+    <button id = "lang1" onclick = "changeLanguage(1)" >English</button>
+    <button id = "lang2" onclick = "changeLanguage(0)" >中文</button>
+</div>
+
+<canvas id="myCanvas" width="650" height="400"></canvas>
+
+<script>
+var canvas = document.getElementById("myCanvas");
+var ctx = canvas.getContext("2d");
+
+//ball vars
+var ballRadius = 10;
+var x = canvas.width/2;
+var y = canvas.height-30;
+var dx = 2;
+var dy = -2;
+
+//first paddle init
+var paddle1Height = 10;
+var paddle1Width = 75;
+var paddle1X = (canvas.width-paddle1Width)/2;
+var rightPressed1 = false;
+var leftPressed1 = false;
+
+//second paddle init
+var paddle2Count = 0;
+var paddle2Height = 10;
+var paddle2Width = 75;
+var paddle2X = (canvas.width-paddle1Width)/2 + 100;
+var rightPressed2 = false;
+var leftPressed2 = false;
+
+var brickRowCount = 10;
+var brickColumnCount = 6;
+var brickWidth = 50;
+var brickHeight = 20;
+var brickPadding = 10;
+var brickOffsetTop = 30;
+var brickOffsetLeft = 30;
+var score = 0;
+var lives = 3;
+var bricks = [];
+
+//all counting vars
+var lanCount;
+var winCount = 0;
+var stopCount;
+var levelCount = 1;
+var myTime;
+
+//all the text variables
+var scoreTxt;
+var liveTxt;
+var winTxt;
+var lostTxt;
+var finishTxt;
+var timeOutTxt;
+
+//all the color vars
+var fontColor = "#f45942";
+var ballColor = "skyblue";
+var ballColor1 = "#f44292";
+
+var Level;
+var Level1 = [  [0,1,1,1,1,1,1,1,1,0],
+                [0,1,1,1,1,1,1,1,1,0],
+                [0,1,1,1,1,1,1,1,1,0],
+                [0,1,1,1,1,1,1,1,1,0],
+                [0,0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0,0]];
+
+var Level2 = [  [1,1,1,1,1,1,1,1,1,1],
+                [1,1,1,1,0,0,1,1,1,1],
+                [1,1,1,1,0,0,1,1,1,1],
+                [1,1,1,1,0,0,1,1,1,1],
+                [0,0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0,0]];
+
+var Level3 = [  [1,0,1,1,1,1,1,1,0,1],
+                [0,1,1,1,1,1,1,1,1,0],
+                [0,1,1,1,1,1,1,1,1,0],
+                [1,0,1,1,1,1,1,1,0,1],
+                [0,0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0,0]];
+
+var Level4 = [  [1,1,0,1,1,1,1,0,1,1],
+                [1,1,1,0,1,1,0,1,1,1],
+                [1,1,1,1,0,0,1,1,1,1],
+                [1,1,1,0,1,1,0,1,1,1],
+                [1,1,0,1,1,1,1,0,1,1],
+                [0,0,0,0,0,0,0,0,0,0]];
+
+var Level5 = [  [1,0,1,1,1,1,1,1,0,1],
+                [0,1,1,1,1,1,1,1,1,0],
+                [1,0,1,1,1,1,1,1,0,1],
+                [1,0,1,1,1,1,1,1,0,1],
+                [0,1,1,1,1,1,1,1,1,0],
+                [1,0,1,1,1,1,1,1,0,1]];
+
+var Level6 = [  [1,1,1,1,1,1,1,1,1,1],
+                [0,1,1,1,1,1,1,1,1,0],
+                [1,0,1,1,1,1,1,1,0,1],
+                [1,0,1,1,1,1,1,1,0,1],
+                [0,1,1,1,1,1,1,1,1,0],
+                [1,1,1,1,0,0,1,1,1,1]];
+
+
+
+Level = Level1;
+
+function initBrick(x){
+    if( x != null) {
+        Level = x;
+    }
+    for (c = 0; c < brickColumnCount; c++) {
+        bricks[c] = [];
+        for (r = 0; r < brickRowCount; r++) {
+            bricks[c][r] = {x: 0, y: 0, status: 1, state: Level[c][r]};
+            if (Level[c][r] == 1) {
+                winCount++;
+            }
+        }
+    }
+}
+initBrick();
+
+
+document.addEventListener("keydown", keyDownHandler, false);
+document.addEventListener("keyup", keyUpHandler, false);
+document.addEventListener("mousemove", mouseMoveHandler, false);
+
+function keyDownHandler(e) {
+    if(e.keyCode == 39) {
+        rightPressed1 = true;
+    }
+    else if(e.keyCode == 37) {
+        leftPressed1 = true;
+    }
+
+    if(e.keyCode == 68) {
+        rightPressed2 = true;
+    }
+    else if(e.keyCode == 65) {
+        leftPressed2 = true;
+    }
+
+}
+function keyUpHandler(e) {
+    if(e.keyCode == 39) {
+        rightPressed1 = false;
+    }
+    else if(e.keyCode == 37) {
+        leftPressed1 = false;
+    }
+
+    if(e.keyCode == 68) {
+        rightPressed2 = false;
+    }
+    else if(e.keyCode == 65) {
+        leftPressed2 = false;
+    }
+}
+function mouseMoveHandler(e) {
+    var relativeX = e.clientX - canvas.offsetLeft;
+    if(relativeX > 0 && relativeX < canvas.width) {
+        paddle1X = relativeX - paddle1Width/2;
+    }
+}
+function collisionDetection() {
+    for(c=0; c<brickColumnCount; c++) {
+        for(r=0; r<brickRowCount; r++) {
+            var b = bricks[c][r];
+            if(b.status == 1 && b.state == 1) {
+                if(x > b.x && x < b.x+brickWidth && y > b.y && y < b.y+brickHeight) {
+                    dy = -dy;
+                    b.status = 0;
+                    score++;
+                    if(score == winCount) {
+                        alert(winTxt);
+                        levelCount++;
+                        if(levelCount == 7){
+                            alert(finishTxt);
+                            document.location.reload();
+                        }else if(levelCount == 2){
+                            level(2);
+                        }else if(levelCount == 3){
+                            level(3);
+                        }else if(levelCount == 4){
+                            level(4);
+                        }else if(levelCount == 5){
+                            level(5);
+                        }else if(levelCount == 6){
+                            level(6);
+                        }else if(levelCount == 7){
+                            level(7);
+                        }
+
+                    }
+                }
+            }
+        }
+    }
+}
+
+function drawBall() {
+    ctx.beginPath();
+    ctx.arc(x, y, ballRadius, 0, Math.PI*2);
+    ctx.fillStyle = ballColor;
+    ctx.fill();
+    ctx.closePath();
+}
+function drawpaddle() {
+    ctx.beginPath();
+    ctx.rect(paddle1X, canvas.height-paddle1Height, paddle1Width, paddle1Height);
+    ctx.fillStyle = fontColor;
+    ctx.fill();
+    ctx.closePath();
+
+    if(paddle2Count == 1){
+        ctx.beginPath();
+        ctx.rect(paddle2X, canvas.height-paddle2Height, paddle2Width, paddle2Height);
+        ctx.fillStyle = ballColor1;
+        ctx.fill();
+        ctx.closePath();
+    }
+}
+function drawBricks() {
+
+    for(c=0; c<brickColumnCount; c++) {
+        for(r=0; r<brickRowCount; r++) {
+            if(bricks[c][r].status == 1 && bricks[c][r].state == 1  ) {
+                var brickX = (r*(brickWidth+brickPadding))+brickOffsetLeft;
+                var brickY = (c*(brickHeight+brickPadding))+brickOffsetTop;
+                bricks[c][r].x = brickX;
+                bricks[c][r].y = brickY;
+                ctx.beginPath();
+                ctx.rect(brickX, brickY, brickWidth, brickHeight);
+                ctx.fillStyle = fontColor;
+                ctx.fill();
+                ctx.closePath();
+            }
+        }
+    }
+}
+function drawScore() {
+
+    ctx.font = "16px Arial";
+    ctx.fillStyle = "#0095DD";
+    ctx.fillText(scoreTxt+score, 8, 20);
+}
+function drawLives() {
+
+    ctx.font = "16px Arial";
+    ctx.fillStyle = "#0095DD";
+    ctx.fillText(liveTxt+lives, canvas.width-100, 20);
+}
+
+function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawBricks();
+    drawBall();
+    drawpaddle();
+    drawScore();
+    drawLives();
+    collisionDetection();
+
+    if(x + dx > canvas.width-ballRadius || x + dx < ballRadius) {
+        dx = -dx;
+    }
+
+    if(y + dy < ballRadius) {
+        dy = -dy;
+    } else if(y + dy > canvas.height-ballRadius) {
+        if (paddle2Count == 0) {
+            if (x > paddle1X && x < paddle1X + paddle1Width) {
+                dy = -dy;
+            } else {
+                lives--;
+                if (!lives) {
+                    alert(lostTxt);
+                    document.location.reload();
+                } else {
+                    x = canvas.width / 2;
+                    y = canvas.height - 30;
+                    dx = 2;
+                    dy = -2;
+                    paddle1X = (canvas.width - paddle1Width) / 2;
+                }
+            }
+        } else {
+            if ((x > paddle1X && x < paddle1X + paddle1Width) || (x > paddle2X && x < paddle2X + paddle2Width)) {
+                dy = -dy;
+            } else {
+                lives--;
+                if (!lives) {
+
+                    alert(lostTxt);
+                    document.location.reload();
+
+                } else {
+                    if (!(x > paddle1X && x < paddle1X + paddle1Width)) {
+                        x = canvas.width / 2;
+                        y = canvas.height - 30;
+                        dx = 2;
+                        dy = -2;
+                        paddle1X = (canvas.width - paddle1Width) / 2;
+
+                    } else if (!(x > paddle2X && x < paddle2X + paddle2Width)) {
+                        x = canvas.width / 2;
+                        y = canvas.height - 30;
+                        dx = 2;
+                        dy = -2;
+                        paddle2X = (canvas.width - paddle2Width) / 2 + 50;
+                    }
+                }
+            }
+        }
+    }
+    
+    if(rightPressed1 && paddle1X < canvas.width-paddle1Width) {
+        paddle1X += 7;
+    }
+    else if(leftPressed1 && paddle1X > 0) {
+        paddle1X -= 7;
+    }
+
+    if(rightPressed2 && paddle2X < canvas.width-paddle2Width) {
+        paddle2X += 7;
+    }
+    else if(leftPressed2 && paddle2X > 0) {
+        paddle2X -= 7;
+    }
+    
+    x += dx;
+    y += dy;
+}
+
+function displayTest(){
+    txtOutput.value = winCount;
+}
+
+function choosePaddleNo(x){
+    if(x == 1){
+        paddle2Count = 0;
+    }else{
+        paddle2Count = 1;
+    }
+    document.getElementById("p1").remove();
+    document.getElementById("p2").remove();
+    document.getElementById("lang1").style.display = "block";
+    document.getElementById("lang2").style.display = "block";
+}
+
+function changeLanguage(count){
+    if(count == 0) {
+
+        //remove the div
+        var el = document.getElementById("s1");
+        while (el.firstChild) {
+            el.removeChild(el.firstChild);
+        }
+        el.parentNode.removeChild(el);
+        //control panel language changes
+        document.getElementById("label").innerHTML = "计时器";
+        document.getElementById("button1").value = "暂停游戏";
+        document.getElementById("button2").value = "开始游戏";
+        document.getElementById("button3").value = "第一难度";
+        document.getElementById("button4").value = "第二难度";
+        document.getElementById("button6").value = "第三难度";
+        document.getElementById("button7").value = "第四难度";
+        document.getElementById("button8").value = "第五难度";
+        document.getElementById("button9").value = "第六难度";
+        document.getElementById("button5").value = "重新启动";
+
+        winTxt = "恭喜你完成了本关！";
+        lostTxt = "很遗憾，再来一次吧？";
+        scoreTxt = "分数：";
+        liveTxt = "生命值：";
+        finishTxt = "您已完成所有关卡，休息一会？"
+        timeOutTxt = "时间不够了哦";
+        lancount = 0;
+        //draw();
+    }else{
+        //remove the div
+        var el = document.getElementById("s1");
+        while (el.firstChild) {
+            el.removeChild(el.firstChild);
+        }
+        el.parentNode.removeChild(el);
+
+        document.getElementById("label").innerHTML = " Timer ";
+        document.getElementById("button1").value = " Pause";
+        document.getElementById("button2").value = " Start ";
+        document.getElementById("button3").value = "Level1";
+        document.getElementById("button4").value = "Level2";
+        document.getElementById("button6").value = "Level3";
+        document.getElementById("button7").value = "Level4";
+        document.getElementById("button8").value = "Level5";
+        document.getElementById("button9").value = "Level6";
+        document.getElementById("button5").value = "Restart";
+
+        winTxt = "Congrats!";
+        lostTxt = "You lose.";
+        scoreTxt = "Score: ";
+        liveTxt = "Lives: ";
+        finishTxt = "You have finished all levels, time to have a rest?";
+        timeOutTxt = "Time is out!";
+        lancount = 1;
+        //draw();
+    }
+}
+
+function level1(){
+    initBrick(Level1);
+    draw();
+}
+
+function level2(){
+    fontColor = "#f4e842";
+    initBrick(Level2);
+    levelCount = 2;
+    draw();
+}
+
+function level3(){
+    fontColor = "#42f495";
+    initBrick(Level3);
+    levelCount = 3;
+    draw();
+}
+
+function level4(){
+    fontColor = "#42d1f4";
+    initBrick(Level4);
+    levelCount = 4;
+    draw();
+}
+
+function level5(){
+    fontColor = "#8642f4";
+    initBrick(Level5);
+    levelCount = 5;
+    draw();
+}
+
+function level6(){
+    fontColor = "#f44292";
+    initBrick(Level6);
+    levelCount = 6;
+    draw();
+}
+
+function reset(){
+    location.reload();
+}
+
+function init(){
+    stopCount = setInterval(draw,10);
+    value = 301;
+    myTime = setInterval(displayTime, 1000);
+}
+
+function stop(){
+    clearInterval(stopCount);
+    clearInterval(myTime);
+}
+
+function displayTime() {
+    document.getElementById("label").innerHTML = "  "+ --value + "s";
+    if(value <= 0){
+        alert(timeOutTxt);
+        stop();
+    }
+
+}
+
+
+</script>
+<div style= "position: absolute; height: 120px; width: 200px; top: 68%;
+left: 25%; z-index: -1">
+
+        <input id = "button2"
+           type = "button"
+           value = " Start "
+           onclick = "init()"/>
+        <input id = "button1"
+               type = "button"
+               value = " Pause "
+               onclick = "stop()"/>
+        <input id = "button5"
+           type = "button"
+           value = "Restart"
+           onClick="history.go(0)"/>
+        <input id = "button3"
+               type = "button"
+               value = "level1"
+               onclick = "level1()"/>
+        <input id = "button4"
+                type = "button"
+               value = "level2"
+               onclick = "level2()"/>
+        <input id = "button6"
+               type = "button"
+               value = "level3"
+               onclick = "level3()"/>
+        <input id = "button7"
+               type = "button"
+               value = "level4"
+               onclick = "level4()"/>
+        <input id = "button8"
+               type = "button"
+               value = "level5"
+               onclick = "level5()"/>
+        <input id = "button9"
+               type = "button"
+               value = "level6"
+               onclick = "level6()"/>
+
+
+    <label id = "label">Timer</label>
+</div>
+</body>
+</html>
