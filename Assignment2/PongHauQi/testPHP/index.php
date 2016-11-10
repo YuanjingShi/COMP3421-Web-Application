@@ -7,6 +7,8 @@ function loginForm() {
        <p>Please enter your name to continue:</p>
        <label for="name">Name:</label>
        <input type="text" name="name" id="name" />
+       <label for="country">Geo Info:</label>
+       <input type="text" name="country" id="country" />
        <input type="submit" name="enter" id="enter" value="Enter" />
    </form>
    </div>
@@ -155,6 +157,7 @@ a:hover {
                 name="submitmsg" type="submit" id="submitmsg" value="Send" />
         </form>
     </div>
+    <div id="map" style="width:400px;height:400px;"></div>
     <script type="text/javascript"
         src="https://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
     <script type="text/javascript">
@@ -204,7 +207,44 @@ a:hover {
     ?>
     <script type="text/javascript"
         src="https://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
-    <script type="text/javascript">
-</script>
+    <script type="text/javascript"></script>
+    <script src="http://maps.googleapis.com/maps/api/js"></script>
+    <script>
+    var myLatlng = new google.maps.LatLng(-25.363882,131.044922);
+    function initialize () {
+
+    var mapOptions = {
+    	center: new google.maps.LatLng(0, 0),
+    	zoom: 1,
+    	minZoom: 1
+    };
+
+    var marker = new google.maps.Marker({
+        position: myLatlng,
+        title:"Hello World!"
+    });
+
+    var map = new google.maps.Map(document.getElementById('map'),mapOptions );
+
+    var allowedBounds = new google.maps.LatLngBounds(
+    	new google.maps.LatLng(85, -180),	// top left corner of map
+    	new google.maps.LatLng(-85, 180)	// bottom right corner
+    );
+
+    var k = 5.0;
+    var n = allowedBounds .getNorthEast().lat() - k;
+    var e = allowedBounds .getNorthEast().lng() - k;
+    var s = allowedBounds .getSouthWest().lat() + k;
+    var w = allowedBounds .getSouthWest().lng() + k;
+    var neNew = new google.maps.LatLng( n, e );
+    var swNew = new google.maps.LatLng( s, w );
+    boundsNew = new google.maps.LatLngBounds( swNew, neNew );
+    map .fitBounds(boundsNew);
+    marker.setMap(map);
+
+    }
+
+    google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
 </body>
 </html>
