@@ -5,6 +5,11 @@
 <body>
 <?php
 session_start ();
+$count = 0;
+$array = array(
+    "issac" => array(1),
+    "henry" => array(2),
+);
 function loginForm() {
     echo '
    <div id="loginform">
@@ -22,10 +27,22 @@ function loginForm() {
     loginForm();
     if (isset ( $_POST ['enter'] )) {
         if ($_POST ['name'] != "") {
-            $_SESSION ['name'] = stripslashes ( htmlspecialchars ( $_POST ['name'] ) );
-            $fp = fopen ( "log.html", 'a' );
-            fwrite ( $fp, "<div class='msgln'><i>User " . $_SESSION ['name'] . " has joined the chat session.</i><br></div>" );
-            fclose ( $fp );
+            foreach ($array as $i => $value) {
+                if($array[$i] == stripslashes ( htmlspecialchars ( $_POST ['name'] ) )){
+                    $count = $count + 1;
+             }
+            }
+            if($count == 0){
+                $_SESSION ['name'] = stripslashes ( htmlspecialchars ( $_POST ['name'] ) );
+                $array[] = $_SESSION ['name'];
+                $fp = fopen ( "user.txt", 'a' );
+                fwrite ( $fp, $_SESSION ['name'] . " has won". );
+                fclose ( $fp );
+            else{
+
+            }
+
+
         } else {
             echo '<span class="error">Please type in a name</span>';
         }

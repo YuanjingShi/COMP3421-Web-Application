@@ -1,17 +1,5 @@
 <link rel="stylesheet" type="text/css" href="mystyle.css" media="screen" />
 <?php
-//session_start ();
-
-if (isset ( $_POST ['enter'] )) {
-    if ($_POST ['name'] != "") {
-        $_SESSION ['name'] = stripslashes ( htmlspecialchars ( $_POST ['name'] ) );
-        $fp = fopen ( "log.html", 'a' );
-        fwrite ( $fp, "<div class='msgln'><i>User " . $_SESSION ['name'] . " has joined the chat session.</i><br></div>" );
-        fclose ( $fp );
-    } else {
-        echo '<span class="error">Please type in a name</span>';
-    }
-}
 
 if (isset ( $_GET ['logout'] )) {
 
