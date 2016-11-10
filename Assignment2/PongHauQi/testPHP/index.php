@@ -210,11 +210,11 @@ a:hover {
     <script type="text/javascript"></script>
     <script src="http://maps.googleapis.com/maps/api/js"></script>
     <script>
-    var myLatlng = new google.maps.LatLng(-25.363882,131.044922);
+    var myLatlng = new google.maps.LatLng(22,114);
     function initialize () {
 
     var mapOptions = {
-    	center: new google.maps.LatLng(0, 0),
+    	center: new google.maps.LatLng(0,0),
     	zoom: 1,
     	minZoom: 1
     };
