@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Simple Image change</title>
+</head>
+<body>
+<h1>Changing the Image</h1>
+<img src="" id="myImage" width="100" height="150">
+<form action="">
+<select onchange="changeImage(this.value)">
+<option value="">Select an image:</option>
+<option value="1">chocolate</option>
+<option value="2">strawberry</option>
+<option value="3">peach</option>
+</select>
+</form>
+
+<script>
+        function changeImage(s) {
+            var image = document.getElementById('myImage');
+            if (s==1) { image.src = "chocolate.jpg";}
+            if (s==2) { image.src = "strawberry.jpg";}
+	    if (s==3) { image.src = "peach.jpg";}
+        }
+    </script>
+<p><strong>Note:</strong> Select to Change the dissert</p>
+</body>
+</html>
