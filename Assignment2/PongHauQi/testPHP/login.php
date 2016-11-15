@@ -31,7 +31,7 @@ if (isset ( $_POST ['enter'] )) {
         if(in_array($_SESSION ['name'], $_SESSION['user'])){
             //echo $_SESSION['array'][$_SESSION['name']];
             header("Location: checkLogin.php");
-            $_SESSION ['winCount'] = $_SESSION['array'][$user][1];
+            $_SESSION ['winCount'] = $_SESSION['array'][$_SESSION ['name']][1];
         }else{
             //echo '<span class="error">User is not registered!</span>';
             $fp1 = fopen ( $file, 'a' );
