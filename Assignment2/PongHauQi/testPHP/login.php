@@ -12,9 +12,10 @@ $count = count($text);
 $_SESSION['array'] = array();
 $_SESSION['user'] = array();
 for($i=0;$i<$count;$i++){
-    list($user,$pwd) = explode(" ", $text[$i]);
+    list($user,$country,$winCount) = explode(" ", $text[$i]);
     $_SESSION['user'][] = $user;
-    $_SESSION['array'][$user] = $pwd;
+    $_SESSION['array'][$user] = $country;
+    $_SESSION['array'][$user] = $winCount;
 }
 //echo in_array(henry,$text,true) ? 'It is here' : 'Sorry it is not';
 //print_r($_SESSION['user']);
@@ -25,15 +26,16 @@ for($i=0;$i<$count;$i++){
 if (isset ( $_POST ['enter'] )) {
     if ($_POST ['name'] != "" && $_POST ['pwd'] != "") {
         $_SESSION ['name'] = stripslashes ( htmlspecialchars ( $_POST ['name'] ) );
-        $_SESSION ['pwd'] = stripslashes ( htmlspecialchars ( $_POST ['pwd'] ) );
+        $_SESSION ['country'] = stripslashes ( htmlspecialchars ( $_POST ['country'] ) );
         //echo $_POST ['name'];
         if(in_array($_SESSION ['name'], $_SESSION['user'])){
             //echo $_SESSION['array'][$_SESSION['name']];
             header("Location: checkLogin.php");
+            $_SESSION ['winCount'] = $_SESSION['array'][$user][1];
         }else{
             //echo '<span class="error">User is not registered!</span>';
             $fp1 = fopen ( $file, 'a' );
-            fwrite ($fp1, $_SESSION ['name']." ".$_SESSION ["pwd"]."\n");
+            fwrite ($fp1, $_SESSION ['name']." ".$_SESSION ["country"]." "."0"."\n");
             fclose ( $fp1 );
             $fp = fopen ( "log.html", 'a' );
             fwrite ( $fp, "<div class='msgln'><i>User " . $_SESSION ['name'] . " has joined the chat session.</i><br></div>" );
