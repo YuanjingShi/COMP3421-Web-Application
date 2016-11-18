@@ -9,7 +9,7 @@ session_start ();
         $fp = fopen ( "log.html", 'a' );
         fwrite ( $fp, "<div class='msgln'><i>User " . $_SESSION ['name'] . " has joined the chat session.</i><br></div>" );
         fclose ( $fp );
-        header("Location: index.php");
+        header("Location: game.php");
     }else{
         session_destroy ();
         header("Location: login.php?logfail=true");
