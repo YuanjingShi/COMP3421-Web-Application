@@ -1,8 +1,41 @@
+<?php
+session_start ();
+
+if (isset ( $_GET ['logout'] )) {
+
+    // Simple exit message
+    $fp = fopen ( "log.html", 'a' );
+    fwrite ( $fp, "<div class='msgln'><i>User " . $_SESSION ['name'] . " has left the chat session.</i><br></div>" );
+    fclose ( $fp );
+
+    session_destroy ();
+    header ( "Location: login.php" ); // Redirect the user
+}
+
+$file = "user.txt";
+$fopen = fopen ( $file, "r");
+
+if ($fopen) {
+    $text = explode("\n", fread($fopen, filesize($file)));
+}
+fclose($fopen);
+$count = count($text);
+//echo in_array(henry,$text,true) ? 'It is here' : 'Sorry it is not';
+//print_r($_SESSION['user']);
+//print_r($_SESSION['array']["henry"]);
+?>
+
 <!doctype html>
 <html lang="en">
 <head>
 	<title>Pong Hau Qi</title>
 </head>
+ <p class="welcome">
+                Welcome, <b><?php echo $_SESSION['name']; ?></b>
+            </p>
+            <p class="logout">
+                <a id="exit" href="#">Exit Game</a>
+            </p>
 <p id="demo" style= "position:relative; left: 42%">This is a Pong Hau Qi game</p>
 <p style= "position:relative; left: 44%">Every turn you got:</p>
 <p id="demo1" style= "position:relative; left: 45%">This is the timer</p>
@@ -156,7 +189,6 @@
                 if (winCount == 0) {
                     start();
                 }
-                triggerAI();
         }else if(class2 == "false"){
             alert("You can only drop piece on empty positions");
             reloadPage();
@@ -175,54 +207,6 @@
             Turn.value = "Player 1 's turn";
         }else{
             Turn.value = "Player 2 's turn";
-        }
-    }
-
-    function triggerAI(){
-        if(turn == 1){
-            var temp1 = checkIfDroppable(position[2],position[4]);
-            var temp2 = checkIfDroppable(position[3], position[4]);
-            document.getElementById("demo").innerHTML = "";
-            if(temp2 && !temp1){
-                turn = 0;
-                count2 = 1;
-                var positionTemp;
-                prePosition = document.getElementById(position[3]);
-                document.getElementById(position[4])
-                        .appendChild(document.getElementById("drag4"));
-                positionTemp = position[4];
-                position[4] = position[3];
-                position[3] = positionTemp;
-                document.getElementById(position[3]).className = "false";
-                prePosition.className = "true";
-
-                alertWinner();
-                //re-enter the timer if game need to be continued.
-                if (winCount == 0) {
-                    start();
-                }
-
-        }else{
-                //drag operations
-                var positionTemp;
-                turn = 0;
-                count2 = 0;
-                prePosition = document.getElementById(position[2]);
-                document.getElementById(position[4])
-                        .appendChild(document.getElementById("drag3"));
-                positionTemp = position[4];
-                position[4] = position[2];
-                position[2] = positionTemp;
-                document.getElementById(position[2]).className = "false";
-                prePosition.className = "true";
-
-                alertWinner();
-                //re-enter the timer if game need to be continued.
-                if (winCount == 0) {
-                    start();
-                }
-
-            }
         }
     }
 
@@ -340,6 +324,25 @@
              value = "restart"
              onclick = "reloadPage()"/>
 </div>
+
+ <script type="text/javascript"
+        src="https://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
+    <script type="text/javascript">
+        // jQuery Document
+        $(document).ready(function(){
+        });
+
+        //jQuery Document
+        $(document).ready(function(){
+            //If user wants to end session
+            $("#exit").click(function(){
+                var exit = confirm("Are you sure you want to end the session?");
+                if(exit==true){window.location = 'PongHauQi.php?logout=true';}
+            });
+        });
+
+
+    </script>
 
 </body>
 </html>

@@ -24,7 +24,7 @@ for($i=0;$i<$count;$i++){
 
 
 if (isset ( $_POST ['enter'] )) {
-    if ($_POST ['name'] != "" && $_POST ['pwd'] != "") {
+    if ($_POST ['name'] != "" && $_POST ['country'] != "") {
         $_SESSION ['name'] = stripslashes ( htmlspecialchars ( $_POST ['name'] ) );
         $_SESSION ['country'] = stripslashes ( htmlspecialchars ( $_POST ['country'] ) );
         //echo $_POST ['name'];
@@ -54,7 +54,7 @@ if (isset ( $_POST ['enter'] )) {
 <link rel="stylesheet" type="text/css" href="mystyle.css" media="screen" />
 <body>
  <div id="loginform">
-   <form action="index.php" method="post">
+   <form method="post">
        <p>Please enter your name to continue:</p>
        <label for="name">Name:</label>
        <input type="text" name="name" id="name" />
