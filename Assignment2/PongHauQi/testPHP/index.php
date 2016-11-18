@@ -19,11 +19,7 @@ if (isset ( $_GET ['logout'] )) {
 <title>Chat - Customer Module</title>
 </head>
 <body>
-    <?php
-    if (! isset ( $_SESSION ['name'] )) {
-        loginForm ();
-    } else {
-        ?>
+
 <div id="wrapper">
         <div id="menu">
             <p class="welcome">
@@ -94,9 +90,6 @@ if (isset ( $_GET ['logout'] )) {
 
         setInterval (loadLog, 1000);
     </script>
-<?php
-    }
-    ?>
     <script type="text/javascript"
         src="https://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
     <script type="text/javascript"></script>
