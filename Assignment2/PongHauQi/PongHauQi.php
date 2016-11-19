@@ -20,9 +20,9 @@ if ($fopen) {
 }
 fclose($fopen);
 $count = count($text);
-//echo in_array(henry,$text,true) ? 'It is here' : 'Sorry it is not';
-//print_r($_SESSION['user']);
-//print_r($_SESSION['array']["henry"]);
+$_SESSION["turnCount"] = 1;
+$_SESSION["position"] = array("div1","div2","div4","div5","div3");
+
 ?>
 
 <!doctype html>
@@ -160,7 +160,7 @@ $count = count($text);
 
                 //reminder of Turns
                 if (turn == 0) {
-                    document.getElementById("demo").innerHTML = "";
+                    document.getElementById("demo").innerHTML = "Player 1's turn";
                     if (count2 == 0) {
                         position[2] = id2;
                         class2 = "false";
@@ -340,6 +340,14 @@ $count = count($text);
                 if(exit==true){window.location = 'PongHauQi.php?logout=true';}
             });
         });
+
+        $("#drag1,#drag2,#drag3,#drag4").drop(function(){
+                var clientmsg = $("#usermsg").val();
+                $.post("post.php", {text: clientmsg});
+                $("#usermsg").attr("value", "");
+                loadLog;
+                return false;
+            });
 
 
     </script>
