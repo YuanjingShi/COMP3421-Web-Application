@@ -39,39 +39,6 @@ $_SESSION["position"] = array("div1","div2","div4","div5","div3");
 <p id="demo" style= "position:relative; left: 42%">This is a Pong Hau Qi game</p>
 <p style= "position:relative; left: 44%">Every turn you got:</p>
 <p id="demo1" style= "position:relative; left: 45%">This is the timer</p>
-<style>
-	#div1, #div2, #div3,#div4,#div5 {
-        float: left;
-        width: 74px;
-        height: 74px;
-        margin: auto;
-        position: relative;
-
-	}
-    #div6, #div7, #div8, #div9{
-        float: left;
-        width: 74px;
-        height: 74px;
-        margin: auto;
-        position: relative;
-
-    }
-    #div0 {
-        position: relative;
-        height: 228px;
-        width: 228px;
-        margin: auto;
-        padding: 6px;
-        background-image: url('image1/board1.png');
-        background-size: contain;
-    }
-    #drag1, #drag2, #drag3, #drag4 {
-        width: 80px;
-        height: 80px;
-    }
-
-
-</style>
 
 <script>
 
@@ -349,8 +316,26 @@ $_SESSION["position"] = array("div1","div2","div4","div5","div3");
                 return false;
             });
 
+        function Update(){
+            $.ajax({
+                url: "log.html",
+                cache: false,
+                success: function(html){
+                    $("#chatbox").html(html); //Insert chat log into the #chatbox div
+
+                    //Auto-scroll
+                    var newscrollHeight = $("#chatbox").attr("scrollHeight") - 20; //Scroll height after the request
+                    if(newscrollHeight > oldscrollHeight){
+                        $("#chatbox").animate({ scrollTop: newscrollHeight }, 'normal'); //Autoscroll to bottom of div
+                    }
+                }
+            });
+        }
+
+
 
     </script>
-
+<script src="http://maps.googleapis.com/maps/api/js"></script>
+<script src = googleUser.js></script>
 </body>
 </html>
