@@ -138,11 +138,6 @@ $_SESSION["position"] = array("div1","div2","div4","div5","div3");
                         class2 = "false";
                         prePosition.className = "true";
                     }
-                    <?
-                    $fp = fopen("update.php", 'a');
-                    fwrite($fp, position);
-                    fclose($fp);
-                    ?>
                 } else {
                     //this part is for dual-player model
                     document.getElementById("demo").innerHTML = "Player 2's turn";
@@ -285,6 +280,9 @@ $_SESSION["position"] = array("div1","div2","div4","div5","div3");
     </div>
 
 </div>
+<form method="post">
+
+</form>
 
 <div  style= "position: relative; height: 150px; width: 200px; left: 43%">
       <input type = "button"

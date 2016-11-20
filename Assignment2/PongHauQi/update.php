@@ -1,20 +1,16 @@
 <?php
 session_start();
-include ("constants.php");
 
-if($_SESSION['turnCount'] == 1){
+if(isset($_SESSION['name'])){
     $text = $_POST['text'];
 
-    $fp = fopen("log.html", 'a');
-    fwrite($fp, "<div class='msgln'>(".date("g:i A").")
-    <b>".$_SESSION['name']."
-    </b>: ".stripslashes(htmlspecialchars($text))."
-    <br></div>");
+    $fp = fopen("test.php", 'a');
+    fwrite($fp, $text);
     fclose($fp);
 }
 
-$playerCount = 0;
+?>
 
-echo $username;
- ?>
-positionpositionpositionposition
+<script>
+    console.log(<? echo $text; ?>);
+</script>
