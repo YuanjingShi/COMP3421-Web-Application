@@ -1,5 +1,6 @@
 <?php
 session_start();
+include ("constants.php");
 
 if($_SESSION['turnCount'] == 1){
     $text = $_POST['text'];
@@ -12,4 +13,8 @@ if($_SESSION['turnCount'] == 1){
     fclose($fp);
 }
 
+$playerCount = 0;
+
+echo $username;
  ?>
+positionpositionpositionposition

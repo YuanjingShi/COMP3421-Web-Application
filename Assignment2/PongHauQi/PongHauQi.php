@@ -28,6 +28,7 @@ $_SESSION["position"] = array("div1","div2","div4","div5","div3");
 <!doctype html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" type="text/css" href="myStyle.css" media="screen" />
 	<title>Pong Hau Qi</title>
 </head>
  <p class="welcome">
@@ -137,6 +138,11 @@ $_SESSION["position"] = array("div1","div2","div4","div5","div3");
                         class2 = "false";
                         prePosition.className = "true";
                     }
+                    <?
+                    $fp = fopen("update.php", 'a');
+                    fwrite($fp, position);
+                    fclose($fp);
+                    ?>
                 } else {
                     //this part is for dual-player model
                     document.getElementById("demo").innerHTML = "Player 2's turn";
@@ -295,41 +301,52 @@ $_SESSION["position"] = array("div1","div2","div4","div5","div3");
  <script type="text/javascript"
         src="https://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
     <script type="text/javascript">
-        // jQuery Document
-        $(document).ready(function(){
-        });
-
-        //jQuery Document
-        $(document).ready(function(){
-            //If user wants to end session
-            $("#exit").click(function(){
-                var exit = confirm("Are you sure you want to end the session?");
-                if(exit==true){window.location = 'PongHauQi.php?logout=true';}
-            });
-        });
-
-        $("#drag1,#drag2,#drag3,#drag4").drop(function(){
-                var clientmsg = $("#usermsg").val();
-                $.post("post.php", {text: clientmsg});
-                $("#usermsg").attr("value", "");
-                loadLog;
-                return false;
-            });
 
         function Update(){
-            $.ajax({
-                url: "log.html",
-                cache: false,
-                success: function(html){
-                    $("#chatbox").html(html); //Insert chat log into the #chatbox div
+            if(turn == 1){
+                var temp1 = checkIfDroppable(position[2],position[4]);
+                var temp2 = checkIfDroppable(position[3], position[4]);
+                if(temp2 && !temp1){
+                    turn = 0;
+                    count2 = 1;
+                    var positionTemp;
+                    prePosition = document.getElementById(position[3]);
+                    document.getElementById(position[4])
+                        .appendChild(document.getElementById("drag4"));
+                    positionTemp = position[4];
+                    position[4] = position[3];
+                    position[3] = positionTemp;
+                    document.getElementById(position[3]).className = "false";
+                    prePosition.className = "true";
 
-                    //Auto-scroll
-                    var newscrollHeight = $("#chatbox").attr("scrollHeight") - 20; //Scroll height after the request
-                    if(newscrollHeight > oldscrollHeight){
-                        $("#chatbox").animate({ scrollTop: newscrollHeight }, 'normal'); //Autoscroll to bottom of div
+                    alertWinner();
+                    //re-enter the timer if game need to be continued.
+                    if (winCount == 0) {
+                        start();
                     }
+
+                }else{
+                    //drag operations
+                    var positionTemp;
+                    turn = 0;
+                    count2 = 0;
+                    prePosition = document.getElementById(position[2]);
+                    document.getElementById(position[4])
+                        .appendChild(document.getElementById("drag3"));
+                    positionTemp = position[4];
+                    position[4] = position[2];
+                    position[2] = positionTemp;
+                    document.getElementById(position[2]).className = "false";
+                    prePosition.className = "true";
+
+                    alertWinner();
+                    //re-enter the timer if game need to be continued.
+                    if (winCount == 0) {
+                        start();
+                    }
+
                 }
-            });
+            }
         }
 
 
