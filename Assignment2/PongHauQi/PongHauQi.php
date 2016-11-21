@@ -292,9 +292,9 @@ session_start();
         var time = setInterval(function(){
             var value = parseInt(responsePHP());
             if(value == -1){
-                ;
+
             }else{
-                // do tsome shit here
+                //
                 clearInterval(time);
                 if (window.XMLHttpRequest) {
                     // code for IE7+, Firefox, Chrome, Opera, Safari
