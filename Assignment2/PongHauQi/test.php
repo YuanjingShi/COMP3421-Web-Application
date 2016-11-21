@@ -1,29 +1,29 @@
 <?php
 session_start();
 $file = "waiting.txt";
-$state = 0;
 
-$fp = fopen ( $file, 'w+' );
-if($fp) {
-    $count = fread($fp, filesize($file));
-    $count = intval($count) + 1;
-    fwrite($fp, $count);
+
+if($_SESSION['state'] == 0){
+    $fp = fopen ( $file, 'a' );
+    fwrite($fp, $_SESSION['name']."\n");
     fclose($fp);
-}else{
-    fwrite($fp, "1");
-    fclose($fp);
+    $_SESSION['state'] = 1;
 }
 
-
-
+    print_r($_GET);
 if($_GET['type'] == 2){
-    $fp1 = fopen($file, 'r+');
-    $result = fread($fp1,filesize($file));
-    if(intval($result) == 2){
-        header("Location: PongHauQi.php");
+
+    $fopen = fopen ( $file, "a");
+    if ($fopen) {
+    $result = explode("\n", fread($fopen, filesize($file)));
     }
-    fclose($fp1);
+    
+    $count = 3;
+    header("Location: PongHauQi.php");
+    fclose($fopen);
 }
+//print_r("ajax");
+
 ?>
 
 <html>
@@ -40,7 +40,6 @@ if($_GET['type'] == 2){
                         xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
                     }
                     xmlhttp.open("GET", "test.php?type=2", false);
-                    console.log(xmlhttp.responseText);
                     xmlhttp.send();
 
             },1000);
