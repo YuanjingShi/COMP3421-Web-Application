@@ -1,16 +1,11 @@
 <?php
 session_start();
 
-if(isset($_SESSION['name'])){
-    $text = $_POST['text'];
+$q=$_REQUEST["q"];
 
-    $fp = fopen("test.php", 'a');
-    fwrite($fp, $text);
-    fclose($fp);
-}
+$fp = fopen("moves.php", 'a');
+fwrite($fp, $q);
+fclose($fp);
 
 ?>
 
-<script>
-    console.log(<? echo $text; ?>);
-</script>

@@ -1,30 +1,3 @@
-<?php
-session_start ();
-
-if (isset ( $_GET ['logout'] )) {
-
-    // Simple exit message
-    $fp = fopen ( "log.html", 'a' );
-    fwrite ( $fp, "<div class='msgln'><i>User " . $_SESSION ['name'] . " has left the chat session.</i><br></div>" );
-    fclose ( $fp );
-
-    session_destroy ();
-    header ( "Location: login.php" ); // Redirect the user
-}
-
-$file = "user.txt";
-$fopen = fopen ( $file, "r");
-
-if ($fopen) {
-    $text = explode("\n", fread($fopen, filesize($file)));
-}
-fclose($fopen);
-$count = count($text);
-$_SESSION["turnCount"] = 1;
-$_SESSION["position"] = array("div1","div2","div4","div5","div3");
-
-?>
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -151,7 +124,7 @@ $_SESSION["position"] = array("div1","div2","div4","div5","div3");
                         prePosition.className = "true";
                     }
                 }
-
+                sendMove(prePosition.id; id2);
                 alertWinner();
                 //re-enter the timer if game need to be continued.
                 if (winCount == 0) {
@@ -257,6 +230,18 @@ $_SESSION["position"] = array("div1","div2","div4","div5","div3");
         }
     }
 
+    function sendMove(source, destination){
+        if (window.XMLHttpRequest) {
+            // code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp=new XMLHttpRequest();
+        } else {  // code for IE6, IE5
+            xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+        }
+
+        xmlhttp.open("GET","update.php?q="+source+destination,false);
+        xmlhttp.send();
+    }
+
 </script>
 <body>
 <div id = "div0">
@@ -280,9 +265,6 @@ $_SESSION["position"] = array("div1","div2","div4","div5","div3");
     </div>
 
 </div>
-<form method="post">
-
-</form>
 
 <div  style= "position: relative; height: 150px; width: 200px; left: 43%">
       <input type = "button"
@@ -295,62 +277,5 @@ $_SESSION["position"] = array("div1","div2","div4","div5","div3");
              value = "restart"
              onclick = "reloadPage()"/>
 </div>
-
- <script type="text/javascript"
-        src="https://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
-    <script type="text/javascript">
-
-        function Update(){
-            if(turn == 1){
-                var temp1 = checkIfDroppable(position[2],position[4]);
-                var temp2 = checkIfDroppable(position[3], position[4]);
-                if(temp2 && !temp1){
-                    turn = 0;
-                    count2 = 1;
-                    var positionTemp;
-                    prePosition = document.getElementById(position[3]);
-                    document.getElementById(position[4])
-                        .appendChild(document.getElementById("drag4"));
-                    positionTemp = position[4];
-                    position[4] = position[3];
-                    position[3] = positionTemp;
-                    document.getElementById(position[3]).className = "false";
-                    prePosition.className = "true";
-
-                    alertWinner();
-                    //re-enter the timer if game need to be continued.
-                    if (winCount == 0) {
-                        start();
-                    }
-
-                }else{
-                    //drag operations
-                    var positionTemp;
-                    turn = 0;
-                    count2 = 0;
-                    prePosition = document.getElementById(position[2]);
-                    document.getElementById(position[4])
-                        .appendChild(document.getElementById("drag3"));
-                    positionTemp = position[4];
-                    position[4] = position[2];
-                    position[2] = positionTemp;
-                    document.getElementById(position[2]).className = "false";
-                    prePosition.className = "true";
-
-                    alertWinner();
-                    //re-enter the timer if game need to be continued.
-                    if (winCount == 0) {
-                        start();
-                    }
-
-                }
-            }
-        }
-
-
-
-    </script>
-<script src="http://maps.googleapis.com/maps/api/js"></script>
-<script src = googleUser.js></script>
 </body>
 </html>
