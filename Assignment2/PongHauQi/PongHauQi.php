@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -6,6 +9,9 @@
 <p id="demo" style= "position:relative; left: 42%">This is a Pong Hau Qi game</p>
 <p style= "position:relative; left: 44%">Every turn you got:</p>
 <p id="demo1" style= "position:relative; left: 45%">This is the timer</p>
+<p class="welcome" style= "position:relative; left: 45%">
+    Welcome, <b><?php echo $_SESSION['name']; ?></b>
+</p>
 <style>
     #div1, #div2, #div3,#div4,#div5 {
         float: left;
@@ -229,6 +235,17 @@
                 alert("Player 2 is the winner!");
                 stop();
                 winCount = 1;
+                if (window.XMLHttpRequest) {
+                    // code for IE7+, Firefox, Chrome, Opera, Safari
+                    xmlhttp=new XMLHttpRequest();
+                } else {  // code for IE6, IE5
+                    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+                }
+
+                xmlhttp.open("GET", "update.php?type=3&p="+<?php
+                        echo $_SESSION['name'];
+                    ?>, false);
+                xmlhttp.send();
             }
         }
 
