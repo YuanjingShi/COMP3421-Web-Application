@@ -1,18 +1,44 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" type="text/css" href="myStyle.css" media="screen" />
-	<title>Pong Hau Qi</title>
+    <title>Pong Hau Qi</title>
 </head>
- <p class="welcome">
-                Welcome, <b><?php echo $_SESSION['name']; ?></b>
-            </p>
-            <p class="logout">
-                <a id="exit" href="#">Exit Game</a>
-            </p>
 <p id="demo" style= "position:relative; left: 42%">This is a Pong Hau Qi game</p>
 <p style= "position:relative; left: 44%">Every turn you got:</p>
 <p id="demo1" style= "position:relative; left: 45%">This is the timer</p>
+<style>
+    #div1, #div2, #div3,#div4,#div5 {
+        float: left;
+        width: 74px;
+        height: 74px;
+        margin: auto;
+        position: relative;
+
+    }
+    #div6, #div7, #div8, #div9{
+        float: left;
+        width: 74px;
+        height: 74px;
+        margin: auto;
+        position: relative;
+
+    }
+    #div0 {
+        position: relative;
+        height: 228px;
+        width: 228px;
+        margin: auto;
+        padding: 6px;
+        background-image: url('image1/board1.png');
+        background-size: contain;
+    }
+    #drag1, #drag2, #drag3, #drag4 {
+        width: 80px;
+        height: 80px;
+    }
+
+
+</style>
 
 <script>
 
@@ -47,14 +73,14 @@
         location.reload();
     }
 
-	function allowDrop(ev) {
-		ev.preventDefault();
-	}
+    function allowDrop(ev) {
+        ev.preventDefault();
+    }
 
-	function drag(ev) {
+    function drag(ev) {
 
         //when count is 0, game could not be started
-	    if(count == 1) {
+        if(count == 1) {
 
             id1 = ev.target.id;
             class1 = ev.target.className;
@@ -89,47 +115,48 @@
             }
         }
 
-	}
+    }
 
-	function drop(ev) {
-		ev.preventDefault();
+    function drop(ev) {
+        ev.preventDefault();
         id2 = ev.target.id;
         class2 = ev.target.className;
         if (class2 == "true" && checkIfDroppable(prePosition.id, id2)) {
-                var data = ev.dataTransfer.getData("text");
-                ev.target.appendChild(document.getElementById(data));
+            var data = ev.dataTransfer.getData("text");
+            ev.target.appendChild(document.getElementById(data));
 
-                //reminder of Turns
-                if (turn == 0) {
-                    document.getElementById("demo").innerHTML = "Player 1's turn";
-                    if (count2 == 0) {
-                        position[2] = id2;
-                        class2 = "false";
-                        prePosition.className = "true";
-                    } else {
-                        position[3] = id2;
-                        class2 = "false";
-                        prePosition.className = "true";
-                    }
+            //reminder of Turns
+            if (turn == 0) {
+                document.getElementById("demo").innerHTML = "Player 1's turn";
+                if (count2 == 0) {
+                    position[2] = id2;
+                    class2 = "false";
+                    prePosition.className = "true";
                 } else {
-                    //this part is for dual-player model
-                    document.getElementById("demo").innerHTML = "Player 2's turn";
-                    if (count1 == 0) {
-                        position[0] = id2;
-                        class2 = "false";
-                        prePosition.className = "true";
-                    } else {
-                        position[1] = id2;
-                        class2 = "false";
-                        prePosition.className = "true";
-                    }
+                    position[3] = id2;
+                    class2 = "false";
+                    prePosition.className = "true";
                 }
-                sendMove(prePosition.id; id2);
-                alertWinner();
-                //re-enter the timer if game need to be continued.
-                if (winCount == 0) {
-                    start();
+            } else {
+                //this part is for dual-player model
+                document.getElementById("demo").innerHTML = "Player 2's turn";
+                if (count1 == 0) {
+                    position[0] = id2;
+                    class2 = "false";
+                    prePosition.className = "true";
+                } else {
+                    position[1] = id2;
+                    class2 = "false";
+                    prePosition.className = "true";
                 }
+            }
+
+            alertWinner();
+            //re-enter the timer if game need to be continued.
+            if (winCount == 0) {
+                start();
+            }
+            sendMove(prePosition.id, id2);
         }else if(class2 == "false"){
             alert("You can only drop piece on empty positions");
             reloadPage();
@@ -137,9 +164,9 @@
             alert("You cannot make this move");
             reloadPage();
         }
-	}
+    }
 
-	function displayCount(){
+    function displayCount(){
         txtOutput.value = position;
     }
 
@@ -170,15 +197,15 @@
 
 
     function start () {
-            clearInterval(myTime);
-           // document.getElementById("demo").innerHTML = "Player 1's turn";
-            value = 21;
-            myTime = setInterval(displayTime, 1000);
+        clearInterval(myTime);
+        // document.getElementById("demo").innerHTML = "Player 1's turn";
+        value = 21;
+        myTime = setInterval(displayTime, 1000);
     }
 
     function stop() {
-            clearInterval(myTime);
-            count = 0;
+        clearInterval(myTime);
+        count = 0;
     }
 
     function displayTime() {
@@ -229,8 +256,7 @@
             }
         }
     }
-
-    function sendMove(source, destination){
+    function responsePHP(){
         if (window.XMLHttpRequest) {
             // code for IE7+, Firefox, Chrome, Opera, Safari
             xmlhttp=new XMLHttpRequest();
@@ -238,8 +264,67 @@
             xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
         }
 
-        xmlhttp.open("GET","update.php?q="+source+destination,false);
+        xmlhttp.open("GET", "update.php?type=0", false);
+        console.log(xmlhttp.responseText);
         xmlhttp.send();
+        return xmlhttp.responseText;
+    }
+
+    function update(){
+        var temp = responsePHP();
+        var time = setInterval(function(){
+            var value = parseInt(responsePHP());
+            if(value == -1){
+                ;
+            }else{
+                // do tsome shit here
+                clearInterval(time);
+                if (window.XMLHttpRequest) {
+                    // code for IE7+, Firefox, Chrome, Opera, Safari
+                    xmlhttp=new XMLHttpRequest();
+                } else {  // code for IE6, IE5
+                    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+                }
+
+                xmlhttp.open("GET", "update.php?type=2", false);
+                console.log(xmlhttp.responseText);
+                xmlhttp.send();
+                var result = xmlhttp.responseText.split(",");
+                makeMove(result[0],result[1]);
+            }
+        },1000);
+    }
+
+    function makeMove(preId, postId){
+        turn = 0;
+        count2 = 1;
+        var positionTemp;
+        console.log(preId+postId);
+        prePosition = document.getElementById(preId);
+        document.getElementById(postId)
+            .appendChild(document.getElementById("drag4"));
+        positionTemp = position[4];
+        position[4] = position[3];
+        position[3] = positionTemp;
+        document.getElementById(position[3]).className = "false";
+        prePosition.className = "true";
+        alertWinner();
+        //re-enter the timer if game need to be continued.
+        if (winCount == 0) {
+            start();
+        }
+    }
+
+    function sendMove(prePosition, postPosition){
+        if (window.XMLHttpRequest) {
+            // code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp=new XMLHttpRequest();
+        } else {  // code for IE6, IE5
+            xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.open("GET","update.php?type=1&q="+prePosition+","+postPosition,false);
+        xmlhttp.send();
+        update();
     }
 
 </script>
@@ -247,7 +332,7 @@
 <div id = "div0">
 
     <div id="div1" class = "false" ondrop="drop(event)" ondragover="allowDrop(event)">
-	    <img src="image1/piece4.png" draggable="true" ondragstart="drag(event)" id="drag1">
+        <img src="image1/piece4.png" draggable="true" ondragstart="drag(event)" id="drag1">
     </div>
     <div id="div6"></div>
     <div id="div2" class = "false" ondrop="drop(event)" ondragover="allowDrop(event)">
@@ -267,15 +352,16 @@
 </div>
 
 <div  style= "position: relative; height: 150px; width: 200px; left: 43%">
-      <input type = "button"
-             value = "start"
-             onclick = "init()"/>
-      <input type = "button"
-             value = "pause"
-             onclick = "stop()"/>
-      <input type = "button"
-             value = "restart"
-             onclick = "reloadPage()"/>
+    <input type = "button"
+           value = "start"
+           onclick = "init()"/>
+    <input type = "button"
+           value = "pause"
+           onclick = "stop()"/>
+    <input type = "button"
+           value = "restart"
+           onclick = "reloadPage()"/>
 </div>
+
 </body>
 </html>
