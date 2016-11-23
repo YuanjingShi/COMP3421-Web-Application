@@ -55,12 +55,17 @@ if($_GET['type'] == 3){
 
 if($_GET['type'] == 4){
 
-    $fopen = fopen ( "waiting.txt", "a");
+    $fopen = fopen ( "waiting.txt", "r");
     if ($fopen) {
         $result = explode("\n", fread($fopen, filesize("waiting.txt")));
     }
     fclose($fopen);
-    echo true;
+    if(count($result) >= 2){
+        echo true;
+    }else{
+        echo false;
+    }
+
 }
 
 

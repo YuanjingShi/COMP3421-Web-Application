@@ -21,21 +21,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="update.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="update.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/update.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="500">
-              <caret line="65" column="0" selection-start-line="65" selection-start-column="0" selection-end-line="65" selection-end-column="0" />
+            <state relative-caret-position="470">
+              <caret line="61" column="19" selection-start-line="61" selection-start-column="19" selection-end-line="61" selection-end-column="19" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="test.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="test.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="275">
-              <caret line="28" column="50" selection-start-line="28" selection-start-column="50" selection-end-line="28" selection-end-column="50" />
+            <state relative-caret-position="200">
+              <caret line="26" column="38" selection-start-line="26" selection-start-column="38" selection-end-line="26" selection-end-column="38" />
               <folding>
                 <marker date="1479897911000" expanded="true" signature="750:788" ph="{...}" />
                 <marker date="1479897911000" expanded="true" signature="750:999" ph="{...}" />
@@ -50,19 +50,6 @@
             <state relative-caret-position="3690">
               <caret line="246" column="31" selection-start-line="246" selection-start-column="31" selection-end-line="246" selection-end-column="31" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="indexCopy.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/testPHP/indexCopy.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2280">
-              <caret line="152" column="16" selection-start-line="152" selection-start-column="16" selection-end-line="152" selection-end-column="16" />
-              <folding>
-                <marker date="1479633980000" expanded="true" signature="80:456" ph="..." />
-                <marker date="1479633980000" expanded="true" signature="123:446" ph="..." />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -99,8 +86,8 @@
         <option value="$PROJECT_DIR$/login.php" />
         <option value="$PROJECT_DIR$/PongHauQi.php" />
         <option value="$PROJECT_DIR$/waiting.txt" />
-        <option value="$PROJECT_DIR$/update.php" />
         <option value="$PROJECT_DIR$/test.php" />
+        <option value="$PROJECT_DIR$/update.php" />
       </list>
     </option>
   </component>
@@ -253,12 +240,12 @@
       <updated>1479633443088</updated>
       <workItem from="1479633445243" duration="12778000" />
       <workItem from="1479694329496" duration="19220000" />
-      <workItem from="1479891759292" duration="3159000" />
+      <workItem from="1479891759292" duration="3734000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="35157000" />
+    <option name="totallyTimeSpent" value="35732000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="26" width="1280" height="749" extended-state="0" />
@@ -431,14 +418,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/waiting.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/testPHP/indexCopy.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2280">
@@ -447,14 +426,6 @@
             <marker date="1479633980000" expanded="true" signature="80:456" ph="..." />
             <marker date="1479633980000" expanded="true" signature="123:446" ph="..." />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/update.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="500">
-          <caret line="65" column="0" selection-start-line="65" selection-start-column="0" selection-end-line="65" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -468,12 +439,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/test.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="275">
-          <caret line="28" column="50" selection-start-line="28" selection-start-column="50" selection-end-line="28" selection-end-column="50" />
+        <state relative-caret-position="200">
+          <caret line="26" column="38" selection-start-line="26" selection-start-column="38" selection-end-line="26" selection-end-column="38" />
           <folding>
             <marker date="1479897911000" expanded="true" signature="750:788" ph="{...}" />
             <marker date="1479897911000" expanded="true" signature="750:999" ph="{...}" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/waiting.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/update.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="470">
+          <caret line="61" column="19" selection-start-line="61" selection-start-column="19" selection-end-line="61" selection-end-column="19" />
+          <folding />
         </state>
       </provider>
     </entry>
