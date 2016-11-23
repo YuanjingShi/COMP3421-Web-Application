@@ -1,5 +1,6 @@
 <?php
 session_start();
+$_SESSION['turn'] = 0;
 ?>
 <!doctype html>
 <html lang="en">
@@ -162,7 +163,7 @@ session_start();
             if (winCount == 0) {
                 start();
             }
-            sendMove(prePosition.id, id2);
+            sendMove(prePosition.id, id2,data);
         }else if(class2 == "false"){
             alert("You can only drop piece on empty positions");
             reloadPage();
@@ -216,14 +217,15 @@ session_start();
 
     function displayTime() {
         document.getElementById("demo1").innerHTML = --value;
-        if(value <= 0){
-            alertTimeOut();
-        }
+        //if(value <= 0){
+        //    alertTimeOut();
+        //}
     }
     function displayTest(){
         txtOutput.value = position;
         Turn.value = Math.round(Math.random())+2;
     }
+    
     function alertTimeOut(){
         alert("Your time is out!");
         stop();
@@ -282,13 +284,13 @@ session_start();
         }
 
         xmlhttp.open("GET", "update.php?type=0", false);
-        console.log(xmlhttp.responseText);
+        //console.log(xmlhttp.responseText);
         xmlhttp.send();
         return xmlhttp.responseText;
     }
 
     function update(){
-        var temp = responsePHP();
+        
         var time = setInterval(function(){
             var value = parseInt(responsePHP());
             if(value == -1){
@@ -304,22 +306,25 @@ session_start();
                 }
 
                 xmlhttp.open("GET", "update.php?type=2", false);
-                console.log(xmlhttp.responseText);
+                //console.log(xmlhttp.responseText);
                 xmlhttp.send();
                 var result = xmlhttp.responseText.split(",");
-                makeMove(result[0],result[1]);
+                makeMove(result[0],result[1],result[2]);
             }
         },1000);
     }
 
-    function makeMove(preId, postId){
-        turn = 0;
+    function makeMove(preId, postId, pieceID){
+        if(turn == 0){
+            turn = 1;
+        }else{
+            turn = 0;
+        }
         count2 = 1;
         var positionTemp;
-        console.log(preId+postId);
+        console.log(pieceID);
         prePosition = document.getElementById(preId);
-        document.getElementById(postId)
-            .appendChild(document.getElementById("drag4"));
+        document.getElementById(postId).appendChild(document.getElementById(pieceID));
         positionTemp = position[4];
         position[4] = position[3];
         position[3] = positionTemp;
@@ -332,16 +337,16 @@ session_start();
         }
     }
 
-    function sendMove(prePosition, postPosition){
+    function sendMove(prePosition, postPosition, pieceID){
         if (window.XMLHttpRequest) {
             // code for IE7+, Firefox, Chrome, Opera, Safari
             xmlhttp=new XMLHttpRequest();
         } else {  // code for IE6, IE5
             xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
         }
-        xmlhttp.open("GET","update.php?type=1&q="+prePosition+","+postPosition,false);
+        xmlhttp.open("GET","update.php?type=1&q="+prePosition+","+postPosition+","+pieceID,false);
         xmlhttp.send();
-        update();
+        //update();
     }
 
 </script>
@@ -378,6 +383,9 @@ session_start();
     <input type = "button"
            value = "restart"
            onclick = "reloadPage()"/>
+    <input type = "button"
+           value = "update"
+           onclick = "update()"/>
 </div>
 
 </body>

@@ -2,6 +2,7 @@
 session_start();
 $pre = "i am fucked";
 
+//sendMove() usage
 if($_GET['type'] == 1) {
     $q = $_REQUEST["q"];
 
@@ -12,6 +13,7 @@ if($_GET['type'] == 1) {
     $pre = $message;
 }
 
+//responesPHP() usage
 if($_GET['type'] == 0){
     $fp = fopen("moves.txt", 'r+');
     $result = fread($fp,filesize("moves.txt"));
@@ -23,6 +25,7 @@ if($_GET['type'] == 0){
     }
 }
 
+//update() usage
 if($_GET['type'] == 2){
     $fp = fopen("moves.txt", 'r+');
     $result = fread($fp,filesize("moves.txt"));
@@ -30,6 +33,7 @@ if($_GET['type'] == 2){
     echo $result;
 }
 
+//
 if($_GET['type'] == 3){
     $q = $_REQUEST["q"];
     $fp = fopen("user.txt", 'r');
@@ -53,6 +57,7 @@ if($_GET['type'] == 3){
     fclose($fp1);
 }
 
+//for test.php usage
 if($_GET['type'] == 4){
 
     $fopen = fopen ( "waiting.txt", "r");

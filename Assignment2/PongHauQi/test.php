@@ -1,12 +1,14 @@
 <?php
 session_start();
 $file = "waiting.txt";
-$state = 0;
-if($_SESSION['state'] == 0){
+
+if($_SESSION['state'] <= 2){
     $fp = fopen ( $file, 'a' );
     fwrite($fp, $_SESSION['name']."\n");
     fclose($fp);
-    $_SESSION['state'] = 1;
+    $_SESSION['state'] += 1;
+}else{
+    echo "There are already two players in the game, please wait.";
 }
 ?>
 <html>
@@ -41,7 +43,7 @@ if($_SESSION['state'] == 0){
         $handle = fopen ( "waiting.txt", "r" );
         $contents = fread ( $handle, filesize ( "waiting.txt" ) );
         fclose ( $handle );
-        echo $contents;
+        echo $contents."is waiting for opponent";
     //}
     ?></div>
 <div id="map" style="width:500px;height:380px;"></div>
