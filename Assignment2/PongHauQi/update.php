@@ -30,10 +30,10 @@ if($_GET['type'] == 2){
     $fp = fopen("moves.txt", 'r+');
     $result = fread($fp,filesize("moves.txt"));
     fclose($fp);
-    echo $result;
+    echo (string)$result;
 }
 
-//
+//alertWinner usage
 if($_GET['type'] == 3){
     $q = $_REQUEST["q"];
     $fp = fopen("user.txt", 'r');

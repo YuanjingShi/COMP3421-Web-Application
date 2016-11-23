@@ -216,16 +216,17 @@ $_SESSION['turn'] = 0;
     }
 
     function displayTime() {
-        document.getElementById("demo1").innerHTML = --value;
+        //document.getElementById("demo1").innerHTML = --value;
         //if(value <= 0){
         //    alertTimeOut();
         //}
     }
+    /*
     function displayTest(){
         txtOutput.value = position;
         Turn.value = Math.round(Math.random())+2;
     }
-    
+    */
     function alertTimeOut(){
         alert("Your time is out!");
         stop();
@@ -294,7 +295,7 @@ $_SESSION['turn'] = 0;
         var time = setInterval(function(){
             var value = parseInt(responsePHP());
             if(value == -1){
-
+                console.log("If moves.txt has not been changed");
             }else{
                 //
                 clearInterval(time);
@@ -309,31 +310,72 @@ $_SESSION['turn'] = 0;
                 //console.log(xmlhttp.responseText);
                 xmlhttp.send();
                 var result = xmlhttp.responseText.split(",");
-                makeMove(result[0],result[1],result[2]);
+                makeMove(result[0],result[1],String(result[2]));
             }
         },1000);
     }
 
     function makeMove(preId, postId, pieceID){
+        //change the turn of current chess board
         if(turn == 0){
             turn = 1;
         }else{
             turn = 0;
         }
-        count2 = 1;
+        //change the count of one side piece
+        if(count1 = 1){
+            count1 = 0;
+        }else{
+            count1 = 1;
+        }
+        //change the count of another side piece
+        if(count2 = 1){
+            count2 = 0;
+        }else{
+            count2 = 1;
+        }
         var positionTemp;
+        if(pieceID == "drag1"){
+            console.log("same");
+        }else{
+            console.log("not same");
+        }
         console.log(pieceID);
         prePosition = document.getElementById(preId);
-        document.getElementById(postId).appendChild(document.getElementById(pieceID));
+        var movingPiece = document.getElementById(pieceID);
+        document.getElementById(postId).appendChild(movingPiece);
+
+        //change the inside position array
+        var preNum = returnPosition(preId);
+        var postNum = returnPosition(postId);
         positionTemp = position[4];
-        position[4] = position[3];
-        position[3] = positionTemp;
-        document.getElementById(position[3]).className = "false";
+        position[4] = position[preNum];
+        position[preNum] = positionTemp;
+
+        //prePosition is OK for drop
+        //post position is not OK for drop
+        document.getElementById(postId).className = "false";
         prePosition.className = "true";
+
+
         alertWinner();
         //re-enter the timer if game need to be continued.
         if (winCount == 0) {
             start();
+        }
+    }
+
+    function returnPosition(divStr){
+        if(divStr == "div1"){
+            return 0;
+        }else if(divStr == "div2"){
+            return 1;
+        }else if(divStr == "div3"){
+            return 2;
+        }else if(divStr == "div4"){
+            return 3;
+        }else if(divStr == "div5"){
+            return 4;
         }
     }
 
@@ -344,9 +386,9 @@ $_SESSION['turn'] = 0;
         } else {  // code for IE6, IE5
             xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
         }
-        xmlhttp.open("GET","update.php?type=1&q="+prePosition+","+postPosition+","+pieceID,false);
+        xmlhttp.open("GET","update.php?type=1&q="+prePosition+","+postPosition+","+pieceID+",1",false);
         xmlhttp.send();
-        //update();
+        update();
     }
 
 </script>
