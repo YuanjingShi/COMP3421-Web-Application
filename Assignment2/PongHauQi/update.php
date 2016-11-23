@@ -53,6 +53,16 @@ if($_GET['type'] == 3){
     fclose($fp1);
 }
 
+if($_GET['type'] == 4){
+
+    $fopen = fopen ( "waiting.txt", "a");
+    if ($fopen) {
+        $result = explode("\n", fread($fopen, filesize("waiting.txt")));
+    }
+    fclose($fopen);
+    echo true;
+}
+
 
 
 ?>
