@@ -1,7 +1,7 @@
 <?php
 session_start();
 $pre = "i am fucked";
-
+$winCount = 0;
 //sendMove() usage
 if($_GET['type'] == 1) {
     $q = $_REQUEST["q"];
@@ -37,6 +37,9 @@ if($_GET['type'] == 2){
 if($_GET['type'] == 3){
     $q = $_REQUEST["q"];
     $fp = fopen("user.txt", 'r');
+    if($q){
+        $winCount = 1;
+    }
     if ($fp) {
         $text = explode("\n", fread($fopen, filesize($file)));
     }
@@ -55,6 +58,7 @@ if($_GET['type'] == 3){
         }
     }
     fclose($fp1);
+
 }
 
 //for test.php usage
@@ -73,7 +77,14 @@ if($_GET['type'] == 4){
 
 }
 
-
+//check winner usage
+if($_GET['type'] == 5){
+    if($winCount == 1){
+        echo true;
+    }else{
+        echo false;
+    }
+}
 
 ?>
 

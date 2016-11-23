@@ -121,6 +121,7 @@ $_SESSION['turn'] = 0;
                 }
             }
         }
+        //console.log(prePosition.id);
 
     }
 
@@ -128,6 +129,10 @@ $_SESSION['turn'] = 0;
         ev.preventDefault();
         id2 = ev.target.id;
         class2 = ev.target.className;
+        console.log(class2);
+        console.log(prePosition.id);
+        console.log(id2);
+        console.log(checkIfDroppable(prePosition.id, id2));
         if (class2 == "true" && checkIfDroppable(prePosition.id, id2)) {
             var data = ev.dataTransfer.getData("text");
             ev.target.appendChild(document.getElementById(data));
@@ -172,7 +177,7 @@ $_SESSION['turn'] = 0;
             reloadPage();
         }
     }
-
+/*
     function displayCount(){
         txtOutput.value = position;
     }
@@ -184,6 +189,7 @@ $_SESSION['turn'] = 0;
             Turn.value = "Player 2 's turn";
         }
     }
+    */
 
 
     function checkIfDroppable(x, y){
@@ -257,6 +263,17 @@ $_SESSION['turn'] = 0;
                 alert("Player 2 is the winner!");
                 stop();
                 winCount = 1;
+                if (window.XMLHttpRequest) {
+                    // code for IE7+, Firefox, Chrome, Opera, Safari
+                    xmlhttp=new XMLHttpRequest();
+                } else {  // code for IE6, IE5
+                    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+                }
+
+                xmlhttp.open("GET", "update.php?type=3&p="+<?php
+                    echo $_SESSION['name'];
+                    ?>, false);
+                xmlhttp.send();
             }
         }
 
@@ -265,6 +282,17 @@ $_SESSION['turn'] = 0;
                 alert("Player 1 is the winner!");
                 stop();
                 winCount = 1;
+                if (window.XMLHttpRequest) {
+                    // code for IE7+, Firefox, Chrome, Opera, Safari
+                    xmlhttp=new XMLHttpRequest();
+                } else {  // code for IE6, IE5
+                    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+                }
+
+                xmlhttp.open("GET", "update.php?type=3&p="+<?php
+                    echo $_SESSION['name'];
+                    ?>, false);
+                xmlhttp.send();
             }
         }
 
@@ -273,6 +301,17 @@ $_SESSION['turn'] = 0;
                 alert("Player 1 is the winner!");
                 stop();
                 winCount = 1;
+                if (window.XMLHttpRequest) {
+                    // code for IE7+, Firefox, Chrome, Opera, Safari
+                    xmlhttp=new XMLHttpRequest();
+                } else {  // code for IE6, IE5
+                    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+                }
+
+                xmlhttp.open("GET", "update.php?type=3&p="+<?php
+                    echo $_SESSION['name'];
+                    ?>, false);
+                xmlhttp.send();
             }
         }
     }
@@ -318,8 +357,10 @@ $_SESSION['turn'] = 0;
     function makeMove(preId, postId, pieceID){
         //change the turn of current chess board
         if(turn == 0){
+            document.getElementById("demo").innerHTML = "Player 2's turn";
             turn = 1;
         }else{
+            document.getElementById("demo").innerHTML = "Player 1's turn";
             turn = 0;
         }
         //change the count of one side piece
@@ -335,12 +376,12 @@ $_SESSION['turn'] = 0;
             count2 = 1;
         }
         var positionTemp;
-        if(pieceID == "drag1"){
+        /*if(pieceID == "drag1"){
             console.log("same");
         }else{
             console.log("not same");
-        }
-        console.log(pieceID);
+        }*/
+        //console.log(pieceID);
         prePosition = document.getElementById(preId);
         var movingPiece = document.getElementById(pieceID);
         document.getElementById(postId).appendChild(movingPiece);
@@ -348,21 +389,47 @@ $_SESSION['turn'] = 0;
         //change the inside position array
         var preNum = returnPosition(preId);
         var postNum = returnPosition(postId);
+        console.log(preNum);
+        //console.log(postNum);
+
+        //like two divs are exchanging their child imgs
         positionTemp = position[4];
         position[4] = position[preNum];
         position[preNum] = positionTemp;
+        //console.log(position[preNum]);
+        //console.log(position[4]);
 
         //prePosition is OK for drop
         //post position is not OK for drop
         document.getElementById(postId).className = "false";
-        prePosition.className = "true";
+        document.getElementById(preId).className = "true";
 
 
-        alertWinner();
+        var check = checkWin();
+        if(check == true){
+            alert("You lose!");
+            stop();
+            winCount = 1;
+        }
         //re-enter the timer if game need to be continued.
         if (winCount == 0) {
             start();
         }
+    }
+
+    function checkWin(){
+        if (window.XMLHttpRequest) {
+            // code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp=new XMLHttpRequest();
+        } else {  // code for IE6, IE5
+            xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+        }
+
+        xmlhttp.open("GET", "update.php?type=5", false);
+        //console.log(xmlhttp.responseText);
+        xmlhttp.send();
+        return xmlhttp.responseText;
+        //alert("Player 2 is the winner!");
     }
 
     function returnPosition(divStr){
@@ -388,7 +455,7 @@ $_SESSION['turn'] = 0;
         }
         xmlhttp.open("GET","update.php?type=1&q="+prePosition+","+postPosition+","+pieceID+",1",false);
         xmlhttp.send();
-        update();
+        //update();
     }
 
 </script>
