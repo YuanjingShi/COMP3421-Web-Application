@@ -35,13 +35,13 @@ if($_GET['type'] == 2){
 
 //alertWinner usage
 if($_GET['type'] == 3){
-    $q = $_REQUEST["p"];
+
     $fp = fopen("user.txt", 'r');
-    if($q){
-        $fopenWin = fopen("winCount.txt",'a');
-        fwrite($fopenWin,1);
-        fclose($fopenWin);
-    }
+
+    $fopenWin = fopen("winCount.txt",'a');
+    fwrite($fopenWin,1);
+    fclose($fopenWin);
+
     if ($fp) {
         $text = explode("\n", fread($fopen, filesize($file)));
     }
@@ -54,7 +54,7 @@ if($_GET['type'] == 3){
         list($user,$country,$winCount) = explode(" ", $text[$i]);
         if($user == $q){
             $winCount = intval($winCount) + 1;
-            fwrite($fp1, $_SESSION['name']." ".$_SESSION ["country"]." ".$winCount."\n");
+            fwrite($fp1, $_SESSION['name']." ".$_SESSION ['country']." ".$winCount."\n");
         }else{
             fwrite($fp1, $text[$i]);
         }
@@ -68,7 +68,7 @@ if($_GET['type'] == 4){
 
     $fopen = fopen ( "waiting.txt", "r");
     if ($fopen) {
-        $result = explode("\n", fread($fopen, filesize("waiting.txt")));
+        $result = explode(" ", fread($fopen, filesize("waiting.txt")));
     }
     fclose($fopen);
     if(count($result) >= 2){
@@ -81,7 +81,7 @@ if($_GET['type'] == 4){
 
 //check winner usage
 if($_GET['type'] == 5){
-    $fopen = fopen("winCount",'r');
+    $fopen = fopen("winCount.txt",'r');
     if($fopen){
         echo true;
     }else{
@@ -92,11 +92,11 @@ if($_GET['type'] == 5){
 //check if quit
 if($_GET['type'] == 6){
     $temp = $_REQUEST["temp"];
-    $fopen = fopen("quitCount",'a');
+    $fopen = fopen("quitCount.txt",'a');
     if($temp == "quit"){
         fwrite($fopen,"quit");
     }else if($temp == ""){
-        if(0 == filesize( "quitCount" )){
+        if(0 == filesize( "quitCount.txt" )){
             echo true;
         }else{
             echo false;

@@ -1,1 +1,1 @@
-div5,div2,drag4,1
+div1,div4,drag1,1

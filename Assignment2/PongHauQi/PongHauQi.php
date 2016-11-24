@@ -8,8 +8,6 @@ $_SESSION['turn'] = 0;
     <title>Pong Hau Qi</title>
 </head>
 <p id="demo" style= "position:relative; left: 42%">This is a Pong Hau Qi game</p>
-<p style= "position:relative; left: 44%">Every turn you got:</p>
-<p id="demo1" style= "position:relative; left: 45%">This is the timer</p>
 <p class="welcome" style= "position:relative; left: 45%">
     Welcome, <b><?php echo $_SESSION['name']; ?></b>
 </p>
@@ -182,15 +180,15 @@ $_SESSION['turn'] = 0;
 
 
     function checkIfDroppable(x, y){
-        if(x == "div1" && (y == "div3" || y == "div4")){
+        if(x == "div1" && (y == "div3" || y == "div4" || y == "div1")){
             return true;
-        }else if(x == "div2" && (y == "div3" || y == "div5")){
+        }else if(x == "div2" && (y == "div3" || y == "div5" || y == "div2")){
             return true;
-        }else if(x == "div3" && (y == "div1" || y == "div2" || y == "div4" || y == "div5" )){
+        }else if(x == "div3" && (y == "div1" || y == "div2" || y == "div4" || y == "div5"|| y == "div3" )){
             return true;
-        }else if(x == "div4" && (y == "div1" || y == "div3" || y == "div5")) {
+        }else if(x == "div4" && (y == "div1" || y == "div3" || y == "div5" || y == "div4")) {
             return true;
-        }else if(x == "div5" && (y == "div2" || y == "div3" || y == "div4")) {
+        }else if(x == "div5" && (y == "div2" || y == "div3" || y == "div4" || y == "div5")) {
             return true;
         }else{
             return false;
@@ -201,8 +199,6 @@ $_SESSION['turn'] = 0;
     function start () {
         clearInterval(myTime);
         // document.getElementById("demo").innerHTML = "Player 1's turn";
-        value = 21;
-        myTime = setInterval(displayTime, 1000);
     }
 
     function stop() {
@@ -228,9 +224,7 @@ $_SESSION['turn'] = 0;
                     xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
                 }
 
-                xmlhttp.open("GET", "update.php?type=3&p="+<?php
-                        echo $_SESSION['name'];
-                    ?>, false);
+                xmlhttp.open("GET", "update.php?type=3", false);
                 xmlhttp.send();
             }
         }
@@ -247,9 +241,7 @@ $_SESSION['turn'] = 0;
                     xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
                 }
 
-                xmlhttp.open("GET", "update.php?type=3&p="+<?php
-                    echo $_SESSION['name'];
-                    ?>, false);
+                xmlhttp.open("GET", "update.php?type=3", false);
                 xmlhttp.send();
             }
         }
@@ -266,9 +258,7 @@ $_SESSION['turn'] = 0;
                     xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
                 }
 
-                xmlhttp.open("GET", "update.php?type=3&p="+<?php
-                    echo $_SESSION['name'];
-                    ?>, false);
+                xmlhttp.open("GET", "update.php?type=3", false);
                 xmlhttp.send();
             }
         }
@@ -285,9 +275,7 @@ $_SESSION['turn'] = 0;
                     xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
                 }
 
-                xmlhttp.open("GET", "update.php?type=3&p="+<?php
-                    echo $_SESSION['name'];
-                    ?>, false);
+                xmlhttp.open("GET", "update.php?type=3&p", false);
                 xmlhttp.send();
             }
         }
@@ -334,14 +322,16 @@ $_SESSION['turn'] = 0;
                     alert("You lose!");
                     stop();
                     winCount = 1;
+                    reloadPage();
                 }
 
                 //check if opponent quit the game first
                 var checkQuit = quitThepage();
                 if(checkQuit == true){
-                    alert("You lose!");
+                    alert("You opponent has quit the game!");
                     stop();
                     winCount = 1;
+                    reloadPage();
                 }
             }
         },1000);
@@ -382,21 +372,26 @@ $_SESSION['turn'] = 0;
         //change the inside position array
         var preNum = returnPosition(preId);
         var postNum = returnPosition(postId);
+        console.log(preId);
+        console.log(postId);
         console.log(preNum);
-        //console.log(postNum);
-
+        console.log(postNum);
+        console.log(position);
+        console.log(position[preNum]);
+        console.log(position[4]);
         //like two divs are exchanging their child imgs
         positionTemp = position[4];
         position[4] = position[preNum];
         position[preNum] = positionTemp;
-        //console.log(position[preNum]);
-        //console.log(position[4]);
+        console.log(position);
 
         //prePosition is OK for drop
         //post position is not OK for drop
-        document.getElementById(postId).className = "false";
+        document.getElementById(postId).className = "true";
         document.getElementById(preId).className = "true";
 
+        prePosition = document.getElementById(postId);
+        alertWinner();
         //re-enter the timer if game need to be continued.
         if (winCount == 0) {
             start();
@@ -419,17 +414,12 @@ $_SESSION['turn'] = 0;
     }
 
     function returnPosition(divStr){
-        if(divStr == "div1"){
-            return 0;
-        }else if(divStr == "div2"){
-            return 1;
-        }else if(divStr == "div3"){
-            return 2;
-        }else if(divStr == "div4"){
-            return 3;
-        }else if(divStr == "div5"){
-            return 4;
+        for (var i = 0; i<position.length; i++){
+            if(position[i] == divStr){
+                return i;
+            }
         }
+
     }
 
     function quitThepage(message){
@@ -446,6 +436,7 @@ $_SESSION['turn'] = 0;
 
 
     function sendMove(prePosition, postPosition, pieceID){
+        console.log(position);
         if (window.XMLHttpRequest) {
             // code for IE7+, Firefox, Chrome, Opera, Safari
             xmlhttp=new XMLHttpRequest();
@@ -458,6 +449,8 @@ $_SESSION['turn'] = 0;
     }
 
 </script>
+<script src="http://maps.googleapis.com/maps/api/js"></script>
+<script src = googleUser.js></script>
 <body>
 <div id = "div0">
 
@@ -495,6 +488,6 @@ $_SESSION['turn'] = 0;
            value = "update"
            onclick = "update()"/>
 </div>
-
+<div id="map" style="width:500px;height:380px; position: absolute; left:30%; top:70%;"></div>
 </body>
 </html>

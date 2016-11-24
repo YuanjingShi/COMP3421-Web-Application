@@ -2,14 +2,20 @@
 session_start();
 $file = "waiting.txt";
 
-if($_SESSION['state'] <= 2){
-    $fp = fopen ( $file, 'a' );
-    fwrite($fp, $_SESSION['name']."\n");
+
+$fp = fopen ( "waiting.txt", 'r' );
+$text = explode(" ", fread($fp, filesize("waiting.txt")));
+fclose($fp);
+$count = count($text);
+//echo $count;
+if(count($text) < 2){
+    $fp = fopen ( "waiting.txt", 'a' );
+    fwrite($fp, " ".$_SESSION['name']);
     fclose($fp);
-    $_SESSION['state'] += 1;
 }else{
     echo "There are already two players in the game, please wait.";
 }
+
 ?>
 <html>
 <head>

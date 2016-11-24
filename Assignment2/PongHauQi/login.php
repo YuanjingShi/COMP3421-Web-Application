@@ -11,8 +11,9 @@ fclose($fopen);
 $count = count($text);
 $_SESSION['array'] = array();
 $_SESSION['user'] = array();
-$_SESSION['state'] = 0;
-$_SESSION['count'] = 0;
+//$_SESSION['state'] = 0;
+//$_SESSION['count'] = 0;
+echo $count;
 for($i=0;$i<$count;$i++){
     list($user,$country,$winCount) = explode(" ", $text[$i]);
     $_SESSION['user'][] = $user;
