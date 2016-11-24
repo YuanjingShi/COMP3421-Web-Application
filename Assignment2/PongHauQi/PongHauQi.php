@@ -172,24 +172,13 @@ $_SESSION['turn'] = 0;
         }else if(class2 == "false"){
             alert("You can only drop piece on empty positions");
             reloadPage();
+            quitThepage("quit");
         }else{
             alert("You cannot make this move");
             reloadPage();
+            quitThepage("quit");
         }
     }
-/*
-    function displayCount(){
-        txtOutput.value = position;
-    }
-
-    function displayTurn(){
-        if(turn == 0) {
-            Turn.value = "Player 1 's turn";
-        }else{
-            Turn.value = "Player 2 's turn";
-        }
-    }
-    */
 
 
     function checkIfDroppable(x, y){
@@ -221,18 +210,6 @@ $_SESSION['turn'] = 0;
         count = 0;
     }
 
-    function displayTime() {
-        //document.getElementById("demo1").innerHTML = --value;
-        //if(value <= 0){
-        //    alertTimeOut();
-        //}
-    }
-    /*
-    function displayTest(){
-        txtOutput.value = position;
-        Turn.value = Math.round(Math.random())+2;
-    }
-    */
     function alertTimeOut(){
         alert("Your time is out!");
         stop();
@@ -350,6 +327,22 @@ $_SESSION['turn'] = 0;
                 xmlhttp.send();
                 var result = xmlhttp.responseText.split(",");
                 makeMove(result[0],result[1],String(result[2]));
+
+                //check if opponent wins the game first
+                var check = checkWin();
+                if(check == true){
+                    alert("You lose!");
+                    stop();
+                    winCount = 1;
+                }
+
+                //check if opponent quit the game first
+                var checkQuit = quitThepage();
+                if(checkQuit == true){
+                    alert("You lose!");
+                    stop();
+                    winCount = 1;
+                }
             }
         },1000);
     }
@@ -404,13 +397,6 @@ $_SESSION['turn'] = 0;
         document.getElementById(postId).className = "false";
         document.getElementById(preId).className = "true";
 
-
-        var check = checkWin();
-        if(check == true){
-            alert("You lose!");
-            stop();
-            winCount = 1;
-        }
         //re-enter the timer if game need to be continued.
         if (winCount == 0) {
             start();
@@ -445,6 +431,19 @@ $_SESSION['turn'] = 0;
             return 4;
         }
     }
+
+    function quitThepage(message){
+        if (window.XMLHttpRequest) {
+            // code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp=new XMLHttpRequest();
+        } else {  // code for IE6, IE5
+            xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.open("GET","update.php?type=6&temp="+message,false);
+        xmlhttp.send();
+        return xmlhttp.responseText;
+    }
+
 
     function sendMove(prePosition, postPosition, pieceID){
         if (window.XMLHttpRequest) {

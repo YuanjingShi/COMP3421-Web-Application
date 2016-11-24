@@ -24,54 +24,75 @@
             position: absolute;
             z-index: 0;
         }
-        #p1{
-            position: absolute;
-            height: 10%;
-            width: 30%;
-            margin: 2%;
-            top: 60%;
-            left: 30%;
-        }
-        #p2{
-            position: absolute;
-            height: 10%;
-            width: 30%;
-            margin: 2%;
-            top: 60%;
-            left: 65%;
-        }
-        #lang1{
-            position: absolute;
-            height: 10%;
-            width: 30%;
-            margin: 2%;
-            top: 72%;
-            left: 30%;
-            display: none;
-        }
-        #lang2{
-            position: absolute;
-            height: 10%;
-            width: 30%;
-            margin: 2%;
-            top: 72%;
-            left: 65%;
-            display:none;
-        }
-        #button1,#button2,#button3,#button4,#button5,#button6,#button7,#button8,#button9{
 
+
+        #ballsize{
+            position: absolute;
+            height: 10%;
+            width: 30%;
+            margin: 2%;
+            top: 50%;
+            left: 65%;
         }
+
+        #levelChange{
+             position: absolute;
+             height: 10%;
+             width: 30%;
+             margin: 2%;
+             top: 65%;
+             left: 65%;
+         }
+
+        #start {
+            position: absolute;
+            height: 10%;
+            width: 30%;
+            margin: 2%;
+            top: 80%;
+            left: 65%;
+        }
+
+        #name{
+            position: absolute;
+            height: 10%;
+            width: 20%;
+            top: 10%;
+            left: 20%;
+        }
+        h2{
+            color: rgb(255,255,255);
+        }
+
+
     </style>
 </head>
 <body>
 <div id = "s1">
-    <button id = "p1" onclick = "choosePaddleNo(1)">Single Mode/单人模式</button>
-    <button id = "p2" onclick = "choosePaddleNo(2)">Dual Mode/双人模式</button>
-    <button id = "lang1" onclick = "changeLanguage(1)" >English</button>
-    <button id = "lang2" onclick = "changeLanguage(0)" >中文</button>
+    <h2 id = "name">
+        Break Out Game
+    </h2>
+    <select id = "ballsize" onchange="changeBallsize(this.value)">
+        <option value="small">small</option>
+        <option value="medium">medium</option>
+        <option value="large">large</option>
+    </select>
+
+    <<select id = "levelChange" onchange="changeLevel(this.value)">
+        <option value="level1" >level1</option>
+        <option value="level2" >level2</option>
+    <option value="level3" >level3</option>
+    <option value="level4" >level4</option>
+    <option value="level5" >level5</option>
+    <option value="level6" >level6</option>
+</select>
+
+    <button id = "start" onclick = "init()">start the game</button>
 </div>
 
-<canvas id="myCanvas" width="650" height="400"></canvas>
+<canvas id="myCanvas" width="650" height="400">
+    <label id = "label">Timer</label>
+</canvas>
 
 <script>
 var canvas = document.getElementById("myCanvas");
@@ -86,7 +107,7 @@ var dy = -2;
 
 //first paddle init
 var paddle1Height = canvas.height/40;
-var paddle1Width = canvas.width/10;
+var paddle1Width = canvas.width/7;
 var paddle1X = (canvas.width-paddle1Width)/2;
 var rightPressed1 = false;
 var leftPressed1 = false;
@@ -101,7 +122,7 @@ var leftPressed2 = false;
 
 var brickRowCount = 10;
 var brickColumnCount = 6;
-var brickWidth = canvas.width/12;;
+var brickWidth = canvas.width/12;
 var brickHeight = canvas.height/30;
 var brickPadding = 10;
 var brickOffsetTop = 30;
@@ -118,17 +139,22 @@ var levelCount = 1;
 var myTime;
 
 //all the text variables
-var scoreTxt;
-var liveTxt;
-var winTxt;
-var lostTxt;
-var finishTxt;
-var timeOutTxt;
+var winTxt = "Congrats!";
+var lostTxt = "You lose.";
+var scoreTxt = "Score: ";
+var liveTxt = "Lives: ";
+var finishTxt = "You have finished all levels, time to have a rest?";
+var timeOutTxt = "Time is out!";
+var timeTxt = 301;
 
 //all the color vars
 var fontColor = "#f45942";
 var ballColor = "skyblue";
 var ballColor1 = "#f44292";
+var ballColor2 = "#f49541";
+
+var brickColor = "#02ea6e";
+var brickColor1 = "#2f3254";
 
 var Level;
 var Level1 = [  [0,1,1,1,1,1,1,1,1,0],
@@ -177,6 +203,12 @@ var Level6 = [  [1,1,1,1,1,1,1,1,1,1],
 
 Level = Level1;
 
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min)) + min;
+}
+
 function initBrick(x){
     if( x != null) {
         Level = x;
@@ -184,7 +216,8 @@ function initBrick(x){
     for (c = 0; c < brickColumnCount; c++) {
         bricks[c] = [];
         for (r = 0; r < brickRowCount; r++) {
-            bricks[c][r] = {x: 0, y: 0, status: 1, state: Level[c][r]};
+            var temp = getRandomInt(1,4);
+            bricks[c][r] = {x: 0, y: 0, status: 1, state: Level[c][r], type: temp};
             if (Level[c][r] == 1) {
                 winCount++;
             }
@@ -198,9 +231,6 @@ initBrick();
 //document.addEventListener("keyup", keyUpHandler, false);
 //document.addEventListener("mousemove", mouseMoveHandler, false);
 document.addEventListener("touchmove", mouseMoveHandler, false);
-document.addEventListener("touchstart",touchStartHandler,false);
-document.addEventListener("touchend",touchEndHandler,false);
-
 /*
 function keyDownHandler(e) {
     if(e.keyCode == 39) {
@@ -237,6 +267,7 @@ function keyUpHandler(e) {
 
 
 function mouseMoveHandler(e) {
+    event.preventDefault();
     var relativeX = e.targetTouches[0].clientX - canvas.offsetLeft;
     if(relativeX > 0 && relativeX < canvas.width) {
         paddle1X = relativeX - paddle1Width/2;
@@ -250,7 +281,13 @@ function collisionDetection() {
                 if(x > b.x && x < b.x+brickWidth && y > b.y && y < b.y+brickHeight) {
                     dy = -dy;
                     b.status = 0;
-                    score++;
+                    if(b.type == 1) {
+                        score++;
+                    }else if(b.type == 2){
+                        score += 2;
+                    }else if(b.type == 3){
+                        score += 3;
+                    }
                     if(score == winCount) {
                         alert(winTxt);
                         levelCount++;
@@ -291,14 +328,6 @@ function drawpaddle() {
     ctx.fillStyle = fontColor;
     ctx.fill();
     ctx.closePath();
-
-    if(paddle2Count == 1){
-        ctx.beginPath();
-        ctx.rect(paddle2X, canvas.height-paddle2Height, paddle2Width, paddle2Height);
-        ctx.fillStyle = ballColor1;
-        ctx.fill();
-        ctx.closePath();
-    }
 }
 function drawBricks() {
 
@@ -311,7 +340,14 @@ function drawBricks() {
                 bricks[c][r].y = brickY;
                 ctx.beginPath();
                 ctx.rect(brickX, brickY, brickWidth, brickHeight);
-                ctx.fillStyle = fontColor;
+                if(bricks[c][r].type == 1){
+                    ctx.fillStyle = fontColor;
+                }else if(bricks[c][r].type == 2){
+                    ctx.fillStyle = brickColor;
+                }else if(bricks[c][r].type == 3){
+                    ctx.fillStyle = brickColor1;
+                }
+
                 ctx.fill();
                 ctx.closePath();
             }
@@ -331,12 +367,24 @@ function drawLives() {
     ctx.fillText(liveTxt+lives, canvas.width-100, 20);
 }
 
+function  drawTime() {
+    ctx.font = "16px Arial";
+    ctx.fillStyle = "#0095DD";
+    timeTxt = timeTxt - 0.05;
+    ctx.fillText("Your got " + Math.round(timeTxt) +" seconds", 8, canvas.height-20);
+    if (timeTxt <= 0) {
+        alert(timeOutTxt);
+        stop();
+    }
+}
+
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawBricks();
     drawBall();
     drawpaddle();
     drawScore();
+    drawTime();
     drawLives();
     collisionDetection();
 
@@ -415,185 +463,83 @@ function displayTest(){
     txtOutput.value = winCount;
 }
 
-function choosePaddleNo(x){
-    if(x == 1){
-        paddle2Count = 0;
-    }else{
-        paddle2Count = 1;
+function changeBallsize(count){
+
+    if(count == "small"){
+        ballRadius = 8;
+    }else if(count == "medium"){
+        ballRadius = 15;
+        ballColor = ballColor1;
+    }else if(count == "large"){
+        ballRadius = 20;
+        ballColor = ballColor2;
     }
-    document.getElementById("p1").remove();
-    document.getElementById("p2").remove();
-    document.getElementById("lang1").style.display = "block";
-    document.getElementById("lang2").style.display = "block";
+
 }
 
-function changeLanguage(count){
-    if(count == 0) {
-
-        //remove the div
+function changeLevel(value) {
+    if (value == "level1") {
+        initBrick(Level1);
+    } else if (value == "level2") {
+        fontColor = "#f4e842";
+        initBrick(Level2);
+        levelCount = 2;
+    } else if (value == "level3") {
+        fontColor = "#42f495";
+        initBrick(Level3);
+        levelCount = 3;
+    } else if (value == "level4") {
+        fontColor = "#42d1f4";
+        initBrick(Level4);
+        levelCount = 4;
+    } else if (value == "level5") {
+        fontColor = "#8642f4";
+        initBrick(Level5);
+        levelCount = 5;
+    } else if (value == "level6") {
+        fontColor = "#f44292";
+        initBrick(Level6);
+        levelCount = 6;
         var el = document.getElementById("s1");
         while (el.firstChild) {
             el.removeChild(el.firstChild);
         }
         el.parentNode.removeChild(el);
-        //control panel language changes
-        document.getElementById("label").innerHTML = "计时器";
-        document.getElementById("button1").value = "暂停游戏";
-        document.getElementById("button2").value = "开始游戏";
-        document.getElementById("button3").value = "第一难度";
-        document.getElementById("button4").value = "第二难度";
-        document.getElementById("button6").value = "第三难度";
-        document.getElementById("button7").value = "第四难度";
-        document.getElementById("button8").value = "第五难度";
-        document.getElementById("button9").value = "第六难度";
-        document.getElementById("button5").value = "重新启动";
+        stopCount = setInterval(draw, 10);
+        //timeTxt = 301;
+        myTime = setInterval(displayTime, 1000);
+    }
+}
 
-        winTxt = "恭喜你完成了本关！";
-        lostTxt = "很遗憾，再来一次吧？";
-        scoreTxt = "分数：";
-        liveTxt = "生命值：";
-        finishTxt = "您已完成所有关卡，休息一会？"
-        timeOutTxt = "时间不够了哦";
-        lancount = 0;
-        //draw();
-    }else{
-        //remove the div
+    function reset() {
+        location.reload();
+    }
+
+    function init() {
+
         var el = document.getElementById("s1");
         while (el.firstChild) {
             el.removeChild(el.firstChild);
         }
         el.parentNode.removeChild(el);
-
-        document.getElementById("label").innerHTML = " Timer ";
-        document.getElementById("button1").value = " Pause";
-        document.getElementById("button2").value = " Start ";
-        document.getElementById("button3").value = "Level1";
-        document.getElementById("button4").value = "Level2";
-        document.getElementById("button6").value = "Level3";
-        document.getElementById("button7").value = "Level4";
-        document.getElementById("button8").value = "Level5";
-        document.getElementById("button9").value = "Level6";
-        document.getElementById("button5").value = "Restart";
-
-        winTxt = "Congrats!";
-        lostTxt = "You lose.";
-        scoreTxt = "Score: ";
-        liveTxt = "Lives: ";
-        finishTxt = "You have finished all levels, time to have a rest?";
-        timeOutTxt = "Time is out!";
-        lancount = 1;
-        //draw();
-    }
-}
-
-function level1(){
-    initBrick(Level1);
-    draw();
-}
-
-function level2(){
-    fontColor = "#f4e842";
-    initBrick(Level2);
-    levelCount = 2;
-    draw();
-}
-
-function level3(){
-    fontColor = "#42f495";
-    initBrick(Level3);
-    levelCount = 3;
-    draw();
-}
-
-function level4(){
-    fontColor = "#42d1f4";
-    initBrick(Level4);
-    levelCount = 4;
-    draw();
-}
-
-function level5(){
-    fontColor = "#8642f4";
-    initBrick(Level5);
-    levelCount = 5;
-    draw();
-}
-
-function level6(){
-    fontColor = "#f44292";
-    initBrick(Level6);
-    levelCount = 6;
-    draw();
-}
-
-function reset(){
-    location.reload();
-}
-
-function init(){
-    stopCount = setInterval(draw,10);
-    value = 301;
-    myTime = setInterval(displayTime, 1000);
-}
-
-function stop(){
-    clearInterval(stopCount);
-    clearInterval(myTime);
-}
-
-function displayTime() {
-    document.getElementById("label").innerHTML = "  "+ --value + "s";
-    if(value <= 0){
-        alert(timeOutTxt);
-        stop();
+        stopCount = setInterval(draw, 10);
+        //value = 301;
+        myTime = setInterval(displayTime, 1000);
     }
 
-}
+    function stop() {
+        clearInterval(stopCount);
+        clearInterval(myTime);
+    }
 
+    function displayTime() {
+        document.getElementById("label").innerHTML = "  " + --value + "s";
+        if (value <= 0) {
+            alert(timeOutTxt);
+            stop();
+        }
+    }
 
 </script>
-<div style= "position: absolute; height: 120px; width: 200px; top: 68%;
-left: 25%; z-index: -1">
-
-        <input id = "button2"
-           type = "button"
-           value = " Start "
-           onclick = "init()"/>
-        <input id = "button1"
-               type = "button"
-               value = " Pause "
-               onclick = "stop()"/>
-        <input id = "button5"
-           type = "button"
-           value = "Restart"
-           onClick="history.go(0)"/>
-        <input id = "button3"
-               type = "button"
-               value = "level1"
-               onclick = "level1()"/>
-        <input id = "button4"
-                type = "button"
-               value = "level2"
-               onclick = "level2()"/>
-        <input id = "button6"
-               type = "button"
-               value = "level3"
-               onclick = "level3()"/>
-        <input id = "button7"
-               type = "button"
-               value = "level4"
-               onclick = "level4()"/>
-        <input id = "button8"
-               type = "button"
-               value = "level5"
-               onclick = "level5()"/>
-        <input id = "button9"
-               type = "button"
-               value = "level6"
-               onclick = "level6()"/>
-
-
-    <label id = "label">Timer</label>
-</div>
 </body>
 </html>

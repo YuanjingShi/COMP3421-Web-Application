@@ -43,7 +43,7 @@ if($_SESSION['state'] <= 2){
         $handle = fopen ( "waiting.txt", "r" );
         $contents = fread ( $handle, filesize ( "waiting.txt" ) );
         fclose ( $handle );
-        echo $contents."is waiting for opponent";
+        echo $contents." is waiting for opponent";
     //}
     ?></div>
 <div id="map" style="width:500px;height:380px;"></div>

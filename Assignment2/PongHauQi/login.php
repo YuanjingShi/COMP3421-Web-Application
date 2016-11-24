@@ -40,7 +40,7 @@ if (isset ( $_POST ['enter'] )) {
         header("Location: test.php");
 
     } else {
-        echo '<span class="error">Please input sth valid</span>';
+        echo '<span class="error">Please input valid username</span>';
     }
 }
 ?>
