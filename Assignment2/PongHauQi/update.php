@@ -68,10 +68,10 @@ if($_GET['type'] == 4){
 
     $fopen = fopen ( "waiting.txt", "r");
     if ($fopen) {
-        $result = explode(" ", fread($fopen, filesize("waiting.txt")));
+        $result = explode("\n", fread($fopen, filesize("waiting.txt")));
     }
     fclose($fopen);
-    if(count($result) >= 2){
+    if(count($result) > 2){
         echo true;
     }else{
         echo false;

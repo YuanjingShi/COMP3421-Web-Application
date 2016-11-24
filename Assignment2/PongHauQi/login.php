@@ -13,7 +13,7 @@ $_SESSION['array'] = array();
 $_SESSION['user'] = array();
 //$_SESSION['state'] = 0;
 //$_SESSION['count'] = 0;
-echo $count;
+//echo $count;
 for($i=0;$i<$count;$i++){
     list($user,$country,$winCount) = explode(" ", $text[$i]);
     $_SESSION['user'][] = $user;
