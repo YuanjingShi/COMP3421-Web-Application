@@ -1,0 +1,11 @@
+QuesID,type,Contents
+101,MC,Please rate the overall quality of the conference contents
+102,MC,have you been able to interact with other conference participants
+103,MC,Please rate the efficiency of the registration process
+104,MC,Do you consider the venue of the conference siutable
+105,MC,How would you find the beverages and food provided in the conference
+106,MC,Would you consider to join this conference again next year
+201,open,Which keynote presentation you like most?
+202,open,Which parallel session paper you like most?
+203,open,Please suggest what contents/topics that you like to contribute to this conference in future
+204,open,Please suggest how to improve the conference in future

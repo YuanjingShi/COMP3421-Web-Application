@@ -1,0 +1,17 @@
+abstract ID,authorID,lastname,firstname,type (PolyU)
+1570017439,101,Lin,Chi-Yi,n
+1570017439,102,Huang,Shih-Wen,n
+1570017439,103,Hsu,Hui-Huang,n
+1570017647,201,Privitera,Gianluca,n
+1570017647,202,Ghidini,Giacomo,n
+1570017647,203,Emmons,Stephen P,n
+1570017647,204,Levine,David,n
+1570017647,205,Bellavista,Paolo,n
+1570017647,206,Smith,Jeffrey O.,n
+1570017651,301,Ma,Hua,n
+1570017651,302,Hu,Zhigang,n
+1570015579,401,Zhu,Weiping,n
+1570015579,402,Cui,Xiaohui,n
+1570015579,403,Hu,Cheng,n
+1570015579,404,Ma,Chao,n
+1570015510,10,Patt,Yale N.,n

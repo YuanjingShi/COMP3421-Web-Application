@@ -1,0 +1,26 @@
+EventID,Data,BegTime,EndTime,Title,Venue
+10,3/11/14,7:45,8:30,Registration,"Silverbox 1-3, Hotel ICON"
+12,3/11/14,8:30,9:00,Opening Ceremony,
+13,3/11/14,9:00,10:00,Keynote Session,
+14,3/11/14,10:00,10:30,Coffee Break,"Sky Bridge, Hotel ICON"
+15,3/11/14,10:30,12:00,Parallel Sessions,"Silverbox 1-3, Hotel ICON"
+16,3/11/14,12:00,13:45,Lunch,"Silverbox 4, Hotel ICON"
+17,3/11/14,13:45,15:15,Parallel Sessions,"Silverbox 1-3, Hotel ICON"
+18,3/11/14,15:15,15:45,Coffee Break,"Sky Bridge, Hotel ICON"
+19,3/11/14,15:45,17:30,Parallel Sessions,"Silverbox 1-3, Hotel ICON"
+11,3/11/14,18:30,21:30,Conference Reception Dinner,"Staff Club, The Hong Kong Polytechnic University"
+20,4/11/14,8:15,9:00,Registration,"Silverbox 1-3, Hotel ICON"
+22,4/11/14,9:00,10:00,Keynote Session,
+24,4/11/14,10:00,10:30,Coffee Break,"Sky Bridge, Hotel ICON"
+25,4/11/14,10:30,12:00,Parallel Sessions,"Silverbox 1-3, Hotel ICON"
+26,4/11/14,12:00,13:45,Lunch,"Silverbox 4, Hotel ICON"
+27,4/11/14,13:45,15:15,Parallel Sessions,"Silverbox 1-3, Hotel ICON"
+28,4/11/14,15:15,15:45,Coffee Break,"Sky Bridge, Hotel ICON"
+29,4/11/14,15:45,17:30,Parallel Sessions,"Silverbox 1-3, Hotel ICON"
+21,4/11/14,18:15,21:30,Conference Banquet,"Silverbox 4, Hotel ICON"
+30,5/11/14,8:15,8:45,Registration,"Silverbox 1-3, Hotel ICON"
+33,5/11/14,8:45,10:15,Parallel Sessions,"Silverbox 1-3, Hotel ICON"
+34,5/11/14,10:15,10:45,Coffee Break,"Sky Bridge, Hotel ICON"
+35,5/11/14,10:45,11:00,Closing Ceremony,"Silverbox 1-3, Hotel ICON"
+,,,,,
+,,,,,
