@@ -83,7 +83,7 @@ if($_GET['type'] == 4){
 if($_GET['type'] == 5){
     $fopen = fopen("winCount.txt",'r');
     if($fopen){
-        echo true;
+        echo false;
     }else{
         echo false;
     }
@@ -104,4 +104,3 @@ if($_GET['type'] == 6){
     }
 }
 ?>
-
